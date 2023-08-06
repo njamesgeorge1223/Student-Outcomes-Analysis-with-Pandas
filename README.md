@@ -1,1 +1,1 @@
-This repository is for the Week #4 Homework Assignment. This interactive Python notebook, PyCitySchools_starter.ipynb, reads two csv files, students_complete.csv and schools_complete.csv, in the Resources folder, which contain data about students and schools in a single school district.  From this data, the notebook performs the necessary calculations to create a high-level snapshot of the district's key metrics. The subsequent analysis reflects my conclusions about these metrics.
+#PyCity Schools Analysis
