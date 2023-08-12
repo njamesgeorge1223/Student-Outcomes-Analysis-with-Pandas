@@ -1,1 +1,1 @@
-This folder holds the input files for the Pymaceuticals Challenge.
+This folder holds the input files for the Pymaceuticals analysis.
