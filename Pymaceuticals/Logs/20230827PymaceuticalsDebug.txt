@@ -1,0 +1,1088 @@
+
+Timepoint: 08/27/2023 00:27:48
+Program execution begins...
+
+
+
+
+
+    Mouse ID Drug Regimen     Sex  Age_months  Weight (g)
+0       k403     Ramicane    Male          21          16
+1       s185    Capomulin  Female           3          17
+2       x401    Capomulin  Female          16          15
+3       m601    Capomulin    Male          22          17
+4       g791     Ramicane    Male          11          16
+..       ...          ...     ...         ...         ...
+244     z314     Stelasyn  Female          21          28
+245     z435     Propriva  Female          12          26
+246     z581    Infubinol  Female          24          25
+247     z795     Naftisol  Female          13          29
+248     z969     Naftisol    Male           9          30
+
+[249 rows x 5 columns]
+
+
+
+     Mouse ID  Timepoint  Tumor Volume (mm3)  Metastatic Sites
+0        b128          0           45.000000                 0
+1        f932          0           45.000000                 0
+2        g107          0           45.000000                 0
+3        a457          0           45.000000                 0
+4        c819          0           45.000000                 0
+...       ...        ...                 ...               ...
+1888     r944         45           41.581521                 2
+1889     u364         45           31.023923                 3
+1890     p438         45           61.433892                 1
+1891     x773         45           58.634971                 4
+1892     b879         45           72.555239                 2
+
+[1893 rows x 4 columns]
+
+
+
+     Mouse ID Drug Regimen   Sex  Age_months  Weight (g)  Timepoint  \
+0        k403     Ramicane  Male          21          16          0   
+1        k403     Ramicane  Male          21          16          5   
+2        k403     Ramicane  Male          21          16         10   
+3        k403     Ramicane  Male          21          16         15   
+4        k403     Ramicane  Male          21          16         20   
+...       ...          ...   ...         ...         ...        ...   
+1888     z969     Naftisol  Male           9          30         25   
+1889     z969     Naftisol  Male           9          30         30   
+1890     z969     Naftisol  Male           9          30         35   
+1891     z969     Naftisol  Male           9          30         40   
+1892     z969     Naftisol  Male           9          30         45   
+
+      Tumor Volume (mm3)  Metastatic Sites  
+0              45.000000                 0  
+1              38.825898                 0  
+2              35.014271                 1  
+3              34.223992                 1  
+4              32.997729                 1  
+...                  ...               ...  
+1888           63.145652                 2  
+1889           65.841013                 3  
+1890           69.176246                 4  
+1891           70.314904                 4  
+1892           73.867845                 4  
+
+[1893 rows x 8 columns]
+
+
+
+    Mouse ID Drug Regimen     Sex  Age_months  Weight (g)  Timepoint  \
+909     g989     Propriva  Female          21          26          0   
+911     g989     Propriva  Female          21          26          5   
+913     g989     Propriva  Female          21          26         10   
+915     g989     Propriva  Female          21          26         15   
+917     g989     Propriva  Female          21          26         20   
+
+     Tumor Volume (mm3)  Metastatic Sites  
+909           45.000000                 0  
+911           47.570392                 0  
+913           49.880528                 0  
+915           53.442020                 0  
+917           54.657650                 1  
+
+
+
+['g989']
+
+
+
+     Mouse ID Drug Regimen   Sex  Age_months  Weight (g)  Timepoint  \
+0        k403     Ramicane  Male          21          16          0   
+1        k403     Ramicane  Male          21          16          5   
+2        k403     Ramicane  Male          21          16         10   
+3        k403     Ramicane  Male          21          16         15   
+4        k403     Ramicane  Male          21          16         20   
+...       ...          ...   ...         ...         ...        ...   
+1888     z969     Naftisol  Male           9          30         25   
+1889     z969     Naftisol  Male           9          30         30   
+1890     z969     Naftisol  Male           9          30         35   
+1891     z969     Naftisol  Male           9          30         40   
+1892     z969     Naftisol  Male           9          30         45   
+
+      Tumor Volume (mm3)  Metastatic Sites  
+0              45.000000                 0  
+1              38.825898                 0  
+2              35.014271                 1  
+3              34.223992                 1  
+4              32.997729                 1  
+...                  ...               ...  
+1888           63.145652                 2  
+1889           65.841013                 3  
+1890           69.176246                 4  
+1891           70.314904                 4  
+1892           73.867845                 4  
+
+[1880 rows x 8 columns]
+
+
+
+Drug Regimen
+Capomulin    40.675741
+Ceftamin     52.591172
+Infubinol    52.884795
+Ketapril     55.235638
+Naftisol     54.331565
+Placebo      54.033581
+Propriva     52.320930
+Ramicane     40.216745
+Stelasyn     54.233149
+Zoniferol    53.236507
+Name: Tumor Volume (mm3), dtype: float64
+
+
+
+Drug Regimen
+Capomulin    41.557809
+Ceftamin     51.776157
+Infubinol    51.820584
+Ketapril     53.698743
+Naftisol     52.509285
+Placebo      52.288934
+Propriva     50.446266
+Ramicane     40.673236
+Stelasyn     52.431737
+Zoniferol    51.818479
+Name: Tumor Volume (mm3), dtype: float64
+
+
+
+Drug Regimen
+Capomulin    24.947764
+Ceftamin     39.290177
+Infubinol    43.128684
+Ketapril     68.553577
+Naftisol     66.173479
+Placebo      61.168083
+Propriva     43.852013
+Ramicane     23.486704
+Stelasyn     59.450562
+Zoniferol    48.533355
+Name: Tumor Volume (mm3), dtype: float64
+
+
+
+Drug Regimen
+Capomulin    4.994774
+Ceftamin     6.268188
+Infubinol    6.567243
+Ketapril     8.279709
+Naftisol     8.134708
+Placebo      7.821003
+Propriva     6.622085
+Ramicane     4.846308
+Stelasyn     7.710419
+Zoniferol    6.966589
+Name: Tumor Volume (mm3), dtype: float64
+
+
+
+Drug Regimen
+Capomulin    0.329346
+Ceftamin     0.469821
+Infubinol    0.492236
+Ketapril     0.603860
+Naftisol     0.596466
+Placebo      0.581331
+Propriva     0.544332
+Ramicane     0.320955
+Stelasyn     0.573111
+Zoniferol    0.516398
+Name: Tumor Volume (mm3), dtype: float64
+
+
+
+                   Mean     Median   Variance  Standard Deviation  \
+Drug Regimen                                                        
+Capomulin     40.675741  41.557809  24.947764            4.994774   
+Ceftamin      52.591172  51.776157  39.290177            6.268188   
+Infubinol     52.884795  51.820584  43.128684            6.567243   
+Ketapril      55.235638  53.698743  68.553577            8.279709   
+Naftisol      54.331565  52.509285  66.173479            8.134708   
+Placebo       54.033581  52.288934  61.168083            7.821003   
+Propriva      52.320930  50.446266  43.852013            6.622085   
+Ramicane      40.216745  40.673236  23.486704            4.846308   
+Stelasyn      54.233149  52.431737  59.450562            7.710419   
+Zoniferol     53.236507  51.818479  48.533355            6.966589   
+
+              Standard Error of the Mean  
+Drug Regimen                              
+Capomulin                       0.329346  
+Ceftamin                        0.469821  
+Infubinol                       0.492236  
+Ketapril                        0.603860  
+Naftisol                        0.596466  
+Placebo                         0.581331  
+Propriva                        0.544332  
+Ramicane                        0.320955  
+Stelasyn                        0.573111  
+Zoniferol                       0.516398  
+
+
+
+Capomulin    230
+Ramicane     228
+Ketapril     188
+Naftisol     186
+Zoniferol    182
+Placebo      181
+Stelasyn     181
+Infubinol    178
+Ceftamin     178
+Propriva     148
+Name: Drug Regimen, dtype: int64
+
+
+
+Male      958
+Female    922
+Name: Sex, dtype: int64
+
+
+
+     Mouse ID Drug Regimen     Sex  Age_months  Weight (g)  Timepoint  \
+0        k403     Ramicane    Male          21          16          0   
+1        k403     Ramicane    Male          21          16          5   
+2        k403     Ramicane    Male          21          16         10   
+3        k403     Ramicane    Male          21          16         15   
+4        k403     Ramicane    Male          21          16         20   
+...       ...          ...     ...         ...         ...        ...   
+1868     z581    Infubinol  Female          24          25         25   
+1869     z581    Infubinol  Female          24          25         30   
+1870     z581    Infubinol  Female          24          25         35   
+1871     z581    Infubinol  Female          24          25         40   
+1872     z581    Infubinol  Female          24          25         45   
+
+      Tumor Volume (mm3)  Metastatic Sites  
+0              45.000000                 0  
+1              38.825898                 0  
+2              35.014271                 1  
+3              34.223992                 1  
+4              32.997729                 1  
+...                  ...               ...  
+1868           54.316407                 2  
+1869           56.286750                 2  
+1870           58.628399                 3  
+1871           60.053740                 3  
+1872           62.754451                 3  
+
+[995 rows x 8 columns]
+
+
+
+    Mouse ID  Timepoint
+0       a203         45
+1       a251         45
+2       a262         45
+3       a275         45
+4       a411         45
+..       ...        ...
+120     y769         45
+121     y793         45
+122     y865         45
+123     z578         45
+124     z581         45
+
+[125 rows x 2 columns]
+
+
+
+    Mouse ID  Timepoint Drug Regimen     Sex  Age_months  Weight (g)  \
+0       a203         45    Infubinol  Female          20          23   
+1       a251         45    Infubinol  Female          21          25   
+2       a262         45      Placebo  Female          17          29   
+3       a275         45     Ceftamin  Female          20          28   
+4       a411         45     Ramicane    Male           3          22   
+..       ...        ...          ...     ...         ...         ...   
+120     y769         45     Ceftamin  Female           6          27   
+121     y793         45    Capomulin    Male          17          17   
+122     y865         45     Ceftamin    Male          23          26   
+123     z578         45     Ramicane    Male          11          16   
+124     z581         45    Infubinol  Female          24          25   
+
+     Tumor Volume (mm3)  Metastatic Sites  
+0             67.973419                 2  
+1             65.525743                 1  
+2             70.717621                 4  
+3             62.999356                 3  
+4             38.407618                 1  
+..                  ...               ...  
+120           68.594745                 4  
+121           31.896238                 2  
+122           64.729837                 3  
+123           30.638696                 0  
+124           62.754451                 3  
+
+[125 rows x 8 columns]
+
+
+
+['Capomulin', 'Ceftamin', 'Infubinol', 'Placebo', 'Ramicane']
+
+
+
+[11     38.982878
+14     38.939633
+30     30.485985
+31     37.074024
+32     40.159220
+39     47.685963
+41     37.311846
+42     38.125164
+44     38.753265
+54     41.483008
+59     38.846876
+61     28.430964
+63     33.329098
+79     46.539206
+80     32.377357
+84     41.581521
+88     23.343598
+90     40.728578
+91     34.455298
+98     31.023923
+103    40.658124
+105    39.952347
+111    36.041047
+113    28.484033
+121    31.896238
+Name: Tumor Volume (mm3), dtype: float64, 3      62.999356
+12     45.000000
+13     56.057749
+15     55.742829
+29     48.722078
+34     47.784682
+45     61.849023
+48     68.923185
+52     67.748662
+53     57.918381
+55     46.784535
+56     59.851956
+57     64.299830
+67     59.741901
+72     61.433892
+74     64.192341
+92     45.000000
+95     52.925348
+96     45.000000
+106    67.527482
+112    45.000000
+114    64.634949
+116    61.386660
+120    68.594745
+122    64.729837
+Name: Tumor Volume (mm3), dtype: float64, 0      67.973419
+1      65.525743
+7      57.031862
+9      66.083066
+16     72.226731
+18     36.321346
+23     60.969711
+26     62.435404
+28     60.918767
+37     67.289621
+50     66.196912
+51     62.117279
+62     47.010364
+65     60.165180
+70     55.629428
+71     45.699331
+73     54.656549
+85     55.650681
+99     46.250112
+101    54.048608
+102    51.542431
+108    50.005138
+109    58.268442
+117    67.685569
+124    62.754451
+Name: Tumor Volume (mm3), dtype: float64, 2      70.717621
+10     72.255963
+17     65.815165
+20     69.042841
+22     69.823146
+25     73.212939
+38     47.520632
+40     53.303185
+43     52.942902
+58     45.000000
+66     58.011146
+68     62.030594
+69     73.059454
+75     53.713158
+78     66.096475
+82     50.218605
+86     64.119142
+87     49.000125
+93     63.423695
+94     56.527952
+100    50.649038
+104    52.614689
+107    68.134288
+115    58.634971
+119    66.842635
+Name: Tumor Volume (mm3), dtype: float64, 4      38.407618
+5      43.047543
+6      38.810366
+8      32.978522
+19     38.342008
+21     33.397653
+24     37.311236
+27     40.659006
+33     29.128472
+35     33.562402
+36     36.374510
+46     31.560470
+47     36.134852
+49     22.050126
+60     30.564625
+64     31.095335
+76     45.220869
+77     36.561652
+81     37.225650
+83     43.419381
+89     30.276232
+97     40.667713
+110    43.166373
+118    44.183451
+123    30.638696
+Name: Tumor Volume (mm3), dtype: float64]
+
+
+
+     Mouse ID Drug Regimen     Sex  Age_months  Weight (g)  Timepoint  \
+10       s185    Capomulin  Female           3          17          0   
+11       s185    Capomulin  Female           3          17          5   
+12       s185    Capomulin  Female           3          17         10   
+13       s185    Capomulin  Female           3          17         15   
+14       s185    Capomulin  Female           3          17         20   
+...       ...          ...     ...         ...         ...        ...   
+440      i557    Capomulin  Female           1          24         45   
+1452     r157    Capomulin    Male          22          25          0   
+1453     r157    Capomulin    Male          22          25          5   
+1454     r157    Capomulin    Male          22          25         10   
+1455     r157    Capomulin    Male          22          25         15   
+
+      Tumor Volume (mm3)  Metastatic Sites  
+10             45.000000                 0  
+11             43.878496                 0  
+12             37.614948                 0  
+13             38.177232                 0  
+14             36.866876                 0  
+...                  ...               ...  
+440            47.685963                 1  
+1452           45.000000                 0  
+1453           45.597064                 0  
+1454           46.059608                 0  
+1455           46.539206                 0  
+
+[230 rows x 8 columns]
+
+
+
+v923
+
+
+
+    Mouse ID Drug Regimen     Sex  Age_months  Weight (g)  Timepoint  \
+341     v923    Capomulin  Female          19          21          0   
+342     v923    Capomulin  Female          19          21          5   
+343     v923    Capomulin  Female          19          21         10   
+344     v923    Capomulin  Female          19          21         15   
+345     v923    Capomulin  Female          19          21         20   
+346     v923    Capomulin  Female          19          21         25   
+347     v923    Capomulin  Female          19          21         30   
+348     v923    Capomulin  Female          19          21         35   
+349     v923    Capomulin  Female          19          21         40   
+350     v923    Capomulin  Female          19          21         45   
+
+     Tumor Volume (mm3)  Metastatic Sites  
+341           45.000000                 0  
+342           45.704434                 0  
+343           39.848223                 0  
+344           40.457989                 0  
+345           39.648296                 0  
+346           40.156413                 1  
+347           40.752216                 2  
+348           41.439242                 2  
+349           42.151015                 2  
+350           40.658124                 2  
+
+
+
+341     0
+342     5
+343    10
+344    15
+345    20
+346    25
+347    30
+348    35
+349    40
+350    45
+Name: Timepoint, dtype: int64
+
+
+
+341    45.000000
+342    45.704434
+343    39.848223
+344    40.457989
+345    39.648296
+346    40.156413
+347    40.752216
+348    41.439242
+349    42.151015
+350    40.658124
+Name: Tumor Volume (mm3), dtype: float64
+
+
+
+Mouse ID
+b128    41.963636
+b742    40.083699
+f966    36.505973
+g288    41.990097
+g316    44.613344
+i557    44.805810
+i738    39.141053
+j119    44.465236
+j246    43.216925
+l509    44.434474
+l897    42.507261
+m601    34.847470
+m957    39.049816
+r157    45.798970
+r554    36.509212
+r944    43.367364
+s185    34.559143
+s710    42.803733
+t565    39.328725
+u364    39.887495
+v923    41.581595
+w150    41.384825
+w914    41.352452
+x401    36.182040
+y793    38.506829
+Name: Tumor Volume (mm3), dtype: float64
+
+
+
+Mouse ID
+b128    22.0
+b742    21.0
+f966    17.0
+g288    19.0
+g316    22.0
+i557    24.0
+i738    20.0
+j119    23.0
+j246    21.0
+l509    21.0
+l897    19.0
+m601    17.0
+m957    19.0
+r157    25.0
+r554    17.0
+r944    25.0
+s185    17.0
+s710    23.0
+t565    17.0
+u364    17.0
+v923    21.0
+w150    23.0
+w914    21.0
+x401    15.0
+y793    17.0
+Name: Weight (g), dtype: float64
+
+
+Timepoint: 08/27/2023 00:28:08
+Program execution begins...
+
+
+
+
+
+    Mouse ID Drug Regimen     Sex  Age_months  Weight (g)
+0       k403     Ramicane    Male          21          16
+1       s185    Capomulin  Female           3          17
+2       x401    Capomulin  Female          16          15
+3       m601    Capomulin    Male          22          17
+4       g791     Ramicane    Male          11          16
+..       ...          ...     ...         ...         ...
+244     z314     Stelasyn  Female          21          28
+245     z435     Propriva  Female          12          26
+246     z581    Infubinol  Female          24          25
+247     z795     Naftisol  Female          13          29
+248     z969     Naftisol    Male           9          30
+
+[249 rows x 5 columns]
+
+
+
+     Mouse ID  Timepoint  Tumor Volume (mm3)  Metastatic Sites
+0        b128          0           45.000000                 0
+1        f932          0           45.000000                 0
+2        g107          0           45.000000                 0
+3        a457          0           45.000000                 0
+4        c819          0           45.000000                 0
+...       ...        ...                 ...               ...
+1888     r944         45           41.581521                 2
+1889     u364         45           31.023923                 3
+1890     p438         45           61.433892                 1
+1891     x773         45           58.634971                 4
+1892     b879         45           72.555239                 2
+
+[1893 rows x 4 columns]
+
+
+
+     Mouse ID Drug Regimen   Sex  Age_months  Weight (g)  Timepoint  \
+0        k403     Ramicane  Male          21          16          0   
+1        k403     Ramicane  Male          21          16          5   
+2        k403     Ramicane  Male          21          16         10   
+3        k403     Ramicane  Male          21          16         15   
+4        k403     Ramicane  Male          21          16         20   
+...       ...          ...   ...         ...         ...        ...   
+1888     z969     Naftisol  Male           9          30         25   
+1889     z969     Naftisol  Male           9          30         30   
+1890     z969     Naftisol  Male           9          30         35   
+1891     z969     Naftisol  Male           9          30         40   
+1892     z969     Naftisol  Male           9          30         45   
+
+      Tumor Volume (mm3)  Metastatic Sites  
+0              45.000000                 0  
+1              38.825898                 0  
+2              35.014271                 1  
+3              34.223992                 1  
+4              32.997729                 1  
+...                  ...               ...  
+1888           63.145652                 2  
+1889           65.841013                 3  
+1890           69.176246                 4  
+1891           70.314904                 4  
+1892           73.867845                 4  
+
+[1893 rows x 8 columns]
+
+
+
+    Mouse ID Drug Regimen     Sex  Age_months  Weight (g)  Timepoint  \
+909     g989     Propriva  Female          21          26          0   
+911     g989     Propriva  Female          21          26          5   
+913     g989     Propriva  Female          21          26         10   
+915     g989     Propriva  Female          21          26         15   
+917     g989     Propriva  Female          21          26         20   
+
+     Tumor Volume (mm3)  Metastatic Sites  
+909           45.000000                 0  
+911           47.570392                 0  
+913           49.880528                 0  
+915           53.442020                 0  
+917           54.657650                 1  
+
+
+
+['g989']
+
+
+
+     Mouse ID Drug Regimen   Sex  Age_months  Weight (g)  Timepoint  \
+0        k403     Ramicane  Male          21          16          0   
+1        k403     Ramicane  Male          21          16          5   
+2        k403     Ramicane  Male          21          16         10   
+3        k403     Ramicane  Male          21          16         15   
+4        k403     Ramicane  Male          21          16         20   
+...       ...          ...   ...         ...         ...        ...   
+1888     z969     Naftisol  Male           9          30         25   
+1889     z969     Naftisol  Male           9          30         30   
+1890     z969     Naftisol  Male           9          30         35   
+1891     z969     Naftisol  Male           9          30         40   
+1892     z969     Naftisol  Male           9          30         45   
+
+      Tumor Volume (mm3)  Metastatic Sites  
+0              45.000000                 0  
+1              38.825898                 0  
+2              35.014271                 1  
+3              34.223992                 1  
+4              32.997729                 1  
+...                  ...               ...  
+1888           63.145652                 2  
+1889           65.841013                 3  
+1890           69.176246                 4  
+1891           70.314904                 4  
+1892           73.867845                 4  
+
+[1880 rows x 8 columns]
+
+
+
+Drug Regimen
+Capomulin    40.675741
+Ceftamin     52.591172
+Infubinol    52.884795
+Ketapril     55.235638
+Naftisol     54.331565
+Placebo      54.033581
+Propriva     52.320930
+Ramicane     40.216745
+Stelasyn     54.233149
+Zoniferol    53.236507
+Name: Tumor Volume (mm3), dtype: float64
+
+
+
+Drug Regimen
+Capomulin    41.557809
+Ceftamin     51.776157
+Infubinol    51.820584
+Ketapril     53.698743
+Naftisol     52.509285
+Placebo      52.288934
+Propriva     50.446266
+Ramicane     40.673236
+Stelasyn     52.431737
+Zoniferol    51.818479
+Name: Tumor Volume (mm3), dtype: float64
+
+
+
+Drug Regimen
+Capomulin    24.947764
+Ceftamin     39.290177
+Infubinol    43.128684
+Ketapril     68.553577
+Naftisol     66.173479
+Placebo      61.168083
+Propriva     43.852013
+Ramicane     23.486704
+Stelasyn     59.450562
+Zoniferol    48.533355
+Name: Tumor Volume (mm3), dtype: float64
+
+
+
+Drug Regimen
+Capomulin    4.994774
+Ceftamin     6.268188
+Infubinol    6.567243
+Ketapril     8.279709
+Naftisol     8.134708
+Placebo      7.821003
+Propriva     6.622085
+Ramicane     4.846308
+Stelasyn     7.710419
+Zoniferol    6.966589
+Name: Tumor Volume (mm3), dtype: float64
+
+
+
+Drug Regimen
+Capomulin    0.329346
+Ceftamin     0.469821
+Infubinol    0.492236
+Ketapril     0.603860
+Naftisol     0.596466
+Placebo      0.581331
+Propriva     0.544332
+Ramicane     0.320955
+Stelasyn     0.573111
+Zoniferol    0.516398
+Name: Tumor Volume (mm3), dtype: float64
+
+
+
+                   Mean     Median   Variance  Standard Deviation  \
+Drug Regimen                                                        
+Capomulin     40.675741  41.557809  24.947764            4.994774   
+Ceftamin      52.591172  51.776157  39.290177            6.268188   
+Infubinol     52.884795  51.820584  43.128684            6.567243   
+Ketapril      55.235638  53.698743  68.553577            8.279709   
+Naftisol      54.331565  52.509285  66.173479            8.134708   
+Placebo       54.033581  52.288934  61.168083            7.821003   
+Propriva      52.320930  50.446266  43.852013            6.622085   
+Ramicane      40.216745  40.673236  23.486704            4.846308   
+Stelasyn      54.233149  52.431737  59.450562            7.710419   
+Zoniferol     53.236507  51.818479  48.533355            6.966589   
+
+              Standard Error of the Mean  
+Drug Regimen                              
+Capomulin                       0.329346  
+Ceftamin                        0.469821  
+Infubinol                       0.492236  
+Ketapril                        0.603860  
+Naftisol                        0.596466  
+Placebo                         0.581331  
+Propriva                        0.544332  
+Ramicane                        0.320955  
+Stelasyn                        0.573111  
+Zoniferol                       0.516398  
+
+
+
+Capomulin    230
+Ramicane     228
+Ketapril     188
+Naftisol     186
+Zoniferol    182
+Placebo      181
+Stelasyn     181
+Infubinol    178
+Ceftamin     178
+Propriva     148
+Name: Drug Regimen, dtype: int64
+
+
+
+Male      958
+Female    922
+Name: Sex, dtype: int64
+
+
+
+     Mouse ID Drug Regimen     Sex  Age_months  Weight (g)  Timepoint  \
+0        k403     Ramicane    Male          21          16          0   
+1        k403     Ramicane    Male          21          16          5   
+2        k403     Ramicane    Male          21          16         10   
+3        k403     Ramicane    Male          21          16         15   
+4        k403     Ramicane    Male          21          16         20   
+...       ...          ...     ...         ...         ...        ...   
+1868     z581    Infubinol  Female          24          25         25   
+1869     z581    Infubinol  Female          24          25         30   
+1870     z581    Infubinol  Female          24          25         35   
+1871     z581    Infubinol  Female          24          25         40   
+1872     z581    Infubinol  Female          24          25         45   
+
+      Tumor Volume (mm3)  Metastatic Sites  
+0              45.000000                 0  
+1              38.825898                 0  
+2              35.014271                 1  
+3              34.223992                 1  
+4              32.997729                 1  
+...                  ...               ...  
+1868           54.316407                 2  
+1869           56.286750                 2  
+1870           58.628399                 3  
+1871           60.053740                 3  
+1872           62.754451                 3  
+
+[995 rows x 8 columns]
+
+
+
+    Mouse ID  Timepoint
+0       a203         45
+1       a251         45
+2       a262         45
+3       a275         45
+4       a411         45
+..       ...        ...
+120     y769         45
+121     y793         45
+122     y865         45
+123     z578         45
+124     z581         45
+
+[125 rows x 2 columns]
+
+
+
+    Mouse ID  Timepoint Drug Regimen     Sex  Age_months  Weight (g)  \
+0       a203         45    Infubinol  Female          20          23   
+1       a251         45    Infubinol  Female          21          25   
+2       a262         45      Placebo  Female          17          29   
+3       a275         45     Ceftamin  Female          20          28   
+4       a411         45     Ramicane    Male           3          22   
+..       ...        ...          ...     ...         ...         ...   
+120     y769         45     Ceftamin  Female           6          27   
+121     y793         45    Capomulin    Male          17          17   
+122     y865         45     Ceftamin    Male          23          26   
+123     z578         45     Ramicane    Male          11          16   
+124     z581         45    Infubinol  Female          24          25   
+
+     Tumor Volume (mm3)  Metastatic Sites  
+0             67.973419                 2  
+1             65.525743                 1  
+2             70.717621                 4  
+3             62.999356                 3  
+4             38.407618                 1  
+..                  ...               ...  
+120           68.594745                 4  
+121           31.896238                 2  
+122           64.729837                 3  
+123           30.638696                 0  
+124           62.754451                 3  
+
+[125 rows x 8 columns]
+
+
+
+['Capomulin', 'Ceftamin', 'Infubinol', 'Placebo', 'Ramicane']
+
+
+
+[11     38.982878
+14     38.939633
+30     30.485985
+31     37.074024
+32     40.159220
+39     47.685963
+41     37.311846
+42     38.125164
+44     38.753265
+54     41.483008
+59     38.846876
+61     28.430964
+63     33.329098
+79     46.539206
+80     32.377357
+84     41.581521
+88     23.343598
+90     40.728578
+91     34.455298
+98     31.023923
+103    40.658124
+105    39.952347
+111    36.041047
+113    28.484033
+121    31.896238
+Name: Tumor Volume (mm3), dtype: float64, 3      62.999356
+12     45.000000
+13     56.057749
+15     55.742829
+29     48.722078
+34     47.784682
+45     61.849023
+48     68.923185
+52     67.748662
+53     57.918381
+55     46.784535
+56     59.851956
+57     64.299830
+67     59.741901
+72     61.433892
+74     64.192341
+92     45.000000
+95     52.925348
+96     45.000000
+106    67.527482
+112    45.000000
+114    64.634949
+116    61.386660
+120    68.594745
+122    64.729837
+Name: Tumor Volume (mm3), dtype: float64, 0      67.973419
+1      65.525743
+7      57.031862
+9      66.083066
+16     72.226731
+18     36.321346
+23     60.969711
+26     62.435404
+28     60.918767
+37     67.289621
+50     66.196912
+51     62.117279
+62     47.010364
+65     60.165180
+70     55.629428
+71     45.699331
+73     54.656549
+85     55.650681
+99     46.250112
+101    54.048608
+102    51.542431
+108    50.005138
+109    58.268442
+117    67.685569
+124    62.754451
+Name: Tumor Volume (mm3), dtype: float64, 2      70.717621
+10     72.255963
+17     65.815165
+20     69.042841
+22     69.823146
+25     73.212939
+38     47.520632
+40     53.303185
+43     52.942902
+58     45.000000
+66     58.011146
+68     62.030594
+69     73.059454
+75     53.713158
+78     66.096475
+82     50.218605
+86     64.119142
+87     49.000125
+93     63.423695
+94     56.527952
+100    50.649038
+104    52.614689
+107    68.134288
+115    58.634971
+119    66.842635
+Name: Tumor Volume (mm3), dtype: float64, 4      38.407618
+5      43.047543
+6      38.810366
+8      32.978522
+19     38.342008
+21     33.397653
+24     37.311236
+27     40.659006
+33     29.128472
+35     33.562402
+36     36.374510
+46     31.560470
+47     36.134852
+49     22.050126
+60     30.564625
+64     31.095335
+76     45.220869
+77     36.561652
+81     37.225650
+83     43.419381
+89     30.276232
+97     40.667713
+110    43.166373
+118    44.183451
+123    30.638696
+Name: Tumor Volume (mm3), dtype: float64]
+
+
+
+     Mouse ID Drug Regimen     Sex  Age_months  Weight (g)  Timepoint  \
+10       s185    Capomulin  Female           3          17          0   
+11       s185    Capomulin  Female           3          17          5   
+12       s185    Capomulin  Female           3          17         10   
+13       s185    Capomulin  Female           3          17         15   
+14       s185    Capomulin  Female           3          17         20   
+...       ...          ...     ...         ...         ...        ...   
+440      i557    Capomulin  Female           1          24         45   
+1452     r157    Capomulin    Male          22          25          0   
+1453     r157    Capomulin    Male          22          25          5   
+1454     r157    Capomulin    Male          22          25         10   
+1455     r157    Capomulin    Male          22          25         15   
+
+      Tumor Volume (mm3)  Metastatic Sites  
+10             45.000000                 0  
+11             43.878496                 0  
+12             37.614948                 0  
+13             38.177232                 0  
+14             36.866876                 0  
+...                  ...               ...  
+440            47.685963                 1  
+1452           45.000000                 0  
+1453           45.597064                 0  
+1454           46.059608                 0  
+1455           46.539206                 0  
+
+[230 rows x 8 columns]
+
+
+
+g288
+
