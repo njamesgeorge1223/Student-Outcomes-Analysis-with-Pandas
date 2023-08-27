@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[5]:
+# In[1]:
 
 
 #*******************************************************************************************
@@ -20,28 +20,39 @@
  #      DisplayMatplotlibLineChartFromXYSeries
  #      DisplayRegressionLine
  #      DisplayMatplotlibScatterPlotFromXYSeries
+ #      DisplaySummaryStatisticsBoxPlot
+ #      DisplayOneLineGraphFromSeries
+ #      DisplaySeriesCountAndRedundancies
+ #      DisplayTwoByTwoHistograms
+ #      DisplayLinearRegressionLine
  #
  #
  #  Date            Description                             Programmer
  #  ----------      ------------------------------------    ------------------
- #  08/20/2023      Initial Development                     Nicholas George
+ #  08/22/2023      Initial Development                     N. James George
  #
  #******************************************************************************************/
 
 import PyFunctions as function
+import PyLogSubRoutines as log_subroutine
 
 import math
+
 import matplotlib.pyplot as plt
+import pandas as pd
+
+from scipy import stats
+from pathlib import Path
 
 
-# In[6]:
+# In[2]:
 
 
 CONSTANT_LOCAL_FILE_NAME \
     = 'PySubroutines.py'
 
 
-# In[7]:
+# In[3]:
 
 
 #*******************************************************************************************
@@ -156,22 +167,14 @@ def DisplayPandasBarChartFromSeries \
                 (inputSeries.name,
                  fontdict \
                     = {'fontsize': 
-                            12.0, 
-                       'fontstyle': 
-                            'italic', 
-                       'fontweight': 
-                            'bold'})
+                            12})
 
         plt \
             .ylabel \
                 (yLabelStringParameter,
                  fontdict \
                     = {'fontsize': 
-                            12.0, 
-                       'fontstyle': 
-                            'italic', 
-                       'fontweight': 
-                            'bold'})
+                            12})
         
         plt \
             .grid \
@@ -183,12 +186,17 @@ def DisplayPandasBarChartFromSeries \
         
     except:
         
-        print \
-            (f'The subroutine, DisplayPandasBarChartFromSeries, '
-             + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
-             + f'was unable to plot a bar chart using Pandas.')
-        
-        
+        log_subroutine \
+            .PrintAndLogWriteText \
+                (f'The subroutine, DisplayPandasBarChartFromSeries, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME},\n'
+                 + f'with the caption, {captionStringParameter},\n'
+                 + f'was unable to plot a bar chart using Pandas.')
+
+
+# In[4]:
+
+
 #*******************************************************************************************
  #
  #  Subroutine Name:  DisplayMatplotlibBarChartFromSeries
@@ -287,11 +295,7 @@ def DisplayMatplotlibBarChartFromSeries \
                 (inputSeries.name,
                  fontdict \
                     = {'fontsize': 
-                            12.0, 
-                       'fontstyle': 
-                            'italic', 
-                       'fontweight': 
-                            'bold'})
+                            12.0})
 
         plt \
             .ylabel \
@@ -319,12 +323,17 @@ def DisplayMatplotlibBarChartFromSeries \
 
     except:
         
-        print \
-            (f'The subroutine, DisplayMatplotlibBarChartFromSeries, '
-             + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
-             + f'was unable to plot a bar chart using Matplotlib.')
-        
-        
+        log_subroutine \
+            .PrintAndLogWriteText \
+                (f'The subroutine, DisplayMatplotlibBarChartFromSeries, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME},\n'
+                 + f'with the caption, {captionStringParameter},\n'
+                 + f'was unable to plot a bar chart using Matplotlib.')
+
+
+# In[5]:
+
+
 #*******************************************************************************************
  #
  #  Subroutine Name:  DisplayPandasPieChartFromSeries
@@ -405,16 +414,16 @@ def DisplayPandasPieChartFromSeries \
              autopct \
                  = autoPercentStringParameter,
              legend \
-                 = False)
+                 = False,
+             figsize \
+                = (6, 9))
 
         plt \
             .title \
                 (captionStringParameter,
                  pad = 5, 
                  fontdict \
-                     = {'fontsize' : 14.0, 
-                        'fontstyle' : 'normal', 
-                        'fontweight' : 'bold'})
+                     = {'fontsize' : 14.0})
         
         plt \
             .show()
@@ -422,12 +431,17 @@ def DisplayPandasPieChartFromSeries \
         
     except:
         
-        print \
-            (f'The subroutine, DisplayPandasPieChartFromSeries, '
-             + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
-             + f'was unable to plot a pie chart using Pandas.')
-        
-        
+        log_subroutine \
+            .PrintAndLogWriteText \
+                (f'The subroutine, DisplayPandasPieChartFromSeries, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME},\n'
+                 + f'with the caption, {captionStringParameter},\n'
+                 + f'was unable to plot a pie chart using Pandas.')
+
+
+# In[6]:
+
+
 #*******************************************************************************************
  #
  #  Subroutine Name:  DisplayMatplotlibPieChartFromSeries
@@ -522,12 +536,17 @@ def DisplayMatplotlibPieChartFromSeries \
         
     except:
         
-        print \
-            (f'The subroutine, DisplayMatplotlibPieChartFromSeries, '
-             + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
-             + f'was unable to plot a pie chart using Matplotlib.')
-     
-    
+        log_subroutine \
+            .PrintAndLogWriteText \
+                (f'The subroutine, DisplayMatplotlibPieChartFromSeries, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME},\n'
+                 + f'with the caption, {captionStringParameter},\n'
+                 + f'was unable to plot a pie chart using Matplotlib.')
+
+
+# In[7]:
+
+
 #*******************************************************************************************
  #
  #  Subroutine Name:  DisplayMatplotlibBoxPlotFromSeriesList
@@ -618,22 +637,14 @@ def DisplayMatplotlibBoxPlotFromSeriesList \
                 (xLabelStringParameter,
                  fontdict \
                      = {'fontsize': 
-                            12.0, 
-                        'fontstyle': 
-                            'italic', 
-                        'fontweight': 
-                            'bold'})
+                            12.0})
 
         ax \
             .set_ylabel \
                 (yLabelStringParameter,
                  fontdict \
                      = {'fontsize': 
-                            12.0, 
-                        'fontstyle': 
-                            'italic', 
-                        'fontweight': 
-                            'bold'})
+                            12.0})
         
         
         ticksIndexList \
@@ -660,12 +671,17 @@ def DisplayMatplotlibBoxPlotFromSeriesList \
         
     except:
         
-        print \
-            (f'The subroutine, DisplayMatplotlibBoxPlotFromSeriesList, '
-             + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
-             + f'was unable to plot a box plot using Matplotlib.')
+        log_subroutine \
+            .PrintAndLogWriteText \
+                (f'The subroutine, DisplayMatplotlibBoxPlotFromSeriesList, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME},\n'
+                 + f'with the caption, {captionStringParameter},\n'
+                 + f'was unable to plot a box plot using Matplotlib.')
 
-        
+
+# In[8]:
+
+
 #*******************************************************************************************
  #
  #  Subroutine Name:  DisplayMatplotlibLineChartFromXYSeries
@@ -760,23 +776,15 @@ def DisplayMatplotlibLineChartFromXYSeries \
             .xlabel \
                 (xLabelStringParameter,
                  fontdict \
-                     = {'fontsize': 
-                            12.0, 
-                        'fontstyle': 
-                            'italic', 
-                        'fontweight': 
-                            'bold'})
+                     = {'fontsize':
+                            12.0})
 
         plt \
             .ylabel \
                 (yLabelStringParameter,
                  fontdict \
                      = {'fontsize': 
-                            12.0, 
-                        'fontstyle': 
-                            'italic', 
-                        'fontweight': 
-                            'bold'})
+                            12.0})
 
         plt \
             .grid()
@@ -786,12 +794,17 @@ def DisplayMatplotlibLineChartFromXYSeries \
 
     except:
         
-        print \
-            (f'The subroutine, DisplayMatplotlibLineChartFromXYSeries, '
-             + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
-             + f'was unable to plot a line chart using Matplotlib.')
-      
-    
+        log_subroutine \
+            .PrintAndLogWriteText \
+                (f'The subroutine, DisplayMatplotlibLineChartFromXYSeries, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME},\n'
+                 + f'with the caption, {captionStringParameter},\n'
+                 + f'was unable to plot a line chart using Matplotlib.')
+
+
+# In[9]:
+
+
 #*******************************************************************************************
  #
  #  Subroutine Name:  DisplayRegressionLine 
@@ -799,7 +812,7 @@ def DisplayMatplotlibLineChartFromXYSeries \
  #  Subroutine Description:
  #      This subroutine receives two Series and the polynomial degree, calculates 
  #      the parameters of the regression line, and displays the results on the 
- #      scatter plot and below it.
+ #      scatter plot and above it.
  #
  #
  #  Subroutine Parameters:
@@ -902,23 +915,30 @@ def DisplayRegressionLine \
                          = 'pearson')
 
     
-        print \
-            ('r-value:     {:.4f}'.format(math.sqrt(rSquaredFloatVariable)))
+        log_subroutine \
+            .PrintAndLogWriteText \
+                ('r-value:     {:.4f}'.format(math.sqrt(rSquaredFloatVariable)))
         
-        print \
-            ('r-squared:   {:.4f}'.format(rSquaredFloatVariable))
+        log_subroutine \
+            .PrintAndLogWriteText \
+                ('r-squared:   {:.4f}'.format(rSquaredFloatVariable))
         
-        print \
-            ('correlation: {:.4f}'.format(correlationFloatVariable))
+        log_subroutine \
+            .PrintAndLogWriteText \
+                ('correlation: {:.4f}'.format(correlationFloatVariable))
         
     except:
         
-        print \
-            (f'The subroutine, DisplayRegressionLine, '
-             + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
-             + f'was unable to calculate and display a regression line.')
+        log_subroutine \
+            .PrintAndLogWriteText \
+                (f'The subroutine, DisplayRegressionLine, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME},\n'
+                 + f'was unable to calculate and display a regression line.')
 
-        
+
+# In[10]:
+
+
 #*******************************************************************************************
  #
  #  Subroutine Name:  DisplayMatplotlibScatterPlotFromXYSeries
@@ -1006,14 +1026,10 @@ def DisplayMatplotlibScatterPlotFromXYSeries \
         plt \
             .title \
                 (captionStringParameter, 
-                 pad = 15, 
+                 pad = 20, 
                  fontdict \
                     = {'fontsize': 
-                           14.0, 
-                       'fontstyle': 
-                           'normal', 
-                       'fontweight':
-                           'bold'})
+                           14.0})
     
         plt \
             .xlabel \
@@ -1021,11 +1037,7 @@ def DisplayMatplotlibScatterPlotFromXYSeries \
                      .name,
                  fontdict \
                      = {'fontsize': 
-                            12.0, 
-                        'fontstyle': 
-                            'italic', 
-                        'fontweight': 
-                            'bold'})
+                            12.0})
 
         plt \
             .ylabel \
@@ -1033,18 +1045,22 @@ def DisplayMatplotlibScatterPlotFromXYSeries \
                      .name,
                  fontdict \
                      = {'fontsize': 
-                            12.0, 
-                        'fontstyle': 
-                            'italic', 
-                        'fontweight': 
-                            'bold'})
+                            12.0})
         
         plt \
             .grid()
         
         
-        if optionalDegreeIntegerParameter > 0:
+        if optionalDegreeIntegerParameter == 1:
             
+            DisplayLinearRegressionLine \
+                (xSeries,
+                 ySeries,
+                 optionalTextXCoordinateFloatParameter,
+                 optionalTextYCoordinateFloatParameter)
+            
+        elif optionalDegreeIntegerParameter > 1:
+                
             DisplayRegressionLine \
                 (xSeries,
                  ySeries,
@@ -1059,14 +1075,820 @@ def DisplayMatplotlibScatterPlotFromXYSeries \
         
     except:
         
-        print \
-            (f'The subroutine, DisplayMatplotlibScatterPlotFromXYSeries, '
-             + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
-             + f'was unable to plot a scatter plot using Matplotlib.')
+        log_subroutine \
+            .PrintAndLogWriteText \
+                (f'The subroutine, DisplayMatplotlibScatterPlotFromXYSeries, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME},\n'
+                 + f'with the caption, {captionStringParameter},\n'
+                 + f'was unable to plot a scatter plot using Matplotlib.')
 
 
-# In[ ]:
+# In[11]:
 
 
+#*******************************************************************************************
+ #
+ #  Subroutine Name:  DisplayStackedSubplots
+ #
+ #  Subroutine Description:
+ #      This subroutine receives a DataFrame, and formatting parameters, and creates
+ #      stacked subplots.
+ #
+ #
+ #  Subroutine Parameters:
+ #
+ #  Type    Name            Description
+ #  -----   -------------   ----------------------------------------------
+ #  Dictionary
+ #          frameDictionaryParameter
+ #                          This parameter is the input Dictionary for conversion 
+ #                          to a DataFrame.
+ #  String
+ #          captionStringParameter
+ #                          This parameter is the chart title.
+ #  List of Strings
+ #          colorListParameter
+ #                          This parameter is the list of colors for the subplots.
+ #  String
+ #          xLabelStringParameter
+ #                          This parameter is the title for the x-axis.
+ #
+ #
+ #  Date                Description                                 Programmer
+ #  ---------------     ------------------------------------        ------------------
+ #  8/20/2023           Initial Development                         N. James George
+ #
+ #******************************************************************************************/  
+        
+def DisplayStackedSubplots \
+        (frameDictionaryParameter,
+         captionStringParameter,
+         colorListParameter,
+         xLabelStringParameter = ''):
+    
+    try:
+        
+        inputDataFrame \
+            = pd \
+                .DataFrame \
+                    (frameDictionaryParameter)
+        
+    
+        numberOfSubPlotsIntegerVariable \
+            = len(inputDataFrame.keys())
+    
+    
+        fig, axs \
+            = plt \
+                .subplots \
+                    (numberOfSubPlotsIntegerVariable)
+    
+        fig \
+            .suptitle \
+                (captionStringParameter, 
+                 fontsize = 14)
+    
+    
+        for index, subPlot in enumerate(axs):
+        
+            subPlot \
+                .plot \
+                    (inputDataFrame.iloc[:,index], 
+                 color \
+                     = colorListParameter[index])
+            
+            subPlot \
+                .grid()
 
+        
+            if index != (numberOfSubPlotsIntegerVariable - 1):
+                subPlot \
+                    .set_xticklabels \
+                        (labels = [])
+            else:
+                subPlot \
+                    .tick_params \
+                        (axis = 'x', 
+                         rotation = 90.0)
+                
+                subPlot \
+                    .set_xlabel \
+                        (xLabelStringParameter)
+            
+            subPlot \
+                .set_ylabel \
+                    (inputDataFrame.iloc[:,index].name)
+            
+    except:
+        
+        log_subroutine \
+            .PrintAndLogWriteText \
+                (f'The subroutine, DisplayStackedSubplots, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME},\n'
+                 + f'with the caption, {captionStringParameter},\n'
+                 + f'was unable to create stacked subplots.')
+
+
+# In[12]:
+
+
+#*******************************************************************************************
+ #
+ #  Subroutine Name:  DisplaySummaryStatisticsBoxPlot
+ #
+ #  Subroutine Description:
+ #      This subroutine receives a DataFrame and column name and plots a horizontal
+ #      box plot based on the information.
+ #
+ #
+ #  Subroutine Parameters:
+ #
+ #  Type    Name            Description
+ #  -----   -------------   ----------------------------------------------
+ #  DataFrame
+ #          boxPlotDataFrameParameter
+ #                          This parameter is the input DataFrame
+ #  Series
+ #          columnNameStringParameter
+ #                          This parameter is the input Series used as y-axis 
+ #                          values.
+ #  String
+ #          captionStringParameter
+ #                          This parameter is the chart title.
+ #
+ #
+ #  Date                Description                                 Programmer
+ #  ---------------     ------------------------------------        ------------------
+ #  8/20/2023           Initial Development                         N. James George
+ #
+ #******************************************************************************************/  
+            
+def DisplaySummaryStatisticsBoxPlot \
+        (boxPlotDataFrameParameter, \
+         columnNameStringParameter, \
+         captionStringParameter):
+    
+    try:
+        
+        boxPlotAxes \
+            = boxPlotDataFrameParameter.boxplot \
+                (by \
+                     ='Industry', \
+                 column \
+                     = [columnNameStringParameter], 
+                 fontsize \
+                     = 12,
+                 rot \
+                     = 0.0,
+                 grid \
+                     = True,
+                 figsize \
+                     = (9,6),
+                 vert \
+                     = False,
+                 widths \
+                     = 0.7,
+                 meanline \
+                     = True,
+                 showmeans \
+                     = True)
+
+    
+        plt \
+            .suptitle \
+                (captionStringParameter, 
+                 fontsize \
+                     = 14, 
+                 y \
+                    = 1.01)
+    
+        plt \
+            .xlabel('')
+    
+        plt \
+            .ylabel('')
+    
+        boxPlotAxes \
+            .get_figure() \
+            .gca() \
+            .set_xlabel('')
+    
+    
+        plt \
+            .show()
+        
+    except:
+        
+        log_subroutine \
+            .PrintAndLogWriteText \
+                (f'The subroutine, DisplaySummaryStatisticsBoxPlot, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME},\n'
+                 + f'with the caption, {captionStringParameter},\n'
+                 + f'was unable to create a horizontal box plot.')
+
+
+# In[13]:
+
+
+#*******************************************************************************************
+ #
+ #  Subroutine Name:  DisplayOneLineGraphFromSeries
+ #
+ #  Subroutine Description:
+ #      This subroutine displays a one line graph based on an input Series 
+ #      and formatting parameters.
+ #
+ #
+ #  Subroutine Parameters:
+ #
+ #  Type    Name            Description
+ #  -----   -------------   ----------------------------------------------
+ #  Series
+ #          inputSeriesParameter
+ #                          This parameter is the input Series
+ #  String
+ #          colorStringParameter
+ #                          This parameter specifies the color of the line.
+ #  String
+ #          captionStringParameter
+ #                          This parameter is the chart title.
+ #  String
+ #          xLabelStringParameter
+ #                          This parameter is the x-axis label.
+ #  String
+ #          yLabelStringParameter
+ #                          This parameter is the y-axis label.
+ #
+ #
+ #  Date                Description                                 Programmer
+ #  ---------------     ------------------------------------        ------------------
+ #  8/22/2023           Initial Development                         N. James George
+ #
+ #******************************************************************************************/ 
+
+def DisplayOneLineGraphFromSeries \
+    (inputSeriesParameter,
+     colorStringParameter,
+     captionStringParameter,
+     xLabelStringParameter,
+     yLabelStringParameter):
+    
+    try:
+    
+        inputSeries \
+            = inputSeriesParameter.copy()
+    
+        inputSeries \
+            .plot \
+                (kind \
+                     = 'line', 
+                 color \
+                     = colorStringParameter, 
+                 grid \
+                     = True, 
+                 legend \
+                     = False, 
+                 fontsize \
+                     = 12)
+
+
+        plt \
+            .suptitle \
+                (captionStringParameter, 
+                 fontsize \
+                    = 14, 
+                 y \
+                    = 1.0)
+    
+        plt \
+            .xlabel \
+                (xLabelStringParameter, 
+                    fontsize \
+                        = 12)
+    
+        plt \
+            .ylabel \
+                (yLabelStringParameter, \
+                    fontsize \
+                        = 12)
+    
+    
+        plt \
+            .show()
+        
+    except:
+        
+        log_subroutine \
+            .PrintAndLogWriteText \
+                (f'The subroutine, DisplayOneLineGraphFromSeries, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME},\n'
+                 + f'with the caption, {captionStringParameter},\n'
+                 + f'was unable to create a one line graph.')
+
+
+# In[14]:
+
+
+#*******************************************************************************************
+ #
+ #  Subroutine Name:  DisplayLinesGraph
+ #
+ #  Subroutine Description:
+ #      This subroutine displays a multiple line graph based on an input Dictionary
+ #      and formatting parameters.
+ #
+ #
+ #  Subroutine Parameters:
+ #
+ #  Type    Name            Description
+ #  -----   -------------   ----------------------------------------------
+ #  Dictionary
+ #          frameDictionaryParameter
+ #                          This parameter is the input Series as a Dictionary.
+ #  List of Strings
+ #          colorListParameter
+ #                          This parameter is a List of colors for the lines.
+ #  String
+ #          captionStringParameter
+ #                          This parameter is the chart title.
+ #  String
+ #          xLabelStringParameter
+ #                          This optional parameter is the x-axis label.
+ #  String
+ #          yLabelStringParameter
+ #                          This optional parameter is the y-axis label.
+ #  Integer
+ #          rotationIntegerParameter
+ #                          This optional parameter is the angle of rotation
+ #                          for the x-axis tick labels.
+ #
+ #
+ #  Date                Description                                 Programmer
+ #  ---------------     ------------------------------------        ------------------
+ #  8/22/2023           Initial Development                         N. James George
+ #
+ #******************************************************************************************/ 
+
+def DisplayLinesGraph \
+        (frameDictionaryParameter,
+         colorListParameter,
+         captionStringParameter,
+         xlabelStringParameter = '',
+         ylabelStringParameter = '',
+         rotationIntegerParameter = 0.0):
+        
+    try:
+
+        lineDataFrame \
+            = pd \
+                .DataFrame \
+                    (frameDictionaryParameter)
+    
+
+        lineDataFrame \
+            .plot \
+                (kind \
+                     = 'line',
+                 grid \
+                     = True, 
+                 legend \
+                     = True, 
+                 fontsize \
+                     = 12,
+                 rot \
+                     = 90.0,
+                 color \
+                     = colorListParameter)
+
+        plt \
+            .suptitle \
+                (captionStringParameter, 
+                 fontsize \
+                    = 14, 
+                 y \
+                    = 0.99)
+    
+
+        plt \
+            .xlabel \
+                (xlabelStringParameter, 
+                 fontsize \
+                    = 12)
+
+        plt \
+            .ylabel \
+                (ylabelStringParameter,
+                    fontsize \
+                        = 12)
+
+        plt \
+            .show()
+
+    except:
+        
+        log_subroutine \
+            .PrintAndLogWriteText \
+                (f'The subroutine, DisplayLinesGraph, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME},\n'
+                 + f'with the caption, {captionStringParameter},\n'
+                 + f'was unable to create a line graph.')
+
+
+# In[15]:
+
+
+#*******************************************************************************************
+ #
+ #  Subroutine Name:  DisplaySeriesCountAndRedundancies
+ #
+ #  Subroutine Description:
+ #      This subroutine displays a multiple line graph based on an input Dictionary
+ #      and formatting parameters.
+ #
+ #
+ #  Subroutine Parameters:
+ #
+ #  Type    Name            Description
+ #  -----   -------------   ----------------------------------------------
+ #  Series
+ #          inputSeriesParameter
+ #                          This parameter is the input Series.
+ #  String
+ #          whatIsItStringParameter
+ #                          This parameter is the what the Series holds.
+ #  String
+ #          whereIsItStringParameter
+ #                          This parameter is where the values came from.
+ #
+ #
+ #  Date                Description                                 Programmer
+ #  ---------------     ------------------------------------        ------------------
+ #  8/23/2023           Initial Development                         N. James George
+ #
+ #******************************************************************************************/ 
+
+def DisplaySeriesCountAndRedundancies \
+        (inputSeriesParameter,
+         whatIsItStringParameter,
+         whereIsItStringParameter):
+    
+    numberOfTickersIntegerVariable \
+        = inputSeriesParameter.count()
+
+    numberOfRedundanciesIntegerVariable \
+        = function \
+            .ReturnNumberOfRedundanciesInSeries \
+                (inputSeriesParameter)
+
+    log_subroutine \
+        .PrintAndLogWriteText \
+            (f'There are now {numberOfTickersIntegerVariable} '
+             + f'{whatIsItStringParameter} '
+             + f'with {numberOfRedundanciesIntegerVariable} '
+             + f'redundancies in {whereIsItStringParameter}.')
+
+
+# In[16]:
+
+
+#*******************************************************************************************
+ #
+ #  Subroutine Name:  DisplayLinesGraph
+ #
+ #  Subroutine Description:
+ #      This subroutine displays a two-by-two plot of four histograms from 
+ #      a Frame Dictionary.
+ #
+ #
+ #  Subroutine Parameters:
+ #
+ #  Type    Name            Description
+ #  -----   -------------   ----------------------------------------------
+ #  Dictionary
+ #          frameDictionaryParameter
+ #                          This parameter is the input Series as a Dictionary.
+ #  String
+ #          figureTitleStringParameter
+ #                          This parameter is the figure title.
+ #  String
+ #          figureXLabelStringParameter
+ #                          This parameter is the figure x-axis label.
+ #  String
+ #          figureYLabelStringParameter
+ #                          This parameter is the figure y-axis label.
+ #  Integer
+ #          numberOfBinsIntegerParameter
+ #                          This optional parameter is the number of bins
+ #                          for the histogram.
+ #  Float
+ #          alphaFloatParameter
+ #                          This parameter is the alpha value (transparency level)
+ #                          of the histogram bars.
+ #  List of Strings
+ #          colorListParameter
+ #                          This parameter is a List of colors for the four histograms.
+ #  Tuple of Integers
+ #          figSizeTupleOfIntegersParamete
+ #                          This parameter is the length and width of the figure.
+ #
+ #
+ #  Date                Description                                 Programmer
+ #  ---------------     ------------------------------------        ------------------
+ #  8/24/2023           Initial Development                         N. James George
+ #
+ #******************************************************************************************/ 
+
+def DisplayTwoByTwoHistograms \
+        (frameDictionaryParameter,
+         figureTitleStringParameter \
+             = '',
+         figureXLabelStringParameter \
+             = '',
+         figureYLabelStringParameter \
+             = '',
+         numberOfBinsIntegerParameter \
+             = 10,
+         alphaFloatParameter \
+             = 0.8,
+         colorListOfStringsParameter \
+             = ['darkgreen', 
+                'darkorange', 
+                'darkblue', 
+                'firebrick'],
+         figSizeTupleOfIntegersParameter \
+             = (9,6)):
+
+    try:
+        
+        inputDataFrame \
+            = pd \
+                .DataFrame \
+                    (frameDictionaryParameter)
+        
+        fig, axs \
+            = plt \
+                .subplots \
+                    (2, 2,
+                     figsize \
+                        = figSizeTupleOfIntegersParameter,
+                     sharey \
+                         = True, 
+                     tight_layout \
+                         = True)
+        
+        index \
+            = 0
+        
+        for row in range(2):
+            for column in range(2):
+    
+                inputDataFrame \
+                    .hist \
+                        (column \
+                             = inputDataFrame.keys()[index], 
+                         ax \
+                             = axs \
+                                 [row, column], 
+                         bins \
+                             = numberOfBinsIntegerParameter, 
+                         alpha \
+                             = alphaFloatParameter, 
+                         color \
+                             = colorListOfStringsParameter \
+                                 [index])
+                
+                axs[row, column] \
+                    .set_title \
+                        (inputDataFrame.keys() \
+                             [index])
+                
+                index \
+                    += 1
+
+
+        fig \
+            .suptitle \
+                (figureTitleStringParameter,
+                 fontsize = 14)
+
+        fig \
+            .supxlabel \
+                (figureXLabelStringParameter,
+                 fontsize = 12)
+
+        fig \
+            .supylabel \
+                (figureYLabelStringParameter,
+                 fontsize = 12)
+
+        
+        plt.show()
+        
+    except:
+        
+        log_subroutine \
+            .PrintAndLogWriteText \
+                (f'The subroutine, DisplayTwoByTwoHistograms, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME},\n'
+                 + f'with the caption, {figureTitleStringParameter},\n'
+                 + f'was unable to create a two-by-two set of four histograms.')
+
+
+# In[17]:
+
+
+#*******************************************************************************************
+ #
+ #  Subroutine Name:  WriteDataFrameToCSVFile
+ #
+ #  Subroutine Description:
+ #      This subroutine receives a file path to a csv file as a parameter, 
+ #      and write the DataFrame to the file.
+ #
+ #
+ #  Subroutine Parameters:
+ #
+ #  Type    Name            Description
+ #  -----   -------------   ----------------------------------------------
+ #  DataFrame
+ #          inputDataFrameParameter
+ #                          This parameter is the input DataFrame.
+ #  String or IOString
+ #          filePathStringOrIOStringParameter
+ #                          The parameter is name of the path to the csv file.
+ #                          (i.e., './Resources/input.csv') or an IOString Object.
+ #  String
+ #          indexNameStringParameter
+ #                          This parameter is the name of the index column.
+ #  Boolean
+ #          stringFlagBooleanParameter
+ #                          This parameter indicates whether the first parameter
+ #                          is a String variable or an IOString object.
+ #
+ #
+ #  Date                Description                                 Programmer
+ #  ---------------     ------------------------------------        ------------------
+ #  8/26/2023           Initial Development                         N. James George
+ #
+ #******************************************************************************************/
+
+def WriteDataFrameToCSVFile \
+        (inputDataFrameParameter,
+         filePathStringOrIOStringParameter,
+         indexNameStringParameter
+              = '',
+         stringFlagBooleanParameter \
+            = True):
+    
+    try:
+        
+        if stringFlagBooleanParameter == True:
+            
+            pathObject \
+                = Path \
+                    (filePathStringOrIOStringParameter)
+            
+        else:
+            
+            pathObject \
+                = filePathStringOrIOStringParameter
+        
+        
+        inputDataFrameParameter \
+            .to_csv \
+                (pathObject,
+                    index_label \
+                        = indexNameStringParameter)
+        
+    except:
+        
+        log_subroutine \
+            .PrintAndLogWriteText \
+                (f'The subroutine, WriteDataFrameToCSVFile, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
+                 + f'was unable to write a DataFrame to file path, '
+                 + f'{filePathStringParameter}.')
+
+
+# In[18]:
+
+
+#*******************************************************************************************
+ #
+ #  Subroutine Name:  DisplayLinearRegressionLine
+ #
+ #  Subroutine Description:
+ #      This subroutine receives two Series and the polynomial degree, calculates 
+ #      the parameters of the linear regression line, and displays the results on
+ #      the scatter plot and above it.
+ #
+ #
+ #  Subroutine Parameters:
+ #
+ #  Type    Name            Description
+ #  -----   -------------   ----------------------------------------------
+ #  Series
+ #          xSeriesParameter
+ #                          This parameter is the Series used as x-axis 
+ #                          values.
+ #  Series
+ #          ySeriesParameter
+ #                          This parameter is the Series used as y-axis 
+ #                          values.
+ #  Float
+ #          xCoordinateFloatParameter
+ #                          This parameter is the x-coordinate of the text 
+ #                          in the chart.
+ #  Float
+ #          yCoordinateFloatParameter
+ #                          This parameter is the y-coordinate of the text 
+ #                          in the chart.
+ #
+ #
+ #  Date                Description                                 Programmer
+ #  ---------------     ------------------------------------        ------------------
+ #  8/20/2023           Initial Development                         N. James George
+ #
+ #******************************************************************************************/
+
+def DisplayLinearRegressionLine \
+        (xSeriesParameter,
+         ySeriesParameter,
+         xCoordinateFloatParameter,
+         yCoordinateFloatParameter):
+    
+    try:
+        
+        xSeries \
+            = xSeriesParameter.copy()
+        
+        ySeries \
+            = ySeriesParameter.copy()
+        
+        (slope, 
+         intercept, 
+         rvalue, 
+         pvalue, 
+         stderr) \
+            = stats \
+                .linregress \
+                    (xSeries, 
+                     ySeries)
+
+        linearRegressionSeries \
+            = (xSeries * slope) + intercept
+        
+        
+        plt \
+            .plot \
+                (xSeries,
+                 linearRegressionSeries,
+                 color \
+                     = 'red')
+        
+        
+        linearEquationStringVariable \
+            = 'y = ' + str( round( slope, 4 ) ) + 'x + ' + str( round( intercept, 4 ) )
+        
+        
+        plt \
+            .annotate \
+                (linearEquationStringVariable,
+                 (xCoordinateFloatParameter, yCoordinateFloatParameter),
+                  fontsize \
+                     = 15, 
+                  color \
+                     = 'blue')   
+        
+        
+        rSquaredFloatVariable \
+            = rvalue*rvalue
+        
+        correlationFloatVariable \
+            = xSeries \
+                .corr \
+                    (ySeries, 
+                     method \
+                         = 'pearson')
+        
+        
+        log_subroutine \
+            .PrintAndLogWriteText \
+                ('r-value:     {:.4f}'.format(rvalue))
+        
+        log_subroutine \
+            .PrintAndLogWriteText \
+                ('r-squared:   {:.4f}'.format(rSquaredFloatVariable))
+        
+        log_subroutine \
+            .PrintAndLogWriteText \
+                ('correlation: {:.4f}'.format(correlationFloatVariable))
+        
+    except:
+        
+        log_subroutine \
+            .PrintAndLogWriteText \
+                (f'The subroutine, DisplayLinearRegressionLine, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME},\n'
+                 + f'was unable to calculate and display a linear regression line.')
 

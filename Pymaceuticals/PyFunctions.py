@@ -6,17 +6,17 @@
 
 #*******************************************************************************************
  #
- #  File Name:  PyFunctions.py.ipynb
+ #  File Name:  PyFunctions.py
  #
  #  File Description:
  #      This Python script, PyFunctions.py, contains generic Python functions
  #      for completing common tasks.  Here is the list:
  #
- #      DebugReturnObject
  #      ReturnCSVFileAsDataFrame
  #      ReturnMergedDataFrame
  #
  #      ReturnStylerObjectStandardFormat
+ #      ReturnStylerObjectPercentChangeStandardFormat
  #      ReturnStylerObjectBackgroundGradientFormat
  #
  #      ReturnNumberOfUniqueElementsInColumn
@@ -31,17 +31,30 @@
  #      ReturnEquationAsString
  #      ReturnPearsonCorrelation
  #
+ #      ConvertSeriesValuesToPercentChange
+ #      ConvertSeriesFromDateStringsToDateObjects
+ #
+ #      ReturnNumberOfRedundanciesInSeries
+ #      DisplaySummaryStatistics
+ #      ReturnCorrelationTableStandardFormat
+ #      DisplayHVPlotFromDataFrame
+ #
+ #
  #  Date            Description                             Programmer
  #  ----------      ------------------------------------    ------------------
- #  08/20/2023      Initial Development                     Nicholas George
+ #  08/20/2023      Initial Development                     N. James George
  #
  #******************************************************************************************/
 
 import PyConstants as constant
+import PyLogSubRoutines as log_subroutine
+
+import PyLogConstants as log_constant
 
 import numpy as np
 import pandas as pd
 
+from datetime import datetime
 from pathlib import Path
 
 
@@ -52,43 +65,8 @@ CONSTANT_LOCAL_FILE_NAME \
     = 'PyFunctions.py'
 
 
-# In[3]:
+# In[1]:
 
-
-#*******************************************************************************************
- #
- #  Function Name:  DebugReturnObject
- #
- #  Subroutine Description:
- #      This function returns the input object if the global debug flag, 
- #      constant.CONSTANT_DEBUG_FLAG, is set to True.
- #
- #
- #  Subroutine Parameters:
- #
- #  Type    Name            Description
- #  -----   -------------   ----------------------------------------------
- #  Unknown
- #          objectUnknownTypeParameter
- #                          The parameter is the input object.
- #
- #
- #  Date                Description                                 Programmer
- #  ---------------     ------------------------------------        ------------------
- #  8/11/2023           Initial Development                         N. James George
- #
- #******************************************************************************************/
-
-def DebugReturnObject \
-        (objectUnknownTypeParameter):
-    
-    # This line of code returns the variable if the global debug flag, 
-    # CONSTANT_DEBUG_FLAG, is set to True.
-    if constant.CONSTANT_DEBUG_FLAG == True:
-        return objectUnknownTypeParameter
-    else:
-        return None
-    
 
 #*******************************************************************************************
  #
@@ -105,10 +83,14 @@ def DebugReturnObject \
  #
  #  Type    Name            Description
  #  -----   -------------   ----------------------------------------------
- #  String
+ #  String or IOString
  #          filePathStringParameter
  #                          The parameter is name of the path to the csv file.
- #                          (i.e., './Resources/input.csv')
+ #                          (i.e., './Resources/input.csv') or an IOString Object.
+ #  Boolean
+ #          stringFlagBooleanParameter
+ #                          This parameter indicates whether the first parameter
+ #                          is a String variable or an IOString object.
  #
  #
  #  Date                Description                                 Programmer
@@ -118,30 +100,56 @@ def DebugReturnObject \
  #******************************************************************************************/
 
 def ReturnCSVFileAsDataFrame \
-        (filePathStringParameter):
+        (filePathStringParameter,
+         indexNameStringParameter
+          = None,
+         stringFlagBooleanParameter \
+            = True):
     
     try:
-
-        return \
-            pd \
-                .read_csv \
-                    (Path \
-                        (filePathStringParameter))
+        
+        if stringFlagBooleanParameter == True:
+            
+            pathObject \
+                = Path \
+                    (filePathStringParameter)
+            
+        else:
+            
+            pathObject \
+                = filePathStringParameter
+            
+            
+        if indexNameStringParameter == None:
+            
+            return \
+                pd \
+                    .read_csv \
+                        (pathObject)
+            
+        else:
+        
+            return \
+                pd \
+                    .read_csv \
+                        (pathObject,
+                         index_col \
+                            = indexNameStringParameter)
         
     except:
         
-        print \
-            (f'The function, ReturnCSVFileAsDataFrame, '
-             + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
-             + f'was unable to open file path, '
-             + f'{filePathStringParameter}.')
+        log_subroutine \
+            .PrintAndLogWriteText \
+                (f'The function, ReturnCSVFileAsDataFrame, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
+                 + f'was unable to open file path, '
+                 + f'{filePathStringParameter}.')
     
         return \
             None
-    
-    
-    return \
-        dataDataFrame
+
+
+# In[4]:
 
 
 #*******************************************************************************************
@@ -209,15 +217,19 @@ def ReturnMergedDataFrame \
     
     except:
         
-        print \
-            (f'The function, returnMergedDataFrame, '
-             + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
-             + f'was unable to merge two Dataframes.')
+        log_subroutine \
+            .PrintAndLogWriteText \
+                (f'The function, returnMergedDataFrame, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
+                 + f'was unable to merge two Dataframes.')
         
         return \
             None
-    
-    
+
+
+# In[5]:
+
+
 #*******************************************************************************************
  #
  #  Function Name:  ReturnStylerObjectStandardFormat
@@ -242,6 +254,10 @@ def ReturnMergedDataFrame \
  #          precisionIntegerParameter
  #                          This optional parameter is the decimal place 
  #                          precision of the displayed numbers
+ #  Boolean
+ #          hideFlagBooleanParameter
+ #                          This optional parameter indicates whether the
+ #                          index column is hidden or not.
  #
  #
  #  Date                Description                                 Programmer
@@ -253,13 +269,130 @@ def ReturnMergedDataFrame \
 def ReturnStylerObjectStandardFormat \
         (inputDataFrameParameter,
          captionStringParameter,
-         precisionIntegerParameter = 2):
+         precisionIntegerParameter = 2,
+         hideFlagBooleanParameter = True):
     
     try:
         
         inputDataFrame \
             = inputDataFrameParameter \
                 .copy()
+        
+        if hideFlagBooleanParameter == True:
+            
+            return \
+                inputDataFrame \
+                    .style \
+                    .set_caption \
+                        (captionStringParameter) \
+                    .set_table_styles \
+                        ([dict \
+                             (selector = 'caption',
+                              props = [('color', 'black'),
+                                       ('font-size', '20px'),
+                                       ('font-style', 'bold'),
+                                       ('text-align', 'center')])]) \
+                    .set_properties \
+                         (**{'text-align':
+                            'center',
+                            'border':
+                            '1.3px solid red',
+                            'color':
+                            'blue'}) \
+                    .format \
+                        (precision \
+                            = precisionIntegerParameter, 
+                         thousands \
+                            = ',', 
+                         decimal \
+                            = '.')
+        
+        else:
+            
+            return \
+                inputDataFrame \
+                    .style \
+                    .set_caption \
+                        (captionStringParameter) \
+                    .set_table_styles \
+                        ([dict \
+                             (selector = 'caption',
+                              props = [('color', 'black'),
+                                       ('font-size', '20px'),
+                                       ('font-style', 'bold'),
+                                       ('text-align', 'center')])]) \
+                    .set_properties \
+                         (**{'text-align':
+                            'center',
+                            'border':
+                            '1.3px solid red',
+                            'color':
+                            'blue'}) \
+                    .format \
+                        (precision \
+                            = precisionIntegerParameter, 
+                         thousands \
+                            = ',', 
+                         decimal \
+                            = '.') \
+                    .hide() 
+        
+    except:
+            
+        log_subroutine \
+            .PrintAndLogWriteText \
+                (f'The function, returnStylerObjectStandardFormat, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
+                 + f'was unable to format a DataFrame as a Styler object.')
+        
+        return \
+            None
+
+
+# In[6]:
+
+
+#********************************************************************************************
+ #
+ #  Function Name:  ReturnStylerObjectPercentChangeStandardFormat
+ #
+ #  Function Description:
+ #      This function receives a DataFrame with percent values, formats a copy
+ #      of it as a Styler Object, and returns it to the caller.
+ #
+ #
+ #  Function Parameters:
+ #
+ #  Type    Name            Description
+ #  -----   -------------   ----------------------------------------------
+ #  DataFrame
+ #          inputDataFrameParameter
+ #                          This parameter is the input DataFrame.
+ #  String
+ #          captionStringParameter
+ #                          This parameter is the table title.
+ #
+ #
+ #  Date                Description                                 Programmer
+ #  ---------------     ------------------------------------        ------------------
+ #  8/14/2023           Initial Development                         N. James George
+ #
+ #******************************************************************************************/ 
+    
+def ReturnStylerObjectPercentChangeStandardFormat \
+        (inputDataFrameParameter,
+         captionStringParameter):
+    
+    try:
+        
+        inputDataFrame \
+            = inputDataFrameParameter \
+                .copy()
+        
+        inputDataFrame \
+            .index \
+                .name \
+                    = None
         
         return \
             inputDataFrame \
@@ -281,25 +414,30 @@ def ReturnStylerObjectStandardFormat \
                         'color':
                         'blue'}) \
                 .format \
-                    (precision \
-                        = 2, 
-                     thousands \
-                        = ',', 
-                     decimal \
-                        = '.') \
-                .hide()
+                    ('{:.2f}%') \
+                .highlight_min \
+                    (color \
+                        = 'yellow') \
+                .highlight_max \
+                    (color \
+                        = 'lime')
         
     except:
             
-        print \
-            (f'The function, returnStylerObjectStandardFormat, '
-             + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
-             + f'was unable to format a DataFrame as a Styler object.')
+        log_subroutine \
+            .PrintAndLogWriteText \
+                ('The function, ReturnStylerObjectPercentChangeStandardFormat, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
+                 + 'was unable to format a DataFrame with percent values '
+                 + 'as a Styler object.')
         
         return \
             None
-    
-    
+
+
+# In[7]:
+
+
 #*******************************************************************************************
  #
  #  Function Name:  ReturnStylerObjectBackgroundGradientFormat
@@ -369,14 +507,19 @@ def ReturnStylerObjectBackgroundGradientFormat \
         
     except:
             
-        print \
-            (f'The function, returnStylerObjectStandardFormat, '
-             + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
-             + f'was unable to format a DataFrame as a Styler object.')
+        log_subroutine \
+            .PrintAndLogWriteText \
+                (f'The function, ReturnStylerObjectBackgroundGradientFormat, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
+                 + f'was unable to format a DataFrame as a Styler object.')
         
         return \
             None
-    
+
+
+# In[8]:
+
+
 #*******************************************************************************************
  #
  #  Function Name:  ReturnNumberOfUniqueElementsInColumn
@@ -418,16 +561,20 @@ def ReturnNumberOfUniqueElementsInColumn \
         
     except:
         
-        print \
-            (f'The function, returnNumberOfUniqueElementsInColumnFunction, '
-             + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
-             + f'was unable to calculate the unique number of elements '
-             + f'in a DataFrame column.')
+        log_subroutine \
+            .PrintAndLogWriteText \
+                (f'The function, returnNumberOfUniqueElementsInColumnFunction, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
+                 + f'was unable to calculate the unique number of elements '
+                 + f'in a DataFrame column.')
         
         return \
             None
-    
-    
+
+
+# In[9]:
+
+
 #*******************************************************************************************
  #
  #  Function Name:  ReturnDuplicateRowsAsDataFrame
@@ -474,14 +621,19 @@ def ReturnDuplicateRowsAsDataFrame \
         
     except:
         
-        print \
-            (f'The function, returnDuplicateRowsAsDataFrame, '
-             + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
-             + f'was unable to return duplicate rows from a DataFrame.')
+        log_subroutine \
+            .PrintAndLogWriteText \
+                (f'The function, returnDuplicateRowsAsDataFrame, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
+                 + f'was unable to return duplicate rows from a DataFrame.')
         
         return \
             None
-    
+
+
+# In[10]:
+
+
 #*******************************************************************************************
  #
  #  Function Name:  ReturnDataFrameRowsWithValue
@@ -502,8 +654,8 @@ def ReturnDuplicateRowsAsDataFrame \
  #  String
  #          keyNameStringVariable
  #                          The parameter is the DataFrame column key of interest 
- #  String or List
- #          criteriaStringorListParameter
+ #  List
+ #          criteriaListParameter
  #                          The parameter is a list of the values from the column
  #                          used as criteria in the process.
  #
@@ -536,14 +688,18 @@ def ReturnDataFrameRowsWithValue \
     
     except:
         
-        print \
-            (f'The function, ReturnDataFrameRowsWithValue, '
-             + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
-             + f'was unable to return rows with specified value(s).')
+        log_subroutine \
+            .PrintAndLogWriteText \
+                (f'The function, ReturnDataFrameRowsWithValue, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
+                 + f'was unable to return rows with specified value(s).')
         
         return \
             None
-    
+
+
+# In[11]:
+
 
 #*******************************************************************************************
  #
@@ -566,8 +722,8 @@ def ReturnDataFrameRowsWithValue \
  #          keyNameStringVariable
  #                          The parameter is the name of the DataFrame column 
  #                          of interest 
- #  String or List
- #          criteriaStringorListParameter
+ #  List
+ #          criteriaListParameter
  #                          The parameter is a list of the values from the column
  #                          used as criteria in the process.
  #
@@ -600,14 +756,18 @@ def ReturnDataFrameRowsWithoutValue \
     
     except:
         
-        print \
-            (f'The function, ReturnDataFrameRowsWithoutValue, '
-             + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
-             + f'was unable to return rows without specified value(s).')
+        log_subroutine \
+            .PrintAndLogWriteText \
+                (f'The function, ReturnDataFrameRowsWithoutValue, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
+                 + f'was unable to return rows without specified value(s).')
         
         return \
             None
-    
+
+
+# In[12]:
+
 
 #*******************************************************************************************
  #
@@ -708,16 +868,20 @@ def ReturnSummaryStatisticsAsDataFrame \
         
     except:
             
-        print \
-            (f'The function, ReturnSummaryStatisticsAsDataFrame, '
-             + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
-             + f'was unable to calculate summary statistics for '
-             + f'a Series of values.')
+        log_subroutine \
+            .PrintAndLogWriteText \
+                (f'The function, ReturnSummaryStatisticsAsDataFrame, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
+                 + f'was unable to calculate summary statistics for '
+                 + f'a Series of values.')
             
         return \
             None
 
-    
+
+# In[13]:
+
+
 #*******************************************************************************************
  #
  #  Function Name:  ReturnRegressionModelEquationList
@@ -770,15 +934,19 @@ def ReturnRegressionModelEquationList \
     
     except:
         
-        print \
-            (f'The function, ReturnRegressionModelEquationList, '
-             + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
-             + f'was unable to return polynomial regression equation coefficients.')
+        log_subroutine \
+            .PrintAndLogWriteText \
+                (f'The function, ReturnRegressionModelEquationList, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
+                 + f'was unable to return polynomial regression equation coefficients.')
         
         return \
             None
 
-    
+
+# In[14]:
+
+
 #*******************************************************************************************
  #
  #  Function Name:  ReturnPolynomialLineSeries
@@ -827,15 +995,19 @@ def ReturnPolynomialLineSeries \
                      sampleNumberIntegerVariable)
     except:
         
-        print \
-            (f'The function, ReturnPolynomialLineSeries, '
-             + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
-             + f'was unable to return a polynomial regression line Series.')
+        log_subroutine \
+            .PrintAndLogWriteText \
+                (f'The function, ReturnPolynomialLineSeries, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
+                 + f'was unable to return a polynomial regression line Series.')
         
         return \
             None
 
-    
+
+# In[15]:
+
+
 #*******************************************************************************************
  #
  #  Function Name:  ReturnRSquaredValue
@@ -917,13 +1089,17 @@ def ReturnRSquaredValue \
     
     except:
         
-        print \
-            (f'The function, ReturnRSquaredValue, '
-             + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
-             + f'was unable to return the r-squared value.')
+        log_subroutine \
+            .PrintAndLogWriteText \
+                (f'The function, ReturnRSquaredValue, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
+                 + f'was unable to return the r-squared value.')
         
         return \
             None
+
+
+# In[16]:
 
 
 #*******************************************************************************************
@@ -1011,15 +1187,19 @@ def ReturnEquationAsString \
         
     except:
         
-        print \
-            (f'The function, ReturnEquationAsString, '
-             + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
-             + f'was unable to return the regression line as a String.')
+        log_subroutine \
+            .PrintAndLogWriteText \
+                (f'The function, ReturnEquationAsString, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
+                 + f'was unable to return the regression line as a String.')
     
         return \
             None
-    
-    
+
+
+# In[17]:
+
+
 #*******************************************************************************************
  #
  #  Function Name:  ReturnPearsonCorrelation
@@ -1068,17 +1248,602 @@ def ReturnPearsonCorrelation \
         
     except:
         
-        print \
-            (f'The function, ReturnPearsonCorrelation, '
-             + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
-             + f'was unable to return the Pearson correlation.')
+        log_subroutine \
+            .PrintAndLogWriteText \
+                (f'The function, ReturnPearsonCorrelation, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
+                 + f'was unable to return the Pearson correlation.')
     
         return \
             None
 
 
-# In[ ]:
+# In[18]:
 
 
+#*******************************************************************************************
+ #
+ #  Function Name:  ConvertSeriesValuesToPercentChange
+ #
+ #  Function Description:
+ #      This function receives a Series, converts its values to percent change values,
+ #      and returns the new Series to the caller.
+ #
+ #
+ #  Function Parameters:
+ #
+ #  Type    Name            Description
+ #  -----   -------------   ----------------------------------------------
+ #  Series
+ #          inputSeriesParameter
+ #                          This parameter is input Series.
+ #
+ #
+ #  Date                Description                                 Programmer
+ #  ---------------     ------------------------------------        ------------------
+ #  8/14/2023           Initial Development                         N. James George
+ #
+ #******************************************************************************************/ 
+    
+def ConvertSeriesValuesToPercentChange \
+        (inputSeriesParameter):
 
+    try:
+        
+        inputSeries \
+            = inputSeriesParameter.copy()
+    
+        finalSeries \
+            = inputSeries * 0.0
+        
+        
+        for index, value in enumerate(inputSeries):
+        
+            if index >= len(inputSeries):
+            
+                continue
+            
+            elif index > 0:
+            
+                if inputSeries[ index - 1 ] != 0:
+        
+                    finalSeries[ index ] \
+                        = ((value - inputSeries[ index - 1 ]) \
+                           / inputSeries[ index - 1 ]) \
+                          * 100
+            
+            else:
+                
+                finalSeries[ index ] = 0.0
+    
+    
+        finalSeries \
+            .drop \
+                (finalSeries \
+                     .index \
+                         [0], 
+                 inplace \
+                     = True)
+      
+        
+        return \
+            finalSeries
+    
+    except:
+        
+        log_subroutine \
+            .PrintAndLogWriteText \
+                ('The function, ConvertSeriesValuesToPercentChange, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
+                 + 'was unable to convert the values in a Series '
+                 + 'to percent change values.\n')
+        
+        return \
+            None
+
+
+# In[19]:
+
+
+#******************************************************************************************
+ #
+ #  Function Name:  ConvertSeriesTimestampIndexesToDateObjects
+ #
+ #  Function Description:
+ #      This function receives a Series, converts its timestamp indexes values into
+ #      Date objects.
+ #
+ #
+ #  Function Parameters:
+ #
+ #  Type    Name            Description
+ #  -----   -------------   ----------------------------------------------
+ #  Series
+ #          inputSeriesParameter
+ #                          This parameter is input Series.
+ #
+ #
+ #  Date                Description                                 Programmer
+ #  ---------------     ------------------------------------        ------------------
+ #  8/14/2023           Initial Development                         N. James George
+ #
+ #******************************************************************************************/ 
+    
+def ConvertSeriesTimestampIndexesToDateObjects \
+        (inputSeries):
+    
+    try:
+
+        datesList \
+            = []
+
+        for tStamp in inputSeries.index:
+        
+            tempTimestampVariable \
+                = pd \
+                    .Timestamp \
+                        (tStamp)
+            
+            tempTimestampVariable \
+                .to_pydatetime()
+            
+            tempDateVariable \
+                = tempTimestampVariable.date()
+        
+            datesList \
+                .append \
+                    (tempDateVariable)
+        
+        return \
+            pd \
+                .Series \
+                    (datesList, 
+                     index \
+                         = inputSeries.index)
+    
+    except:
+        
+        
+        log_subroutine \
+            .PrintAndLogWriteText \
+                ('The function, ConvertSeriesTimestampIndexesToDateObjects, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
+                 + 'was unable to convert the timestamp indices in a Series '
+                 + 'to date objects.\n')
+        
+        return \
+            None
+
+
+# In[20]:
+
+
+#******************************************************************************************
+ #
+ #  Function Name:  ConvertSeriesFromDateStringsToDateObjects
+ #
+ #  Function Description:
+ #      This function receives a Series and date format, converts the date Strings
+ #      in the Series to Date objects, and returns the new Series to the caller.
+ #
+ #
+ #  Function Parameters:
+ #
+ #  Type    Name            Description
+ #  -----   -------------   ----------------------------------------------
+ #  Series
+ #          inputSeriesParameter
+ #                          This parameter is the input Series.
+ #  String
+ #          dateFormatStringParameter
+ #                          This parameter is date String format of the input Series.
+ #
+ #
+ #  Date                Description                                 Programmer
+ #  ---------------     ------------------------------------        ------------------
+ #  8/14/2023           Initial Development                         N. James George
+ #
+ #******************************************************************************************/ 
+    
+def ConvertSeriesFromDateStringsToDateObjects \
+        (inputSeriesParameter,
+         dateFormatStringParameter):
+    
+    try:
+        
+        return \
+             inputSeriesParameter \
+                .apply \
+                    (lambda x: datetime.strptime(x,'%Y-%m-%d').date())   
+        
+    except:
+        
+        log_subroutine \
+            .PrintAndLogWriteText \
+                ('The function, ConvertSeriesFromDateStringsToDateObjects, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
+                 + 'was unable to convert the date Strings in a Series '
+                 + 'to date objects.\n')
+        
+        return \
+            None
+
+
+# In[21]:
+
+
+#******************************************************************************************
+ #
+ #  Function Name:  ReturnNumberOfRedundanciesInSeries
+ #
+ #  Function Description:
+ #      This function receives a Series, calculates the number of redundancies, and
+ #      returns the value to the caller.
+ #
+ #
+ #  Function Parameters:
+ #
+ #  Type    Name            Description
+ #  -----   -------------   ----------------------------------------------
+ #  Series
+ #          inputSeriesParameter
+ #                          This parameter is the input Series.
+ #
+ #
+ #  Date                Description                                 Programmer
+ #  ---------------     ------------------------------------        ------------------
+ #  8/14/2023           Initial Development                         N. James George
+ #
+ #******************************************************************************************/
+    
+def ReturnNumberOfRedundanciesInSeries \
+        (inputSeriesParameter):
+    
+    try:
+        
+        return \
+            inputSeriesParameter.count() - inputSeriesParameter.nunique()
+    
+    except:
+        
+        log_subroutine \
+            .PrintAndLogWriteText \
+                ('The function, NumberOfRedundanciesInSeries, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
+                 + 'was unable to calculate the number of redundancies '
+                 + 'in a Series.\n')
+        
+        return \
+            None
+
+
+# In[22]:
+
+
+#******************************************************************************************
+ #
+ #  Function Name:  DisplaySummaryStatistics
+ #
+ #  Function Description:
+ #      This function receives a DataFrame and displays the statistics summary in a table.
+ #
+ #
+ #  Function Parameters:
+ #
+ #  Type    Name            Description
+ #  -----   -------------   ----------------------------------------------
+ #  DataFrame
+ #          inputDataFrameParameter
+ #                          This parameter is the input DataFrame
+ #
+ #
+ #  Date                Description                                 Programmer
+ #  ---------------     ------------------------------------        ------------------
+ #  8/14/2023           Initial Development                         N. James George
+ #
+ #******************************************************************************************/
+    
+def DisplaySummaryStatistics \
+        (inputDataFrameParameter,
+         captionStringParameter):
+        
+    inputDataFrame \
+        = inputDataFrameParameter \
+            .copy()
+    
+    inputDataFrame \
+        .index \
+        .name \
+            = None
+
+    
+    return \
+        inputDataFrame \
+            .style \
+            .set_caption \
+                (captionStringParameter) \
+            .set_table_styles \
+                ([{'selector': 
+                       'caption', 
+                   'props':
+                        [('color', 
+                              'black'), 
+                         ('font-size', 
+                              '16px'),
+                         ('font-style', 
+                              'bold'),
+                         ('text-align', 
+                              'center')]}]) \
+            .set_properties \
+                (**{'text-align':
+                        'center',
+                    'border':
+                        '1.3px solid red',
+                    'color':
+                        'blue'}) \
+            .format({'Industry':
+                            constant.GENERAL_TEXT_FORMAT, 
+                     'Lower Quartile':
+                            constant.CURRENCY_FLOAT_AS_INTEGER_FORMAT, 
+                     'Upper Quartile':
+                            constant.CURRENCY_FLOAT_AS_INTEGER_FORMAT,   
+                     'Interquartile Range':
+                            constant.CURRENCY_FLOAT_AS_INTEGER_FORMAT, 
+                     'Lower Boundary':
+                            constant.CURRENCY_FLOAT_AS_INTEGER_FORMAT, 
+                     'Upper Boundary':
+                            constant.CURRENCY_FLOAT_AS_INTEGER_FORMAT, 
+                     'Mean':
+                            constant.CURRENCY_FLOAT_AS_INTEGER_FORMAT, 
+                     'Median':
+                            constant.CURRENCY_FLOAT_AS_INTEGER_FORMAT, 
+                     '% Difference':
+                            constant.PERCENT_FLOAT_FORMAT, 
+                     'Number of Companies':
+                            constant.INTEGER_FORMAT, 
+                     'Number of Outliers':
+                            constant.INTEGER_FORMAT}) \
+            .highlight_max \
+                (subset \
+                    = ['Lower Quartile',
+                       'Upper Quartile',
+                       'Interquartile Range',
+                       'Lower Boundary',
+                       'Upper Boundary',
+                       'Mean',
+                       'Median',
+                       '% Difference',
+                       'Number of Companies',
+                       'Number of Outliers'],
+                 color='lime') \
+            .highlight_min \
+                (subset \
+                    = ['Lower Quartile',
+                       'Upper Quartile',
+                       'Interquartile Range',
+                       'Lower Boundary',
+                       'Upper Boundary',
+                       'Mean',
+                       'Median',
+                       '% Difference',
+                       'Number of Companies',
+                       'Number of Outliers'],
+                 color='yellow') \
+            .hide()
+
+
+# In[23]:
+
+
+#******************************************************************************************
+ #
+ #  Function Name:  ReturnCorrelationTableStandardFormat
+ #
+ #  Function Description:
+ #      This function receives a DataFrame and displays a formatted correlation table.
+ #
+ #
+ #  Function Parameters:
+ #
+ #  Type    Name            Description
+ #  -----   -------------   ----------------------------------------------
+ #  DataFrame
+ #          inputDataFrameParameter
+ #                          This parameter is the input DataFrame
+ #  String
+ #          captionStringParameter
+ #                          This parameter is the table's title.
+ #
+ #
+ #  Date                Description                                 Programmer
+ #  ---------------     ------------------------------------        ------------------
+ #  8/22/2023           Initial Development                         N. James George
+ #
+ #******************************************************************************************/
+
+def ReturnCorrelationTableStandardFormat \
+        (inputDataFrameParameter,
+         captionStringParameter):
+    
+    try:
+        
+        inputDataFrame \
+            = inputDataFrameParameter.copy()
+        
+        return \
+            inputDataFrame \
+                .corr() \
+                .style \
+                .set_caption \
+                    (captionStringParameter) \
+                .set_table_styles \
+                    ([dict \
+                        (selector \
+                             = 'caption',
+                         props \
+                             = [('color', 'black'),
+                                ('font-size', '20px'),
+                                ('font-style', 'bold'),
+                                ('text-align', 'center')])]) \
+                .set_properties \
+                    (**{'text-align':
+                     'center',
+                     'border':
+                     '1.3px solid red',
+                     'color':
+                     'blue'}) \
+                .format \
+                    (precision \
+                        = 6, 
+                     thousands \
+                        = ',', 
+                     decimal \
+                        = '.')
+        
+    except:
+        
+        log_subroutine \
+            .PrintAndLogWriteText \
+                (f'The subroutine, DisplayFormattedCorrelationTableStandardFormat, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
+                 + f'was unable to display a formatted correlation table.')
+        
+        return \
+            None
+
+
+# In[24]:
+
+
+#******************************************************************************************
+ #
+ #  Function Name:  DisplayHVPlotFromDataFrame
+ #
+ #  Function Description:
+ #      This function receives a DataFrame and displays a formatted correlation table.
+ #
+ #
+ #  Function Parameters:
+ #
+ #  Type    Name            Description
+ #  -----   -------------   ----------------------------------------------
+ #  DataFrame
+ #          inputDataFrameParameter
+ #                          This parameter is the input DataFrame
+ #  String
+ #          colorKeyStringParameter
+ #                          This parameter is the key to the DataFrame column 
+ #                          of colors.
+ #  String
+ #          sizeKeyStringParameter
+ #                          This parameter the key to the DataFrame column of 
+ #                          marker sizes.
+ #  Tuple of Integers
+ #          xlimitTupleParameter
+ #                          This parameter the HVPlot limits for the x-axis.
+ #  Tuple of Integers
+ #          ylimitTupleParameter
+ #                          This parameter the HVPlot limits for the y-axis.
+ #  Float
+ #          alphaFloatParameter
+ #                          This parameter the alpha value (transparency level) 
+ #                          for the markers.
+ #  String
+ #          tilesStringParameter
+ #                          This parameter indicates the type of map (OSM, ESRI, etc.).
+ #  List of Strings
+ #          hoverColumnsListOfStringsParameter
+ #                          This parameter is the list of column names 
+ #                          for the hover message.
+ #
+ #
+ #  Date                Description                                 Programmer
+ #  ---------------     ------------------------------------        ------------------
+ #  8/25/2023           Initial Development                         N. James George
+ #
+ #******************************************************************************************/
+
+def DisplayHVPlotFromDataFrame \
+        (inputDataFrameParameter,
+         colorKeyStringParameter,
+         sizeKeyStringParameter,
+         xlimitTupleParameter \
+            = (-180, 180), 
+         ylimitTupleParameter \
+            = (-55, 75),
+         alphaFloatParameter \
+            = 0.7,
+         tilesStringParameter \
+            = 'OSM',
+         hoverColumnsListOfStringsParameter \
+            = None):
+    
+    try:
+        
+        inputDataFrame \
+            = inputDataFrameParameter.copy()
+        
+        
+        if hoverColumnsListOfStringsParameter == None:
+            
+            return \
+                inputDataFrame \
+                    .hvplot \
+                    .points \
+                        ('Longitude', 
+                         'Latitude',
+                         xlabel = '', 
+                         ylabel = '',
+                         geo \
+                            = True, 
+                         color \
+                            = colorKeyStringParameter, 
+                         size \
+                            = sizeKeyStringParameter,
+                         xlim \
+                            = xlimitTupleParameter, 
+                         ylim \
+                            = ylimitTupleParameter,
+                         alpha \
+                            = alphaFloatParameter, 
+                         tiles \
+                            = tilesStringParameter)
+        
+        else:
+            
+            return \
+                inputDataFrame \
+                    .hvplot \
+                    .points \
+                        ('Longitude', 
+                         'Latitude',
+                         xlabel = '', 
+                         ylabel = '',
+                         geo \
+                            = True, 
+                         color \
+                            = colorKeyStringParameter, 
+                         size \
+                            = sizeKeyStringParameter,
+                         xlim \
+                            = xlimitTupleParameter, 
+                         ylim \
+                            = ylimitTupleParameter,
+                         alpha \
+                            = alphaFloatParameter, 
+                         tiles \
+                            = tilesStringParameter,
+                         hover_cols \
+                            = hoverColumnsListOfStringsParameter)
+    
+    except:
+        
+        log_subroutine \
+            .PrintAndLogWriteText \
+                (f'The subroutine, DisplayHVPlotDataFrame, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
+                 + f'was unable to display a formatted HVPlot.')
+        
+        return \
+            None
 

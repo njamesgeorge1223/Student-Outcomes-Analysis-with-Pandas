@@ -21,7 +21,8 @@
  #  08/20/2023      Initial Development                     Nicholas George
  #
  #******************************************************************************************/
-    
+
+import PyLogSubRoutines as log_subroutine
 import PyFunctions as function
 
 
@@ -84,9 +85,11 @@ def DisplayTumorVolumeStatistics \
 
     except:
     
-        print(f'The function, DisplayTumorVolumeSeriesList, '
-              + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
-              + f'was unable to display tumor volume statistics.')
+        log_subroutine \
+            .PrintAndLogWriteText \
+                (f'The function, DisplayTumorVolumeSeriesList, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
+                 + f'was unable to display tumor volume statistics.')
 
 
 # In[ ]:

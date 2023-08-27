@@ -22,6 +22,7 @@
  #******************************************************************************************/
     
 import PyConstants as constant
+import PyLogSubRoutines as log_subroutine
 
 
 # In[2]:
@@ -92,9 +93,11 @@ def ReturnFormattedCompleteMedicalStudyStylerObject \
     
     except:
         
-        print(f'The function, ReturnCSVFileAsDataFrame, '
-              + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
-              + f'was unable to format the Styler Object.')
+        log_subroutine \
+            .PrintAndLogWriteText \
+                (f'The function, ReturnCSVFileAsDataFrame, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
+                 + f'was unable to format a medical study DataFrame.')
     
         return \
             None

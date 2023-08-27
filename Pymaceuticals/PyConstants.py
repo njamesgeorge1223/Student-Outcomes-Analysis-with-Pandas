@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[ ]:
+# In[1]:
 
 
 #*******************************************************************************************
@@ -15,22 +15,27 @@
  #
  #  Date            Description                             Programmer
  #  ----------      ------------------------------------    ------------------
- #  08/20/2023      Initial Development                     Nicholas George
+ #  08/20/2023      Initial Development                     N James George
  #
  #******************************************************************************************/
 
 
-# In[ ]:
+# In[2]:
 
 
-CONSTANT_DEBUG_FLAG \
-    = False
+CONSTANT_LOCAL_FILE_NAME \
+    = 'PyConstants.py'
 
 
+# In[3]:
+
+
+# This is a global constant for setting coefficient precision for equations.
 EQUATION_COEFFICIENT_PRECISION \
-    = 3
+    = 4
 
 
+# These constants are generic formats for Strings.
 GENERAL_TEXT_FORMAT \
     = '{:}'
 
@@ -54,4 +59,10 @@ CURRENCY_FLOAT_AS_INTEGER_FORMAT \
 
 PERCENT_FLOAT_FORMAT \
     = FLOAT_FORMAT + '%'
+
+PERCENT_INTEGER_FORMAT \
+    = INTEGER_FORMAT + '%'
+
+TEMPERATURE_FLOAT_FORMAT \
+    = FLOAT_FORMAT +'° F'
 
