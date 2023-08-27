@@ -1,0 +1,66 @@
+
+Timepoint: 08/27/2023 14:20:34
+Program execution begins...
+
+
+
+Timepoint: 08/27/2023 14:20:34
+The number of unique mouse IDs in the complete medical study DataFrame is 249.
+
+
+Timepoint: 08/27/2023 14:20:34
+The updated number of unique mouse IDs in the complete medical study DataFrame is 248.
+
+
+Timepoint: 08/27/2023 14:20:35
+True
+
+
+Timepoint: 08/27/2023 14:20:36
+The correlation between mouse weight and the average tumor volume is 0.84.
+
+
+Timepoint: 08/27/2023 14:20:36
+r-value:     0.8419
+
+
+Timepoint: 08/27/2023 14:20:36
+r-squared:   0.7089
+
+
+Timepoint: 08/27/2023 14:20:36
+correlation: 0.8419
+
+
+Timepoint: 08/27/2023 14:20:47
+Program execution begins...
+
+
+
+Timepoint: 08/27/2023 14:20:47
+The number of unique mouse IDs in the complete medical study DataFrame is 249.
+
+
+Timepoint: 08/27/2023 14:20:47
+The updated number of unique mouse IDs in the complete medical study DataFrame is 248.
+
+
+Timepoint: 08/27/2023 14:20:49
+True
+
+
+Timepoint: 08/27/2023 14:20:50
+The correlation between mouse weight and the average tumor volume is 0.84.
+
+
+Timepoint: 08/27/2023 14:20:50
+r-value:     0.8419
+
+
+Timepoint: 08/27/2023 14:20:50
+r-squared:   0.7089
+
+
+Timepoint: 08/27/2023 14:20:50
+correlation: 0.8419
+
