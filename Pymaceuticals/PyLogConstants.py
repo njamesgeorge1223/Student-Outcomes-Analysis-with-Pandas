@@ -36,6 +36,13 @@ DEBUG_FLAG \
 LOG_FLAG \
     = False
 
+IMAGE_FLAG \
+    = False
+
+
+PROGRAM_DESIGNATION \
+    = ''
+
 
 LOGS_DIRECTORY_PATH \
     = './Logs'

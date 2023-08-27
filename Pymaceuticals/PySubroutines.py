@@ -181,6 +181,11 @@ def DisplayPandasBarChartFromSeries \
                 (axis \
                     = "y")
         
+        
+        log_subroutine \
+            .SavePlotImage \
+                (captionStringParameter)
+        
         plt \
             .show()
         
@@ -318,6 +323,11 @@ def DisplayMatplotlibBarChartFromSeries \
                 (axis \
                     = "y")
         
+        
+        log_subroutine \
+            .SavePlotImage \
+                (captionStringParameter)
+        
         plt \
             .show()
 
@@ -425,9 +435,13 @@ def DisplayPandasPieChartFromSeries \
                  fontdict \
                      = {'fontsize' : 14.0})
         
+        
+        log_subroutine \
+            .SavePlotImage \
+                (captionStringParameter)
+        
         plt \
             .show()
-        
         
     except:
         
@@ -529,10 +543,14 @@ def DisplayMatplotlibPieChartFromSeries \
                      = {'fontsize' : 14.0, 
                         'fontstyle' : 'normal', 
                         'fontweight' : 'bold'})
-
+        
+        
+        log_subroutine \
+            .SavePlotImage \
+                (captionStringParameter)
+        
         plt \
             .show()
-        
         
     except:
         
@@ -666,6 +684,11 @@ def DisplayMatplotlibBoxPlotFromSeriesList \
                 (axis \
                     = "y")
         
+        
+        log_subroutine \
+            .SavePlotImage \
+                (captionStringParameter)
+        
         plt \
             .show() 
         
@@ -788,6 +811,11 @@ def DisplayMatplotlibLineChartFromXYSeries \
 
         plt \
             .grid()
+        
+        
+        log_subroutine \
+            .SavePlotImage \
+                (captionStringParameter)
 
         plt \
             .show()
@@ -1069,9 +1097,12 @@ def DisplayMatplotlibScatterPlotFromXYSeries \
                  optionalTextYCoordinateFloatParameter)
         
         
+        log_subroutine \
+            .SavePlotImage \
+                (captionStringParameter)
+        
         plt \
             .show()
-
         
     except:
         
@@ -1274,6 +1305,10 @@ def DisplaySummaryStatisticsBoxPlot \
             .set_xlabel('')
     
     
+        log_subroutine \
+            .SavePlotImage \
+                (captionStringParameter)
+    
         plt \
             .show()
         
@@ -1371,7 +1406,11 @@ def DisplayOneLineGraphFromSeries \
                 (yLabelStringParameter, \
                     fontsize \
                         = 12)
-    
+        
+        
+        log_subroutine \
+            .SavePlotImage \
+                (captionStringParameter)
     
         plt \
             .show()
@@ -1480,7 +1519,12 @@ def DisplayLinesGraph \
                 (ylabelStringParameter,
                     fontsize \
                         = 12)
-
+        
+        
+        log_subroutine \
+            .SavePlotImage \
+                (captionStringParameter)
+        
         plt \
             .show()
 
@@ -1681,6 +1725,10 @@ def DisplayTwoByTwoHistograms \
                 (figureYLabelStringParameter,
                  fontsize = 12)
 
+        
+        log_subroutine \
+            .SavePlotImage \
+                (captionStringParameter)
         
         plt.show()
         

@@ -16,6 +16,7 @@
  #      ReturnCurrentTimestampAsString
  #      DebugReturnObjectWriteObject
  #      ReturnTimePointMessage
+ #      ReturnImageFilePathString
  #
  #
  #  Date            Description                             Programmer
@@ -161,7 +162,7 @@ def DebugReturnObjectWriteObject \
                     (messageStringVariable)
 
 
-# In[6]:
+# In[1]:
 
 
 #*******************************************************************************************
@@ -206,4 +207,60 @@ def ReturnTimePointMessage \
     
     return \
         timePointMessageStringVariable
+
+
+# In[2]:
+
+
+#*******************************************************************************************
+ #
+ #  Function Name:  ReturnImageFilePathString
+ #
+ #  Function Description:
+ #      This function takes a captions for a matplotlib plot and returns 
+ #      the image file path.
+ #
+ #
+ #  Function Parameters:
+ #
+ #  Type    Name            Description
+ #  -----   -------------   ----------------------------------------------
+ #  String
+ #          captionStringParameter
+ #                          This parameter is the plot title.
+ #  String
+ #          imageFormatStringParameter
+ #                          This parameter is the image format file suffix.    
+ #
+ #
+ #  Date                Description                                 Programmer
+ #  ---------------     ------------------------------------        ------------------
+ #  8/27/2023           Initial Development                         N. James George
+ #
+ #******************************************************************************************/
+    
+def ReturnImageFilePathString \
+        (captionStringParameter \
+            = 'test',
+         imageFormatStringParameter \
+            = 'png'):
+    
+    tempCaptionStringVariable \
+        = ''.join(filter(str.isalnum, captionStringParameter))
+    
+    imageFilePathStringVariable \
+        = log_constant.IMAGES_DIRECTORY_PATH \
+          + '/' \
+          + log_constant.PROGRAM_DESIGNATION \
+          + tempCaptionStringVariable \
+          + imageFormatStringParameter
+
+    return \
+        imageFilePathStringVariable
+
+
+# In[ ]:
+
+
+
 

@@ -21,6 +21,9 @@
  #      EndProgramExecution
  #      SetDebugMode
  #      SetLogMode
+ #      SetImageMode
+ #      SetProgramDesignation
+ #      SavePlotImage
  #
  #
  #  Date            Description                             Programmer
@@ -31,6 +34,8 @@
 
 import PyLogConstants as log_constant
 import PyLogFunctions as log_function
+
+import matplotlib.pyplot as plt
 
 import os
 
@@ -111,9 +116,7 @@ def CreateDirectory \
  #
  #  Type    Name            Description
  #  -----   -------------   ----------------------------------------------
- #  String
- #          directoryNameStringParameter
- #                          This parameter is program name designation for the output files.
+ #  n/a     n/a             n/a
  #
  #
  #  Date                Description                                 Programmer
@@ -122,8 +125,7 @@ def CreateDirectory \
  #
  #******************************************************************************************/
 
-def OpenLogAndDebugFiles \
-        (programDesignationStringParameter):
+def OpenLogAndDebugFiles():
     
     try:
 
@@ -131,22 +133,27 @@ def OpenLogAndDebugFiles \
             = log_function \
                 .ReturnCurrentDateAsString()
 
- 
+       
+        programDesignationStringVariable \
+            = log_constant \
+                .PROGRAM_DESIGNATION \
+
+       
         log_constant.LOG_FILE_PATH \
             = log_constant.LOGS_DIRECTORY_PATH \
               + '/' \
               + currentDateStringVariable \
-              + programDesignationStringParameter \
+              + programDesignationStringVariable \
               + log_constant.BASE_LOG_FILE_NAME
 
         log_constant.DEBUG_FILE_PATH \
             = log_constant.LOGS_DIRECTORY_PATH \
                 + '/' \
                 + currentDateStringVariable \
-                + programDesignationStringParameter \
+                + programDesignationStringVariable \
                 + log_constant.BASE_DEBUG_FILE_NAME
         
-        
+      
         if log_constant.LOG_FLAG == True:
         
             log_constant \
@@ -154,7 +161,7 @@ def OpenLogAndDebugFiles \
                     = open \
                         (log_constant.LOG_FILE_PATH, 
                          'a')
-        
+       
         if log_constant.DEBUG_FLAG == True:
         
             log_constant \
@@ -370,12 +377,15 @@ def BeginProgramExecution \
                 .IMAGES_DIRECTORY_PATH)
 
 
-        OpenLogAndDebugFiles \
+        SetProgramDesignation \
             (programDesignationStringParameter)
+        
+
+        OpenLogAndDebugFiles()
 
 
         messageStringVariable \
-            = 'Program execution begins...\n\n'
+            = 'Program execution begins...\n'
 
         PrintAllWriteText \
             (messageStringVariable)
@@ -518,4 +528,141 @@ def SetDebugMode \
     log_constant \
         .DEBUG_FLAG \
             = modeFlagBooleanParameter
+
+
+# In[ ]:
+
+
+#*******************************************************************************************
+ #
+ #  Subroutine Name:  SetImageMode
+ #
+ #  Subroutine Description:
+ #      This subroutine sets the value for the global image flag (True/False).
+ #
+ #
+ #  Subroutine Parameters:
+ #
+ #  Type    Name            Description
+ #  -----   -------------   ----------------------------------------------
+ #  Boolean
+ #          modeFlagBooleanParameter
+ #                          This parameter is the desired Boolean value for the global 
+ #                          debug flag.
+ #
+ #
+ #  Date                Description                                 Programmer
+ #  ---------------     ------------------------------------        ------------------
+ #  8/27/2023           Initial Development                         N. James George
+ #
+ #******************************************************************************************/
+
+def SetImageMode \
+        (modeFlagBooleanParameter \
+            = True):
+    
+    log_constant \
+        .IMAGE_FLAG \
+            = modeFlagBooleanParameter
+
+
+# In[1]:
+
+
+#*******************************************************************************************
+ #
+ #  Subroutine Name:  SetProgramDesignation
+ #
+ #  Subroutine Description:
+ #      This subroutine sets the value for the global program designation String.
+ #
+ #
+ #  Subroutine Parameters:
+ #
+ #  Type    Name            Description
+ #  -----   -------------   ----------------------------------------------
+ #  String
+ #          programDesignationStringParameter
+ #                          This parameter is the text for the global designation String.
+ #
+ #
+ #  Date                Description                                 Programmer
+ #  ---------------     ------------------------------------        ------------------
+ #  8/27/2023           Initial Development                         N. James George
+ #
+ #******************************************************************************************/
+
+def SetProgramDesignation \
+        (programDesignationStringParameter \
+            = ''):
+    
+    log_constant \
+        .PROGRAM_DESIGNATION \
+            = programDesignationStringParameter
+
+
+# In[5]:
+
+
+#*******************************************************************************************
+ #
+ #  Subroutine Name:  SavePlotImage
+ #
+ #  Subroutine Description:
+ #      This subroutine sets the value for the global program designation String.
+ #
+ #
+ #  Subroutine Parameters:
+ #
+ #  Type    Name            Description
+ #  -----   -------------   ----------------------------------------------
+ #  String
+ #          captionStringParameter
+ #                          This parameter is the text for the plot title.
+ #  String
+ #          captionStringParameter
+ #                          This parameter is the text for the plot title.
+ #
+ #
+ #  Date                Description                                 Programmer
+ #  ---------------     ------------------------------------        ------------------
+ #  8/27/2023           Initial Development                         N. James George
+ #
+ #******************************************************************************************/
+
+def SavePlotImage \
+        (captionStringParameter \
+            = '',
+         dpiIntegerParameter \
+            = 300,
+         padInchesFloatParameter \
+            = 0.5,
+         imageFormatStringParameter \
+            = 'png'):
+
+    if log_constant \
+            .IMAGE_FLAG \
+                == True:
+
+        imageFilePathStringVariable \
+            = log_function \
+                .ReturnImageFilePathString \
+                    (captionStringParameter,
+                     imageFormatStringParameter)
+        print(imageFilePathStringVariable)
+        plt \
+            .savefig \
+                (imageFilePathStringVariable, 
+                 dpi \
+                     = dpiIntegerParameter, 
+                 bbox_inches \
+                     = 'tight', 
+                 pad_inches \
+                     = 0.5)
+
+
+# In[ ]:
+
+
+
 
