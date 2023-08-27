@@ -18,7 +18,7 @@
  #
  #  Date            Description                             Programmer
  #  ----------      ------------------------------------    ------------------
- #  08/20/2023      Initial Development                     Nicholas George
+ #  08/20/2023      Initial Development                     N. James George
  #
  #******************************************************************************************/
 
