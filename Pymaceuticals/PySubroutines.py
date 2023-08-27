@@ -1663,12 +1663,12 @@ def DisplayTwoByTwoHistograms \
              = (9,6)):
 
     try:
-        
+
         inputDataFrame \
             = pd \
                 .DataFrame \
                     (frameDictionaryParameter)
-        
+
         fig, axs \
             = plt \
                 .subplots \
@@ -1679,10 +1679,10 @@ def DisplayTwoByTwoHistograms \
                          = True, 
                      tight_layout \
                          = True)
-        
+
         index \
             = 0
-        
+
         for row in range(2):
             for column in range(2):
     
@@ -1728,10 +1728,10 @@ def DisplayTwoByTwoHistograms \
         
         log_subroutine \
             .SavePlotImage \
-                (captionStringParameter)
-        
+                (figureTitleStringParameter)
+
         plt.show()
-        
+
     except:
         
         log_subroutine \

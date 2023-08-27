@@ -530,7 +530,7 @@ def SetDebugMode \
             = modeFlagBooleanParameter
 
 
-# In[ ]:
+# In[12]:
 
 
 #*******************************************************************************************
@@ -566,7 +566,7 @@ def SetImageMode \
             = modeFlagBooleanParameter
 
 
-# In[1]:
+# In[13]:
 
 
 #*******************************************************************************************
@@ -601,7 +601,7 @@ def SetProgramDesignation \
             = programDesignationStringParameter
 
 
-# In[5]:
+# In[14]:
 
 
 #*******************************************************************************************
@@ -649,7 +649,7 @@ def SavePlotImage \
                 .ReturnImageFilePathString \
                     (captionStringParameter,
                      imageFormatStringParameter)
-        print(imageFilePathStringVariable)
+
         plt \
             .savefig \
                 (imageFilePathStringVariable, 

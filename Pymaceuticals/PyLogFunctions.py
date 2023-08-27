@@ -252,9 +252,8 @@ def ReturnImageFilePathString \
         = log_constant.IMAGES_DIRECTORY_PATH \
           + '/' \
           + log_constant.PROGRAM_DESIGNATION \
-          + tempCaptionStringVariable \
-          + imageFormatStringParameter
-
+          + tempCaptionStringVariable
+    
     return \
         imageFilePathStringVariable
 
