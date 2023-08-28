@@ -1141,8 +1141,37 @@ def DisplayMatplotlibScatterPlotFromXYSeries \
  #          colorListParameter
  #                          This parameter is the list of colors for the subplots.
  #  String
+ #          figureXLabelStringParameter
+ #                          This parameter is the title for the figure's x-axis.
+ #  String
+ #          figureYLabelStringParameter
+ #                          This parameter is the title for the figure's y-axis.
+ #  String
  #          xLabelStringParameter
- #                          This parameter is the title for the x-axis.
+ #                          This parameter is the title for the plot's x-axis.
+ #  String
+ #          yLabelStringParameter
+ #                          This parameter is the title for the plot's y-axis.
+ #  Float
+ #          figureXLabelYPositionFloatParameter
+ #                          This parameter is the y-axis offset for the figure's 
+ #                          x-label.
+ #  Float
+ #          figureYLabelYPositionFloatParameter
+ #                          This parameter is the x-axis offset for the figure's 
+ #                          y-label.
+ #  Boolean
+ #          legendFlagBooleanParameter 
+ #                          This parameter indicates whether there will be a 
+ #                          legend or not.
+ #  Float
+ #          legendXOffsetFloatParameter
+ #                          This parameter is the x-axis offset for the figure's 
+ #                          legend.
+ #  Float
+ #          legendYOffsetFloatParameter
+ #                          This parameter is the y-axis offset for the figure's 
+ #                          legend.
  #
  #
  #  Date                Description                                 Programmer
@@ -1155,10 +1184,27 @@ def DisplayStackedSubplots \
         (frameDictionaryParameter,
          captionStringParameter,
          colorListParameter,
-         xLabelStringParameter = ''):
+         figureXLabelStringParameter \
+            = None,
+         figureYLabelStringParameter \
+            = None,
+         xLabelStringParameter \
+            = None,
+         yLabelStringParameter \
+            = None,
+         figureXLabelYPositionFloatParameter \
+            = 0.0,
+         figureYLabelXPositionFloatParameter \
+            = 0.0,
+         legendFlagBooleanParameter \
+            = False,
+         legendXOffsetFloatParameter \
+            = 0.0,
+         legendYOffsetFloatParameter \
+            = 0.0):
     
     try:
-        
+
         inputDataFrame \
             = pd \
                 .DataFrame \
@@ -1168,47 +1214,118 @@ def DisplayStackedSubplots \
         numberOfSubPlotsIntegerVariable \
             = len(inputDataFrame.keys())
     
-    
+  
         fig, axs \
             = plt \
                 .subplots \
                     (numberOfSubPlotsIntegerVariable)
-    
+   
         fig \
             .suptitle \
                 (captionStringParameter, 
                  fontsize = 14)
+      
+        if figureXLabelStringParameter != None:
+            
+            fig \
+                .supxlabel \
+                    (figureXLabelStringParameter,
+                     fontsize \
+                         = 12,
+                     y \
+                         = figureXLabelYPositionFloatParameter)
+       
+        if figureYLabelStringParameter != None:
+            
+            fig \
+                .supylabel \
+                    (figureYLabelStringParameter,
+                     fontsize \
+                         = 12,
+                     x \
+                         = figureYLabelXPositionFloatParameter)
     
+        legendLinePlotList \
+             = []
+        
+        legendLineNamesList \
+            = []
     
+            
         for index, subPlot in enumerate(axs):
         
-            subPlot \
-                .plot \
-                    (inputDataFrame.iloc[:,index], 
-                 color \
-                     = colorListParameter[index])
+            lineSubPlot, \
+                = subPlot \
+                    .plot \
+                        (inputDataFrame.iloc[:,index], 
+                         color \
+                             = colorListParameter[index])
+            
+            
+            legendLinePlotList \
+                .append \
+                    (lineSubPlot)
+            
+            legendLineNamesList \
+                .append \
+                    (inputDataFrame.iloc[:,index].name)
+            
             
             subPlot \
                 .grid()
-
-        
+            
             if index != (numberOfSubPlotsIntegerVariable - 1):
+                
                 subPlot \
                     .set_xticklabels \
                         (labels = [])
+                
             else:
                 subPlot \
                     .tick_params \
                         (axis = 'x', 
                          rotation = 90.0)
                 
-                subPlot \
-                    .set_xlabel \
-                        (xLabelStringParameter)
+                if xLabelStringParameter == None:
+                
+                    subPlot \
+                        .set_xlabel \
+                            ('')
+                    
+                else:
+                    
+                    subPlot \
+                        .set_xlabel \
+                            (xLabelStringParameter)
             
-            subPlot \
-                .set_ylabel \
-                    (inputDataFrame.iloc[:,index].name)
+            if yLabelStringParameter == None:
+                
+                subPlot \
+                    .set_ylabel \
+                        (inputDataFrame.iloc[:,index].name)
+            
+            else:
+                    
+                subPlot \
+                    .set_ylabel \
+                        (yLabelStringParameter)
+                
+                
+        if legendFlagBooleanParameter == True:
+        
+            fig \
+                .legend \
+                    (legendLinePlotList, 
+                     legendLineNamesList, 
+                     loc \
+                         = 'center right',
+                     bbox_to_anchor \
+                         = (legendXOffsetFloatParameter, 
+                            legendYOffsetFloatParameter))
+        
+        
+        plt \
+            .show()
             
     except:
         
