@@ -25,6 +25,7 @@
  #      DisplaySeriesCountAndRedundancies
  #      DisplayTwoByTwoHistograms
  #      DisplayLinearRegressionLine
+ #      DisplayTwoPieChartsSideBySide
  #
  #
  #  Date            Description                             Programmer
@@ -2035,4 +2036,148 @@ def DisplayLinearRegressionLine \
                 (f'The subroutine, DisplayLinearRegressionLine, '
                  + f'in source file, {CONSTANT_LOCAL_FILE_NAME},\n'
                  + f'was unable to calculate and display a linear regression line.')
+
+
+# In[19]:
+
+
+#*******************************************************************************************
+ #
+ #  Subroutine Name:  DisplayTwoPieChartsSideBySide
+ #
+ #  Subroutine Description:
+ #      This subroutine receives a Frame Dictionary with two Series and formatting 
+ #      parameters and plots a pie chart using the Pandas DataFrame.plot() method.
+ #
+ #
+ #  Subroutine Parameters:
+ #
+ #  Type    Name            Description
+ #  -----   -------------   ----------------------------------------------
+ #  Dictionary
+ #          frameDictionaryParameter
+ #                          This parameter is the Dictionary used as input.
+ #  List
+ #          colorsListParameter
+ #                          This parameter is the list of bar colors.
+ #  List
+ #          explodeTupleParameter
+ #                          This parameter specifies the fraction of the 
+ #                          radius with which to offset each wedge.
+ #  String
+ #          captionStringParameter
+ #                          This parameter is the chart title.
+ #  Float
+ #          startAngleFloatParameter
+ #                          This parameter is the angle by which the start 
+ #                          of the pie is rotated, counterclockwise from 
+ #                          the x-axis.
+ #  Float
+ #          autoPercentStringParameter
+ #                          This parameter is the format of the wedge label.
+ #
+ #
+ #  Date                Description                                 Programmer
+ #  ---------------     ------------------------------------        ------------------
+ #  8/28/2023           Initial Development                         N. James George
+ #
+ #******************************************************************************************/
+
+def DisplayTwoPieChartsSideBySide \
+        (frameDictionaryParameter, 
+         colorsListParameter,
+         explodeTupleParameter,
+         captionStringParameter,
+         startAngleFloatParameter \
+            = 45.0,
+         autoPercentStringParameter \
+            = '%1.1f%%'):
+
+    try:
+        
+        inputDataFrame \
+            = pd \
+                .DataFrame \
+                    (frameDictionaryParameter)
+
+        fig, axs \
+            = plt \
+                .subplots \
+                    (1, 2,
+                     figsize \
+                        = (10, 8))
+
+        fig \
+            .suptitle \
+                (captionStringParameter, 
+                 y \
+                     = 0.75, 
+                 fontsize \
+                     = 20)
+    
+
+        for columnIndex in range(2):
+    
+            inputDataFrame \
+                .iloc[:,columnIndex]  \
+                .plot \
+                .pie \
+                    (ax \
+                        = axs \
+                            [columnIndex], 
+                     colors \
+                        = colorsListParameter, 
+                     explode \
+                        = explodeTupleParameter, 
+                     shadow \
+                        = True, 
+                     startangle \
+                        = startAngleFloatParameter, 
+                     autopct \
+                        = autoPercentStringParameter,
+                     legend \
+                        = False,
+                    labeldistance \
+                        = 1.2,
+                    ylabel \
+                        = '')
+        
+            axs \
+                [columnIndex] \
+                    .set_title \
+                        (inputDataFrame \
+                             .iloc \
+                                 [:, columnIndex].name, 
+                         fontsize=14)
+                
+
+        plt \
+            .subplots_adjust \
+                (wspace \
+                     = 1.1, 
+                 hspace \
+                     = None)
+         
+        
+        log_subroutine \
+            .SavePlotImage \
+                (captionStringParameter)
+
+        plt \
+            .show()
+        
+    except:
+        
+        log_subroutine \
+            .PrintAndLogWriteText \
+                (f'The subroutine, DisplayTwoPieChartsSideBySide, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME},\n'
+                 + f'was unable to calculate and display two pie charts side-by-side\n'
+                 + f'for the caption, {captionStringParameter}.')
+
+
+# In[ ]:
+
+
+
 
