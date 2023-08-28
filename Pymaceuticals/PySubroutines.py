@@ -934,26 +934,15 @@ def DisplayRegressionLine \
     
         rValueFloatVariable \
             = math.sqrt(rSquaredFloatVariable)
-    
-        correlationFloatVariable \
-            = xSeriesParameter \
-                .corr \
-                    (ySeriesParameter, 
-                     method \
-                         = 'pearson')
 
     
         log_subroutine \
             .PrintAndLogWriteText \
-                ('r-value:     {:.4f}'.format(math.sqrt(rSquaredFloatVariable)))
+                ('r-value:     {:.4f}'.format(rValueFloatVariable))
         
         log_subroutine \
             .PrintAndLogWriteText \
                 ('r-squared:   {:.4f}'.format(rSquaredFloatVariable))
-        
-        log_subroutine \
-            .PrintAndLogWriteText \
-                ('correlation: {:.4f}'.format(correlationFloatVariable))
         
     except:
         
@@ -2029,13 +2018,6 @@ def DisplayLinearRegressionLine \
         rSquaredFloatVariable \
             = rvalue*rvalue
         
-        correlationFloatVariable \
-            = xSeries \
-                .corr \
-                    (ySeries, 
-                     method \
-                         = 'pearson')
-        
         
         log_subroutine \
             .PrintAndLogWriteText \
@@ -2045,9 +2027,6 @@ def DisplayLinearRegressionLine \
             .PrintAndLogWriteText \
                 ('r-squared:   {:.4f}'.format(rSquaredFloatVariable))
         
-        log_subroutine \
-            .PrintAndLogWriteText \
-                ('correlation: {:.4f}'.format(correlationFloatVariable))
         
     except:
         
