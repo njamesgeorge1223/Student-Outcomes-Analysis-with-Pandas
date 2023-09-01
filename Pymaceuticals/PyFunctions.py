@@ -38,6 +38,8 @@
  #      DisplaySummaryStatistics
  #      ReturnCorrelationTableStandardFormat
  #      DisplayHVPlotFromDataFrame
+ #      ReturnSeriesWithDateObjectIndices
+ #      ReturnSeriesWithUniqueIndicesLastValues
  #
  #
  #  Date            Description                             Programmer
@@ -51,6 +53,7 @@ import PyLogSubRoutines as log_subroutine
 
 import PyLogConstants as log_constant
 
+import hvplot.pandas
 import numpy as np
 import pandas as pd
 
@@ -65,7 +68,7 @@ CONSTANT_LOCAL_FILE_NAME \
     = 'PyFunctions.py'
 
 
-# In[1]:
+# In[3]:
 
 
 #*******************************************************************************************
@@ -1597,8 +1600,6 @@ def DisplaySummaryStatistics \
                             constant.CURRENCY_FLOAT_AS_INTEGER_FORMAT, 
                      'Median':
                             constant.CURRENCY_FLOAT_AS_INTEGER_FORMAT, 
-                     '% Difference':
-                            constant.PERCENT_FLOAT_FORMAT, 
                      'Number of Companies':
                             constant.INTEGER_FORMAT, 
                      'Number of Outliers':
@@ -1612,7 +1613,6 @@ def DisplaySummaryStatistics \
                        'Upper Boundary',
                        'Mean',
                        'Median',
-                       '% Difference',
                        'Number of Companies',
                        'Number of Outliers'],
                  color='lime') \
@@ -1625,7 +1625,6 @@ def DisplaySummaryStatistics \
                        'Upper Boundary',
                        'Mean',
                        'Median',
-                       '% Difference',
                        'Number of Companies',
                        'Number of Outliers'],
                  color='yellow') \
@@ -1731,6 +1730,9 @@ def ReturnCorrelationTableStandardFormat \
  #          inputDataFrameParameter
  #                          This parameter is the input DataFrame
  #  String
+ #          captionStringParameter
+ #                          This parameter is the plot's title.
+ #  String
  #          colorKeyStringParameter
  #                          This parameter is the key to the DataFrame column 
  #                          of colors.
@@ -1765,6 +1767,7 @@ def ReturnCorrelationTableStandardFormat \
 
 def DisplayHVPlotFromDataFrame \
         (inputDataFrameParameter,
+         captionStringParameter,
          colorKeyStringParameter,
          sizeKeyStringParameter,
          xlimitTupleParameter \
@@ -1779,15 +1782,15 @@ def DisplayHVPlotFromDataFrame \
             = None):
     
     try:
-        
+
         inputDataFrame \
             = inputDataFrameParameter.copy()
         
-        
+
         if hoverColumnsListOfStringsParameter == None:
-            
-            return \
-                inputDataFrame \
+
+            hvPlotOverlayObject \
+                = inputDataFrame \
                     .hvplot \
                     .points \
                         ('Longitude', 
@@ -1808,11 +1811,11 @@ def DisplayHVPlotFromDataFrame \
                             = alphaFloatParameter, 
                          tiles \
                             = tilesStringParameter)
-        
+       
         else:
-            
-            return \
-                inputDataFrame \
+
+            hvPlotOverlayObject \
+                = inputDataFrame \
                     .hvplot \
                     .points \
                         ('Longitude', 
@@ -1836,6 +1839,16 @@ def DisplayHVPlotFromDataFrame \
                          hover_cols \
                             = hoverColumnsListOfStringsParameter)
     
+    
+        log_subroutine \
+            .SaveHVPlotImageToHTMLFile \
+                (hvPlotOverlayObject,
+                 captionStringParameter)
+
+    
+        return \
+            hvPlotOverlayObject
+    
     except:
         
         log_subroutine \
@@ -1843,6 +1856,168 @@ def DisplayHVPlotFromDataFrame \
                 (f'The subroutine, DisplayHVPlotDataFrame, '
                  + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
                  + f'was unable to display a formatted HVPlot.')
+        
+        return \
+            None
+
+
+# In[25]:
+
+
+#******************************************************************************************
+ #
+ #  Function Name:  DisplayHVPlotFromDataFrame
+ #
+ #  Function Description:
+ #      This function receives a Series with timestamps for indices, converts those
+ #      timestamps to dat object, and returns the new Series.
+ #
+ #
+ #  Function Parameters:
+ #
+ #  Type    Name            Description
+ #  -----   -------------   ----------------------------------------------
+ #  Series
+ #          inputSeriesParameter
+ #                          This parameter is the input Series.
+ #
+ #
+ #  Date                Description                                 Programmer
+ #  ---------------     ------------------------------------        ------------------
+ #  8/31/2023           Initial Development                         N. James George
+ #
+ #******************************************************************************************/
+
+def ReturnSeriesWithDateObjectIndices \
+        (inputSeriesParameter):
+    
+    try:
+
+        indexList \
+            = ConvertSeriesTimestampIndexesToDateObjects \
+                    (inputSeriesParameter) \
+                .tolist()
+  
+        valuesList \
+            = inputSeriesParameter \
+                .tolist()
+   
+        return \
+            pd \
+                .Series \
+                    (valuesList, 
+                     index \
+                         = indexList)
+    
+    except:
+        
+        log_subroutine \
+            .PrintAndLogWriteText \
+                (f'The subroutine, ReturnSeriesWithDateObjectIndices, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
+                 + f'was unable to return a Series with Date Objects as the indices.')
+        
+        return \
+            None
+
+
+# In[26]:
+
+
+#******************************************************************************************
+ #
+ #  Function Name:  ReturnSeriesWithUniqueIndicesLastValues
+ #
+ #  Function Description:
+ #      This function receives a Series and removes all redundant rows with the same index
+ #      but leaves one instance of that index with the last value.
+ #
+ #
+ #  Function Parameters:
+ #
+ #  Type    Name            Description
+ #  -----   -------------   ----------------------------------------------
+ #  Series
+ #          inputSeriesParameter
+ #                          This parameter is the input Series.
+ #
+ #
+ #  Date                Description                                 Programmer
+ #  ---------------     ------------------------------------        ------------------
+ #  8/31/2023           Initial Development                         N. James George
+ #
+ #******************************************************************************************/
+
+def ReturnSeriesWithUniqueIndicesLastValues \
+        (sharesSeriesParameter):
+    
+    try:
+        sharesSeries \
+            = sharesSeriesParameter.copy()
+    
+        sharesSeries \
+            .dropna \
+                (inplace \
+                     = True)
+    
+    
+        lastIndexIntegerVariable \
+            = len \
+                (sharesSeries) - 1
+    
+    
+        indexList \
+            = []
+    
+        valueList \
+            = []
+    
+        for sharesIndex, shares in enumerate(sharesSeries):
+        
+            if sharesIndex < lastIndexIntegerVariable:
+            
+                if (sharesSeries.index[sharesIndex]).date() != (sharesSeries.index[sharesIndex+1]).date():
+            
+                    indexList \
+                        .append \
+                            (sharesSeries \
+                                 .index \
+                                     [sharesIndex])
+            
+                    valueList \
+                        .append \
+                            (sharesSeries[sharesIndex])
+        
+            elif sharesIndex == lastIndexIntegerVariable:
+            
+                if (sharesSeries.index[sharesIndex]).date() != (sharesSeries.index[sharesIndex-1]).date():
+                
+                    indexList \
+                        .append \
+                            (sharesSeries \
+                                 .index \
+                                     [sharesIndex])
+            
+                    valueList \
+                        .append \
+                            (sharesSeries \
+                                 [sharesIndex])
+    
+    
+        return \
+            pd \
+                .Series \
+                    (valueList, 
+                     index \
+                         = indexList)         
+
+    except:
+        
+        log_subroutine \
+            .PrintAndLogWriteText \
+                (f'The subroutine, ReturnSeriesWithUniqueIndicesLastValues, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
+                 + f'was unable to return a Series with last values from unique indices.')
         
         return \
             None

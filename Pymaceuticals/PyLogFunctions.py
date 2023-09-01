@@ -27,8 +27,6 @@
 
 import PyLogConstants as log_constant
 
-import datetime
-
 from datetime import date
 from datetime import datetime
 
@@ -162,7 +160,7 @@ def DebugReturnObjectWriteObject \
                     (messageStringVariable)
 
 
-# In[1]:
+# In[6]:
 
 
 #*******************************************************************************************
@@ -209,7 +207,7 @@ def ReturnTimePointMessage \
         timePointMessageStringVariable
 
 
-# In[2]:
+# In[7]:
 
 
 #*******************************************************************************************
@@ -243,16 +241,26 @@ def ReturnImageFilePathString \
         (captionStringParameter \
             = 'test',
          imageFormatStringParameter \
-            = 'png'):
+            = ''):
     
     tempCaptionStringVariable \
         = ''.join(filter(str.isalnum, captionStringParameter))
     
+    
     imageFilePathStringVariable \
         = log_constant.IMAGES_DIRECTORY_PATH \
-          + '/' \
-          + log_constant.PROGRAM_DESIGNATION \
-          + tempCaptionStringVariable
+            + '/' \
+            + log_constant.PROGRAM_DESIGNATION \
+            + tempCaptionStringVariable
+    
+    
+    if imageFormatStringParameter != '' \
+        and imageFormatStringParameter != None:
+    
+        imageFilePathStringVariable \
+            = imageFilePathStringVariable \
+              + '.' \
+              + imageFormatStringParameter
     
     return \
         imageFilePathStringVariable

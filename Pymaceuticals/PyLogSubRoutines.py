@@ -24,6 +24,7 @@
  #      SetImageMode
  #      SetProgramDesignation
  #      SavePlotImage
+ #      SaveHVPlotImageToHTMLFile
  #
  #
  #  Date            Description                             Programmer
@@ -36,8 +37,10 @@ import PyLogConstants as log_constant
 import PyLogFunctions as log_function
 
 import matplotlib.pyplot as plt
+import panel as pn
 
 import os
+import copy
 
 
 # In[2]:
@@ -619,9 +622,15 @@ def SetProgramDesignation \
  #  String
  #          captionStringParameter
  #                          This parameter is the text for the plot title.
+ #  Integer
+ #          dpiIntegerParameter
+ #                          This parameter is the dots per square inch for the image.
+ #  Float
+ #          padInchesFloatParameter
+ #                          This parameter is the buffer around the plot in inches.
  #  String
- #          captionStringParameter
- #                          This parameter is the text for the plot title.
+ #          imageFormatStringParameter
+ #                          This parameter is the image format (png, html, etc.).
  #
  #
  #  Date                Description                                 Programmer
@@ -638,27 +647,106 @@ def SavePlotImage \
          padInchesFloatParameter \
             = 0.5,
          imageFormatStringParameter \
-            = 'png'):
+            = ''):
 
-    if log_constant \
-            .IMAGE_FLAG \
-                == True:
+    try:
+        
+        if log_constant.IMAGE_FLAG == True:
 
-        imageFilePathStringVariable \
-            = log_function \
-                .ReturnImageFilePathString \
-                    (captionStringParameter,
-                     imageFormatStringParameter)
+            imageFilePathStringVariable \
+                = log_function \
+                    .ReturnImageFilePathString \
+                        (captionStringParameter,
+                            imageFormatStringParameter)
 
-        plt \
-            .savefig \
-                (imageFilePathStringVariable, 
-                 dpi \
-                     = dpiIntegerParameter, 
-                 bbox_inches \
-                     = 'tight', 
-                 pad_inches \
-                     = 0.5)
+            plt \
+                .savefig \
+                    (imageFilePathStringVariable, 
+                     dpi \
+                         = dpiIntegerParameter, 
+                     bbox_inches \
+                         = 'tight', 
+                     pad_inches \
+                         = 0.5)
+
+    except:
+        
+        print \
+            (f'The subroutine, SavePlotImage, in file {CONSTANT_LOCAL_FILE_NAME}, ' \
+             + f'could not save a plot to a file for caption, {captionStringParameter}.')   
+
+
+# In[15]:
+
+
+#*******************************************************************************************
+ #
+ #  Subroutine Name:  SaveHVPlotImageToHTMLFile
+ #
+ #  Subroutine Description:
+ #      This subroutine sets the value for the global program designation String.
+ #
+ #
+ #  Subroutine Parameters:
+ #
+ #  Type    Name            Description
+ #  -----   -------------   ----------------------------------------------
+ #  Object
+ #          hvPlotOverlayParameter
+ #                          This parameter is the input hvplot overlay object.
+ #  String
+ #          captionStringParameter
+ #                          This parameter is the text for the plot title.
+ #
+ #
+ #  Date                Description                                 Programmer
+ #  ---------------     ------------------------------------        ------------------
+ #  8/29/2023           Initial Development                         N. James George
+ #
+ #******************************************************************************************/
+
+def SaveHVPlotImageToHTMLFile \
+        (hvPlotOverlayParameter,
+         captionStringParameter \
+            = ''):
+    
+    try:
+        
+        if log_constant.IMAGE_FLAG == True:
+
+            hvPlotOverlay \
+                = copy \
+                    .copy \
+                        (hvPlotOverlayParameter)
+        
+            hvPlotOverlay \
+                .opts \
+                    (width \
+                         = 1100, 
+                     height \
+                         = 550)
+        
+            imageFilePathStringVariable \
+                = log_function \
+                    .ReturnImageFilePathString \
+                        (captionStringParameter,
+                            'html')
+
+            pn \
+                .pane \
+                    .HoloViews \
+                        (hvPlotOverlay) \
+                            .save \
+                                (imageFilePathStringVariable, 
+                                 title \
+                                     = captionStringParameter)
+    
+    except:
+        
+        print \
+            (f'The subroutine, SaveHVPlotImageToHTMLFile, in file {CONSTANT_LOCAL_FILE_NAME}, ' \
+             + f'could not save an hvplot to an HTML file for caption, {captionStringParameter}.') 
+    
 
 
 # In[ ]:

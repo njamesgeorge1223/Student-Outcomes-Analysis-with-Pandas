@@ -1055,7 +1055,9 @@ def DisplayMatplotlibScatterPlotFromXYSeries \
                      .name,
                  fontdict \
                      = {'fontsize': 
-                            12.0})
+                            12.0},
+                 labelpad \
+                    = 10)
 
         plt \
             .ylabel \
@@ -1314,6 +1316,10 @@ def DisplayStackedSubplots \
                             legendYOffsetFloatParameter))
         
         
+        log_subroutine \
+            .SavePlotImage \
+                (captionStringParameter)
+        
         plt \
             .show()
             
@@ -1491,7 +1497,9 @@ def DisplayOneLineGraphFromSeries \
                  legend \
                      = False, 
                  fontsize \
-                     = 12)
+                     = 12,
+                 rot \
+                    = 90.0)
 
 
         plt \
@@ -1506,7 +1514,9 @@ def DisplayOneLineGraphFromSeries \
             .xlabel \
                 (xLabelStringParameter, 
                     fontsize \
-                        = 12)
+                        = 12,
+                 labelpad \
+                    = 10)
     
         plt \
             .ylabel \
@@ -1619,7 +1629,9 @@ def DisplayLinesGraph \
             .xlabel \
                 (xlabelStringParameter, 
                  fontsize \
-                    = 12)
+                    = 12,
+                 labelpad \
+                    = 10)
 
         plt \
             .ylabel \
@@ -1837,6 +1849,7 @@ def DisplayTwoByTwoHistograms \
             .SavePlotImage \
                 (figureTitleStringParameter)
 
+        
         plt.show()
 
     except:
