@@ -103,9 +103,3 @@ def ReturnFormattedCompleteMedicalStudyStylerObject \
             None
     
 
-
-# In[ ]:
-
-
-
-
