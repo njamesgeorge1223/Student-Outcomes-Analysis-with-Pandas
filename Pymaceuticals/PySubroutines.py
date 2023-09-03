@@ -26,11 +26,14 @@
  #      DisplayTwoByTwoHistograms
  #      DisplayLinearRegressionLine
  #      DisplayTwoPieChartsSideBySide
+ #      DisplayStackedBarChartFromDataFrame
  #
  #
  #  Date            Description                             Programmer
  #  ----------      ------------------------------------    ------------------
  #  08/22/2023      Initial Development                     N. James George
+ #  09/03/2023      Added DisplayStackedBarChartFromDataFrame
+ #                                                          N. James George
  #
  #******************************************************************************************/
 
@@ -174,7 +177,7 @@ def DisplayPandasBarChartFromSeries \
                         'fontstyle': 
                             'normal'},
                  labelpad \
-                    = 0)
+                    = 10)
 
         plt \
             .ylabel \
@@ -2259,6 +2262,171 @@ def DisplayTwoPieChartsSideBySide \
                  + f'in source file, {CONSTANT_LOCAL_FILE_NAME},\n'
                  + f'was unable to calculate and display two pie charts side-by-side\n'
                  + f'for the caption, {captionStringParameter}.')
+
+
+# In[20]:
+
+
+#*******************************************************************************************
+ #
+ #  Subroutine Name:  DisplayStackedBarChartFromDataFrame
+ #
+ #  Subroutine Description:
+ #      This subroutine receives a Series and formatting parameters 
+ #      and plots a bar chart using the Pandas DataFrame.plot() 
+ #      method.
+ #
+ #
+ #  Subroutine Parameters:
+ #
+ #  Type    Name            Description
+ #  -----   -------------   ----------------------------------------------
+ #  Series
+ #          inputSeriesParameter
+ #                          This parameter is the Series used as input.
+ #  List
+ #          barColorsListParameter
+ #                          This parameter is the list of bar colors.
+ #  String
+ #          captionStringParameter
+ #                          This parameter is the chart title.
+ #  String
+ #          yLabelStringParameter
+ #                          This parameter is the y-axis label.
+ #  String
+ #          edgeColorStringParameter
+ #                          This parameter is the bar edge color.
+ #  Float
+ #          lineWidthFloatParameter
+ #                          This parameter is the bar edge line width.
+ #  Float
+ #          alphaFloatParameter
+ #                          This parameter is the transparency value
+ #                          for the bars (0.0-1.0).
+ #  Float
+ #          widthFloatParameter
+ #                          This parameter is the width of a bar.
+ #  Float
+ #          axisTickLabelRotationFloatParameter
+ #                          This parameter is the rotation of the x-axis 
+ #                          tick labels.
+ #
+ #
+ #  Date                Description                                 Programmer
+ #  ---------------     ------------------------------------        ------------------
+ #  9/03/2023           Initial Development                         N. James George
+ #
+ #******************************************************************************************/
+
+def DisplayStackedBarChartFromDataFrame \
+        (inputDataFrameParameter,
+         captionStringParameter, 
+         xLabelStringParameter \
+             = '',
+         yLabelStringParameter \
+             = '',
+         barColorsListParameter \
+             = ['red', 
+                'blue',
+                'green',
+                'purple'],
+         edgeColorStringParameter \
+            = 'black',
+         lineWidthFloatParameter \
+            = 1.0,
+         alphaFloatParameter \
+            = 1.0,
+         widthFloatParameter \
+            = 0.5,
+         axisTickLabelRotationFloatParameter \
+            = 90.0):
+    
+    try:
+        
+        inputDataFrame \
+            = inputDataFrameParameter.copy()
+        
+        inputDataFrame \
+            .plot \
+            .bar \
+                (stacked \
+                     = True,
+                 align \
+                     = 'center',
+                 color \
+                     = barColorsListParameter,
+                 edgecolor \
+                     = edgeColorStringParameter,
+                 linewidth \
+                     = lineWidthFloatParameter,
+                 alpha \
+                     = alphaFloatParameter,
+                 width \
+                     = widthFloatParameter, 
+                 rot \
+                     = axisTickLabelRotationFloatParameter,
+                 legend \
+                     = True)
+        
+        plt \
+            .legend \
+                (bbox_to_anchor \
+                     = (1.1, 
+                        1.05))
+
+        plt \
+            .title \
+                (captionStringParameter,
+                 fontdict \
+                     = {'fontsize': 
+                            14, 
+                        'fontstyle': 
+                            'normal'},
+                 pad = 20)
+
+        plt \
+            .xlabel \
+                (xLabelStringParameter,
+                 fontdict \
+                     = {'fontsize': 
+                            12,
+                        'fontstyle': 
+                            'normal'},
+                 labelpad \
+                    = 10)
+
+        plt \
+            .ylabel \
+                (yLabelStringParameter,
+                 fontdict \
+                    = {'fontsize': 
+                            12,
+                       'fontstyle': 
+                            'normal'},
+                 labelpad \
+                     = 10)
+       
+        plt \
+            .grid \
+                (axis \
+                    = "y")
+        
+    
+        log_subroutine \
+            .SavePlotImage \
+                (captionStringParameter)
+      
+        plt \
+            .show()
+     
+    except:
+        
+        log_subroutine \
+            .PrintAndLogWriteText \
+                (f'The subroutine, DisplayPandasBarChartFromSeries, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME},\n'
+                 + f'with the caption, {captionStringParameter},\n'
+                 + f'was unable to plot a bar chart using Pandas.')
 
 
 # In[ ]:

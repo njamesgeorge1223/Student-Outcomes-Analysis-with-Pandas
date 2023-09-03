@@ -338,8 +338,8 @@ def ReturnStylerObjectStandardFormat \
                          thousands \
                             = ',', 
                          decimal \
-                            = '.') \
-                    .hide() 
+                            = '.')
+        
         
     except:
             
