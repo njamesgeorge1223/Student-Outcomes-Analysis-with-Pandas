@@ -1,1 +1,1 @@
-This repository contains the folders for the PyCitySchools and Pymaceuticals Challenges.
+This repository contains the folders for the PyCitySchools Challenge.
