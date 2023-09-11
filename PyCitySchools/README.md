@@ -20,3 +20,8 @@ There are two notable observations from the test scores and passage rates by gra
 
 In conclusion, the school district includes seven large district high schools and eight smaller charter high schools.  Despite higher per capita spending, the district schools trail behind the charter schools in performance and bring down the district-wide averages for test scores and passing rates.  Thus, this disparity in school performance is a catalyst for further investigation.  Although there are many possibilities, the culprit is likely either district and school practices, social problems, or a combination of both.  As such, I suggest an additional study to root out the fundamental causes behind these conclusions.
 
+----
+
+## Copyright
+
+N. James George © 2023. All Rights Reserved.
