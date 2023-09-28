@@ -1,4 +1,10 @@
+![1680105043870](https://github.com/njgeorge000158/Student-Outcomes-Analysis-in-Jupyter-Notebook/assets/137228821/bf8bce8b-3e80-40e6-a16a-7e0514455542)
+
+----
+
 # PyCity Schools Analysis
+
+----
 
 As the Chief Data Scientist for the city’s school district, I analyzed district-wide standardized test results as well as other information to understand trends in school performance.  Although the data was sufficient to establish a picture of the current situation, it also produced additional questions regarding its underlying reasons.  The following trends summarize my conclusions.
 
