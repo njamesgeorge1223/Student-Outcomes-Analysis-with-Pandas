@@ -2,7 +2,7 @@
 
 ----
 
-# PyCity Schools Analysis
+# PyCitySchools Analysis
 
 ----
 
