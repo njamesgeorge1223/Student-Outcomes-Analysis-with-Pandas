@@ -8,7 +8,7 @@
 
 # <br> **Section 1: Data Preparation**
 
-##   **1.1: Data Retrievel**
+> ## **1.1: Data Retrievel**
 
 ##   **1.2: Merge DataFrames**
 
