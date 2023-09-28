@@ -227,3 +227,9 @@
 > ## **12.5: Display Test Scores/Passing Rates (Median) by School Type**
 
 > ## **12.6: Display Test Scores/Passing Rates (Mean/Median) by School Type**
+
+----
+
+## Copyright
+
+N. James George © 2023. All Rights Reserved.
