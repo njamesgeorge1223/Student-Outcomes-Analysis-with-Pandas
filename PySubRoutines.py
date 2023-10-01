@@ -4260,7 +4260,7 @@ def DisplayTwoByFourHistogramsFromDataFrameList \
 
         log_subroutine \
             .SavePlotImage \
-                (figureTitleFontSizeFloat)
+                (figureTitleString)
 
   
         plt.show()
@@ -4545,7 +4545,7 @@ def DisplayTwoByFourPlotsFromDataFrameList \
 
         log_subroutine \
             .SavePlotImage \
-                (figureTitleFontSizeFloat)
+                (figureTitleString)
 
   
         plt.show()
