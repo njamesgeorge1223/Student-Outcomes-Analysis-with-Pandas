@@ -33,6 +33,8 @@
  #      DisplayHorizontalBarChartFromXYLists
  #      DisplayTwoScatterPlotsSideBySide
  #      DisplayPlotFromDataFrame
+ #      DisplayMultiLineGraphFromDataFrame
+ #      DisplayTwoByFourHistogramsFromDataFrameList
  #
  #
  #  Date            Description                             Programmer
@@ -52,6 +54,13 @@
  #  09/22/2023      Added parameter, labelYOffsetFloat,     N. James George
  #                  to ReturnPlotFromXYSeries
  #  09/23/2023      Renamed ReturnPlotFromXYSeries to DisplayPlotFromXYSeries
+ #                                                          N. James George
+ #  09/28/2023      Added parameters to DisplayHistogramFromSeries
+ #                                                          N. James George
+ #  09/29/2023      Added DisplayMultiLineGraphFromDataFrame,
+ #                        DisplayTwoByFourHistogramsFromDataFrameList
+ #                                                          N. James George
+ #  09/29/2023      Added DisplayTwoByFourPlotsFromDataFrameList
  #                                                          N. James George
  #
  #******************************************************************************************/
@@ -1854,7 +1863,8 @@ def DisplayOneLineGraphFromSeries \
  #
  #  Date                Description                                 Programmer
  #  ---------------     ------------------------------------        ------------------
- #  8/22/2023           Initial Development                         N. James George
+ #  08/22/2023          Initial Development                         N. James George
+ #  09/30/2023          Fixed misspelled parameter causing problem  N. James George
  #
  #******************************************************************************************/ 
 
@@ -1862,8 +1872,8 @@ def DisplayLinesGraph \
         (frameDictionaryParameter,
          colorListParameter,
          captionStringParameter,
-         xlabelStringParameter = '',
-         ylabelStringParameter = '',
+         xLabelStringParameter = '',
+         yLabelStringParameter = '',
          rotationIntegerParameter = 0.0):
         
     try:
@@ -1889,7 +1899,7 @@ def DisplayLinesGraph \
                      = colorListParameter,
                  figsize \
                     = (9.708, 6))
-    
+
         plt \
             .suptitle \
                 (captionStringParameter, 
@@ -1897,21 +1907,16 @@ def DisplayLinesGraph \
                     = 20, 
                  y \
                     = 0.99)
-    
-        plt \
-            .xlabel \
-                (xLabelStringParameter,
-                 fontdict \
-                     = {'fontsize': 
-                            16, 
-                        'fontstyle': 
-                            'normal'},
-                 labelpad \
-                    = 10)
+
+        plt.xlabel \
+            (xLabelStringParameter,
+             fontdict = {'fontsize': 16, 
+                         'fontstyle': 'normal'},
+             labelpad = 10)
 
         plt \
             .ylabel \
-                (ylabelStringParameter,
+                (yLabelStringParameter,
                  fontdict \
                      = {'fontsize': 
                             16, 
@@ -1919,21 +1924,21 @@ def DisplayLinesGraph \
                             'normal'},
                  labelpad \
                     = 0)
-        
+
         plt \
             .xticks \
                 (fontsize \
                      = 14)
-       
+
         plt \
             .yticks \
                 (fontsize \
                      = 14)
-        
+
         log_subroutine \
             .SavePlotImage \
                 (captionStringParameter)
-        
+
         plt \
             .show()
 
@@ -2009,8 +2014,7 @@ def DisplaySeriesCountAndRedundancies \
  #  Subroutine Name:  DisplayLinesGraph
  #
  #  Subroutine Description:
- #      This subroutine displays a two-by-two plot of four histograms from 
- #      a Frame Dictionary.
+ #      This subroutine displays a multi-line graph.
  #
  #
  #  Subroutine Parameters:
@@ -2725,7 +2729,9 @@ def DisplayStackedBarChartFromDataFrame \
  #
  #  Date                Description                                 Programmer
  #  ---------------     ------------------------------------        ------------------
- #  9/06/2023           Initial Development                         N. James George
+ #  09/06/2023          Initial Development                         N. James George
+ #  09/28/2023          Added parameters, figureWidthFloat and figureHeightFloat
+ #                                                                  N. James George
  #
  #******************************************************************************************/
 
@@ -2743,7 +2749,11 @@ def DisplayHistogramFromSeries \
          lineWidthFloatParameter \
             = 1.5,
          edgeColorStringParameter \
-            = 'black'):
+            = 'black',
+         figureWidthFloat \
+             = 9.708,
+         figureHeightFloat \
+             = 6.0):
     
     try:
         
@@ -2766,7 +2776,8 @@ def DisplayHistogramFromSeries \
                  legend \
                      = False,
                  figsize \
-                    = (9.708, 6))
+                    = (figureWidthFloat, 
+                       figureHeightFloat))
 
         plt \
             .title \
@@ -3667,6 +3678,12 @@ def DisplayTwoScatterPlotsSideBySide \
  #  Float
  #          labelPadFloat
  #                          This parameter is the axis label padding from the chart.
+ #  Float
+ #          figureWidthFloat
+ #                          This parameter is the figure width.
+ #  Float
+ #          figureHeightFloat
+ #                          This parameter is the figure height.
  #
  #
  #  Date                Description                                 Programmer
@@ -3700,7 +3717,11 @@ def DisplayPlotFromDataFrame \
          titlePadFloat \
             = 20.0,
          labelPadFloat \
-            = 10.0):
+            = 10.0,
+         figureWidthFloat \
+             = 9.708132,
+         figureHeightFloat \
+             = 6.0):
     
     try:
         
@@ -3788,6 +3809,755 @@ def DisplayPlotFromDataFrame \
                  + f'in source file, {CONSTANT_LOCAL_FILE_NAME},\n'
                  + f'was unable to display a plot from a DataFrame\n'
                  + f'for the caption, {captionString}.')
+
+
+# In[27]:
+
+
+#*******************************************************************************************
+ #
+ #  Subroutine Name:  DisplayMultiLineGraphFromDataFrame
+ #
+ #  Subroutine Description:
+ #      This subroutine displays a multi-line graph based on an input DataFrame
+ #      and formatting parameters.
+ #
+ #
+ #  Subroutine Parameters:
+ #
+ #  Type    Name            Description
+ #  -----   -------------   ----------------------------------------------
+ #  Series
+ #          inputDataFrame
+ #                          This parameter is the input DataFrame
+ #  String
+ #          colorStringObject
+ #                          This parameter specifies the colors of the lines.
+ #  String
+ #          captionString
+ #                          This parameter is the chart title.
+ #  Boolean
+ #          legendFlagBoolean
+ #                          This parameter indicates whether there is a legennd or not.
+ #  Integer
+ #          markerSizeInteger
+ #                          This parameter is the line marker size.
+ #  Float
+ #          legendXCoordinateFloat
+ #                          This parameter is the legend's x-coordinate from the
+ #                          lower left corner of the chart.
+ #  Float
+ #          legendYCoordinateFloat
+ #                          This parameter is the legend's y-coordinate from the
+ #                          lower left corner of the chart.
+ #
+ #
+ #  Date                Description                                 Programmer
+ #  ---------------     ------------------------------------        ------------------
+ #  9/29/2023           Initial Development                         N. James George
+ #
+ #******************************************************************************************/ 
+
+def DisplayMultiLineGraphFromDataFrame \
+    (inputDataFrame,
+     colorStringObject,
+     captionString,
+     xLabelString,
+     yLabelString,
+     legendFlagBoolean \
+        = False,
+     markerSizeInteger \
+        = 40,
+     legendXCoordinateFloat \
+        = 0.0,
+     legendYCoordinateFloat \
+        = 0.0):
+    
+    try:
+    
+        inputDataFrame \
+            .plot \
+                (kind \
+                     = 'line', 
+                 color \
+                     = colorStringObject, 
+                 grid \
+                     = True, 
+                 legend \
+                     = legendFlagBoolean,
+                 marker \
+                     = 'o',
+                 markerfacecolor \
+                     = 'red',
+                 markeredgecolor \
+                     = 'black',
+                 markersize \
+                     = markerSizeInteger,
+                 fontsize \
+                     = 12,
+                 rot \
+                    = 90.0,
+                 figsize \
+                    = (9.708, 6))
+        
+        if legendFlagBoolean == True:
+        
+            plt \
+                .legend \
+                    (loc \
+                         = 'center right', 
+                     bbox_to_anchor \
+                         = (legendXCoordinateFloat,
+                            legendYCoordinateFloat))
+
+        plt \
+            .suptitle \
+                (captionString, 
+                 fontsize \
+                    = 20, 
+                 y \
+                    = 1.0)
+    
+        plt \
+            .xlabel \
+                (xLabelString,
+                 fontdict \
+                     = {'fontsize': 
+                            16, 
+                        'fontstyle': 
+                            'normal'},
+                 labelpad \
+                    = 10)
+    
+        plt \
+            .ylabel \
+                (yLabelString, \
+                 fontdict \
+                     = {'fontsize': 
+                            16, 
+                        'fontstyle': 
+                            'normal'},
+                 labelpad \
+                    = 0)
+        
+        plt \
+            .xticks \
+                (fontsize \
+                     = 14)
+       
+        plt \
+            .yticks \
+                (fontsize \
+                     = 14)
+        
+        log_subroutine \
+            .SavePlotImage \
+                (captionString)
+    
+        plt \
+            .show()
+        
+    except:
+        
+        log_subroutine \
+            .PrintAndLogWriteText \
+                (f'The subroutine, DisplayOneLineGraphFromSeries, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME},\n'
+                 + f'with the caption, {captionString},\n'
+                 + f'was unable to create a one line graph.')
+
+
+# In[28]:
+
+
+#*******************************************************************************************
+ #
+ #  Subroutine Name:  DisplayLinesGraph
+ #
+ #  Subroutine Description:
+ #      This subroutine displays eight histograms in a four-by-eight grid.
+ #
+ #
+ #  Subroutine Parameters:
+ #
+ #  Type    Name            Description
+ #  -----   -------------   ----------------------------------------------
+ #  DataFrame List
+ #          inputDataFrameList
+ #                          This parameter is the input List of DataFrames
+ #  String List
+ #          columnNameStringList
+ #                          This parameter is a List of the columns for display.
+ #  String
+ #          figureTitleString
+ #                          This parameter is the title of the figure.
+ #  Float
+ #          figureTitleFontSizeFloat
+ #                          This parameter is the figure title's font size.
+ #  Float
+ #          figureTitleYPadFloat
+ #                          This parameter is the figure title's space padding.
+ #  String
+ #          figureXLabelString
+ #                          This parameter is the figure's x-axis label.
+ #  Float
+ #          figureXLabelFontSizeFloat
+ #                          This parameter is the figure's x-axis label's font size.
+ #  Float
+ #          figureXLabelPadFloat
+ #                          This parameter is the figure's x-axis label's padding.
+ #  String
+ #          figureYLabelString
+ #                          This parameter is the figure's y-axis label.
+ #  Float
+ #          figureYLabelFontSizeFloat
+ #                          This parameter is the figure's y-axis label's font size.
+ #  Float
+ #          figureYLabelPadFloat
+ #                          This parameter is the figure's y-axis label's padding.
+ #  Integer
+ #          binsInteger
+ #                          This parameter is the number of bins in the histograms.
+ #  Float
+ #          alphaFloat
+ #                          This parameter is the transparency level of the histogram bars.
+ #  String List
+ #          colorStringList
+ #                          This parameter is the colors for the different histograms.
+ #  Float
+ #          barLineWidthFloat
+ #                          This parameter is the width of the lines outlining the histogram 
+ #                          bars.
+ #  String
+ #          barEdgeColorString
+ #                          This parameter is the color of the lines outlining the histogram
+ #                          bars.
+ #  String List
+ #          plotTitleStringList
+ #                          This parameter is the List of histogram titles.
+ #  Float
+ #          plotTitleFontSizeFloat
+ #                          This parameter is the histogram title font size.
+ #  Float
+ #          plotTitleLabelPadFloat
+ #                          This parameter is the histogram title space padding.
+ #  String
+ #          plotXLabelString
+ #                          This parameter is the histogram x-axis label.
+ #  Float
+ #          plotXLabelFontSizeFloat
+ #                          This parameter is the histogram x-axis label's font size.
+ #  Float
+ #          plotXLabelPadFloat
+ #                          This parameter is the histogram x-axis label's space padding.
+ #  String
+ #          plotYLabelString
+ #                          This parameter is the histogram y-axis label.
+ #  Float
+ #          plotYLabelFontSizeFloat
+ #                          This parameter is the histogram y-axis label's font size.
+ #  Float
+ #          plotYLabelPadFloat
+ #                          This parameter is the histogram y-axis label's space padding.
+ #  Boolean
+ #          normalizeYAxisBoolean
+ #                          This parameter normalizes the y-axes for the various plots.
+ #  Boolean
+ #          normalizeYAxisHighestValueCountBoolean
+ #                          This parameter indicates whether the highest value count alone 
+ #                          is the maximum y-axis value.
+ #  Float Tuple
+ #          figSizeFloatTuple
+ #                          This parameter is the figure length and height.
+ #
+ #
+ #  Date                Description                                 Programmer
+ #  ---------------     ------------------------------------        ------------------
+ #  09/29/2023          Initial Development                         N. James George
+ #  09/30/2023          Added x-axis and y-axis limits parameters   N. James George
+ #
+ #******************************************************************************************/ 
+
+def DisplayTwoByFourHistogramsFromDataFrameList \
+        (inputDataFrameList,
+         columnNameStringList,
+         figureTitleString \
+             = '',
+         figureTitleFontSizeFloat \
+             = 24.0,
+         figureTitleYPadFloat \
+             = 0.9,
+         figureXLabelString \
+             = '',
+         figureXLabelFontSizeFloat \
+             = 22.0,
+         figureXLabelPadFloat \
+             = 0.1,
+         figureYLabelString \
+             = '',
+         figureYLabelFontSizeFloat \
+             = 22.0,
+         figureYLabelPadFloat \
+             = 0.06,
+         binsInteger \
+             = 20,
+         alphaFloat \
+             = 0.8,
+         colorStringList \
+             = ['firebrick'],
+         barLineWidthFloat \
+             = 1.5,
+         barEdgeColorString \
+             = 'black',
+         plotTitleStringList \
+             = None,
+         plotTitleFontSizeFloat \
+             = 20.0,
+         plotTitleLabelPadFloat \
+             = 10.0,
+         plotXLabelString \
+             = '',
+         plotXLabelFontSizeFloat \
+             = 16.0,
+         plotXLabelPadFloat \
+             = 10.0,
+         plotYLabelString \
+             = '',
+         plotYLabelFontSizeFloat \
+             = 16.0,
+         plotYLabelPadFloat \
+             = 10.0,
+         normalizeXAxisBoolean \
+             = False,
+         normalizeYAxisBoolean \
+             = False,
+         normalizeYAxisHighestValueCountBoolean \
+             = False,
+         figSizeFloatTuple \
+             = (15, 9.2705)):
+
+    try:
+
+        fig, axs \
+            = plt \
+                .subplots \
+                    (2, 4,
+                     figsize \
+                        = figSizeFloatTuple,
+                     sharey \
+                         = True, 
+                     tight_layout \
+                         = True)
+
+        plt \
+            .clf()
+        
+        
+        if normalizeXAxisBoolean == True:
+
+            xAxisRangeFloatList \
+                = function \
+                    .ReturnMinimumMaximumValuesXAxisHistogram \
+                        (inputDataFrameList,
+                         columnNameStringList)
+
+        
+        if normalizeYAxisBoolean == True:
+
+            yAxisRangeFloatList \
+                = function \
+                    .ReturnMinimumMaximumValuesYAxisHistogram \
+                        (inputDataFrameList,
+                         columnNameStringList,
+                         normalizeYAxisHighestValueCountBoolean,
+                         binsInteger)
+
+
+        print(yAxisRangeFloatList)
+        for index in range(len(inputDataFrameList)):
+
+            plt \
+                .subplot \
+                    (2, 4, index + 1)
+
+            inputDataFrameList[index] \
+                [columnNameStringList[index]] \
+                    .plot \
+                    .hist \
+                        (bins \
+                             = binsInteger, 
+                         alpha \
+                             = alphaFloat, 
+                         color \
+                             = colorStringList, 
+                         linewidth \
+                             = barLineWidthFloat, 
+                         edgecolor \
+                             = barEdgeColorString, 
+                         legend \
+                             = False)
+
+            plt \
+                .title \
+                    (plotTitleStringList[index], 
+                     fontdict \
+                        = {'fontsize': plotTitleFontSizeFloat, 
+                           'fontstyle': 'normal'},
+                     pad = plotTitleLabelPadFloat)
+  
+            plt \
+                .xlabel \
+                    (plotXLabelString,
+                     fontdict \
+                        = {'fontsize': plotXLabelFontSizeFloat, 
+                           'fontstyle': 'normal'},
+                     labelpad = plotXLabelPadFloat)
+
+            plt \
+                .ylabel \
+                    (plotYLabelString,
+                     fontdict \
+                        = {'fontsize': plotYLabelFontSizeFloat, 
+                           'fontstyle': 'normal'},
+                           labelpad = plotYLabelPadFloat)
+        
+            if normalizeXAxisBoolean == True:
+                
+                plt.xlim \
+                    (xAxisRangeFloatList[0], 
+                     xAxisRangeFloatList[1])
+
+            if normalizeYAxisBoolean == True:
+
+                plt.ylim \
+                    (yAxisRangeFloatList[0], 
+                     yAxisRangeFloatList[1])
+            
+
+        plt \
+            .tight_layout \
+                (pad = 3.0)
+    
+  
+        fig \
+            .suptitle \
+                (figureTitleString, 
+                 fontsize = figureTitleFontSizeFloat, 
+                 y = figureTitleYPadFloat)
+ 
+        fig \
+            .supxlabel \
+                (figureXLabelString,
+                 fontsize = figureXLabelFontSizeFloat,
+                 y = figureXLabelPadFloat)
+
+        fig \
+            .supylabel \
+                (figureYLabelString,
+                 fontsize = figureYLabelFontSizeFloat,
+                 x = figureYLabelPadFloat)
+
+
+        log_subroutine \
+            .SavePlotImage \
+                (figureTitleFontSizeFloat)
+
+  
+        plt.show()
+
+    except:
+        
+        log_subroutine \
+            .PrintAndLogWriteText \
+                (f'The subroutine, DisplayTwoByFourHistogramsFromDataFrameList, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME},\n'
+                 + f'with the caption, {figureTitleString},\n'
+                 + f'was unable to create a two-by-four set of eight histograms.')
+
+
+# In[29]:
+
+
+#*******************************************************************************************
+ #
+ #  Subroutine Name:  DisplayTwoByFourPlotsFromDataFrameList
+ #
+ #  Subroutine Description:
+ #      This subroutine displays eight plots in a four-by-eight grid.
+ #
+ #
+ #  Subroutine Parameters:
+ #
+ #  Type    Name            Description
+ #  -----   -------------   ----------------------------------------------
+ #  DataFrame List
+ #          inputDataFrameList
+ #                          This parameter is the input List of DataFrames
+ #  String List
+ #          columnNameStringList
+ #                          This parameter is a List of the columns for display.
+ #  String
+ #          figureTitleString
+ #                          This parameter is the title of the figure.
+ #  Float
+ #          figureTitleFontSizeFloat
+ #                          This parameter is the figure title's font size.
+ #  Float
+ #          figureTitleYPadFloat
+ #                          This parameter is the figure title's space padding.
+ #  String
+ #          figureXLabelString
+ #                          This parameter is the figure's x-axis label.
+ #  Float
+ #          figureXLabelFontSizeFloat
+ #                          This parameter is the figure's x-axis label's font size.
+ #  Float
+ #          figureXLabelPadFloat
+ #                          This parameter is the figure's x-axis label's padding.
+ #  String
+ #          figureYLabelString
+ #                          This parameter is the figure's y-axis label.
+ #  Float
+ #          figureYLabelFontSizeFloat
+ #                          This parameter is the figure's y-axis label's font size.
+ #  Float
+ #          figureYLabelPadFloat
+ #                          This parameter is the figure's y-axis label's padding.
+ #  Float
+ #          alphaFloat
+ #                          This parameter is the transparency level of the histogram bars.
+ #  String List
+ #          colorStringList
+ #                          This parameter is the colors for the different histograms.
+ #  String List
+ #          plotTitleStringList
+ #                          This parameter is the List of histogram titles.
+ #  Float
+ #          plotTitleFontSizeFloat
+ #                          This parameter is the histogram title font size.
+ #  Float
+ #          plotTitleLabelPadFloat
+ #                          This parameter is the histogram title space padding.
+ #  String
+ #          plotXLabelString
+ #                          This parameter is the histogram x-axis label.
+ #  Float
+ #          plotXLabelFontSizeFloat
+ #                          This parameter is the histogram x-axis label's font size.
+ #  Float
+ #          plotXLabelPadFloat
+ #                          This parameter is the histogram x-axis label's space padding.
+ #  String
+ #          plotYLabelString
+ #                          This parameter is the histogram y-axis label.
+ #  Float
+ #          plotYLabelFontSizeFloat
+ #                          This parameter is the histogram y-axis label's font size.
+ #  Float
+ #          plotYLabelPadFloat
+ #                          This parameter is the histogram y-axis label's space padding.
+ #  Boolean
+ #          normalizeYAxisBoolean
+ #                          This parameter normalizes the y-axes for the various plots.
+ #  Float Tuple
+ #          figSizeFloatTuple
+ #                          This parameter is the figure length and height.
+ #
+ #
+ #  Date                Description                                 Programmer
+ #  ---------------     ------------------------------------        ------------------
+ #  09/29/2023          Initial Development                         N. James George
+ #
+ #******************************************************************************************/ 
+
+def DisplayTwoByFourPlotsFromDataFrameList \
+        (inputDataFrameList,
+         columnNameStringList,
+         figureTitleString \
+             = '',
+         figureTitleFontSizeFloat \
+             = 24.0,
+         figureTitleYPadFloat \
+             = 1.0,
+         figureXLabelString \
+             = '',
+         figureXLabelFontSizeFloat \
+             = 22.0,
+         figureXLabelPadFloat \
+             = 0.1,
+         figureYLabelString \
+             = '',
+         figureYLabelFontSizeFloat \
+             = 22.0,
+         figureYLabelPadFloat \
+             = 0.0,
+         alphaFloat \
+             = 0.8,
+         colorStringList \
+             = ['firebrick'],
+         plotTitleStringList \
+             = None,
+         plotTitleFontSizeFloat \
+             = 20.0,
+         plotTitleLabelPadFloat \
+             = 10.0,
+         plotXLabelString \
+             = '',
+         plotXLabelFontSizeFloat \
+             = 16.0,
+         plotXLabelPadFloat \
+             = 10.0,
+         plotYLabelString \
+             = '',
+         plotYLabelFontSizeFloat \
+             = 16.0,
+         plotYLabelPadFloat \
+             = 10.0,
+         normalizeYAxisBoolean \
+             = False,
+         figSizeFloatTuple \
+             = (15, 7.5)):
+
+    try:
+
+        fig, axs \
+            = plt \
+                .subplots \
+                    (2, 4,
+                     figsize \
+                        = figSizeFloatTuple,
+                     sharey \
+                         = True, 
+                     tight_layout \
+                         = True)
+
+        plt \
+            .clf()
+        
+        if normalizeYAxisBoolean == True:
+            
+            minimumYValueFloat \
+                = inputDataFrameList[0] \
+                    [columnNameStringList[0]] \
+                        .min()
+            
+            maximumYValueFloat \
+                = inputDataFrameList[0] \
+                    [columnNameStringList[0]] \
+                        .max()
+            
+            for index in range(8):
+                
+                currentMinimumYValueFloat \
+                    = inputDataFrameList[index] \
+                        [columnNameStringList[index]] \
+                            .min()
+                
+                currentMaximumYValueFloat \
+                    = inputDataFrameList[index] \
+                        [columnNameStringList[index]] \
+                            .max()
+                
+                if currentMinimumYValueFloat <= minimumYValueFloat:
+                    
+                    minimumYValueFloat = currentMinimumYValueFloat
+                    
+                if currentMaximumYValueFloat >= maximumYValueFloat:
+                    
+                    maximumYValueFloat = currentMaximumYValueFloat
+
+
+        for index in range(8):
+
+            plt \
+                .subplot \
+                    (2, 4, index + 1)
+
+            inputDataFrameList[index] \
+                [columnNameStringList[index]] \
+                    .plot \
+                        (color \
+                            = colorStringList,
+                         alpha \
+                            = alphaFloat,
+                         legend \
+                            = False)
+
+            plt \
+                .title \
+                    (plotTitleStringList[index], 
+                     fontdict \
+                        = {'fontsize': plotTitleFontSizeFloat, 
+                           'fontstyle': 'normal'},
+                     pad = plotTitleLabelPadFloat)
+  
+            plt \
+                .xlabel \
+                    (plotXLabelString,
+                     fontdict \
+                        = {'fontsize': plotXLabelFontSizeFloat, 
+                           'fontstyle': 'normal'},
+                     labelpad = plotXLabelPadFloat)
+            
+            plt \
+                .tick_params \
+                    (bottom = False,
+                     labelbottom = False)
+
+            plt \
+                .ylabel \
+                    (plotYLabelString,
+                     fontdict \
+                        = {'fontsize': plotYLabelFontSizeFloat, 
+                           'fontstyle': 'normal'},
+                           labelpad = plotYLabelPadFloat)
+            
+            if normalizeYAxisBoolean == True:
+                
+                plt.ylim \
+                    (minimumYValueFloat, 
+                     maximumYValueFloat)
+            
+
+        plt \
+            .tight_layout \
+                (pad = 3.0)
+    
+  
+        fig \
+            .suptitle \
+                (figureTitleString, 
+                 fontsize = figureTitleFontSizeFloat, 
+                 y = figureTitleYPadFloat)
+ 
+        fig \
+            .supxlabel \
+                (figureXLabelString,
+                 fontsize = figureXLabelFontSizeFloat,
+                 y = figureXLabelPadFloat)
+
+        fig \
+            .supylabel \
+                (figureYLabelString,
+                 fontsize = figureYLabelFontSizeFloat,
+                 x = figureYLabelPadFloat)
+
+
+        log_subroutine \
+            .SavePlotImage \
+                (figureTitleFontSizeFloat)
+
+  
+        plt.show()
+
+    except:
+        
+        log_subroutine \
+            .PrintAndLogWriteText \
+                (f'The subroutine, DisplayTwoByFourPlotsFromDataFrameList, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME},\n'
+                 + f'with the caption, {figureTitleString},\n'
+                 + f'was unable to create a two-by-four set of eight plots.')
 
 
 # In[ ]:

@@ -48,6 +48,7 @@
  #      DisplayDataFrameDescription
  #      DisplayDataFrameMemoryUsage
  #      DisplayDataFrameDataTypes
+ #      ReturnFormattedStatisticsDataFrameFromDataFrameList
  # 
  #
  #
@@ -60,12 +61,16 @@
  #                                                          N. James George
  #  09/13/2023      Added ReturnStylerObjectStandardFormatForSeries
  #                                                          N. James George
- #  9/17/2023       Added title to plot for DisplayHVPlotFromDataFrame
+ #  09/17/2023      Added title to plot for DisplayHVPlotFromDataFrame
  #                                                          N. James George
- #  9/21/2023       Added ReturnExcelFileAsDataFrame,       N. James George
+ #  09/21/2023      Added ReturnExcelFileAsDataFrame,       N. James George
  #                        DisplayDataFrameDescription,
  #                        DisplayDataFrameMemoryUsage,
  #                        DisplayDataFrameDataTypes
+ #  09/29/2023      Added ReturnFormattedStatisticsDataFrameFromDataFrameList
+ #                                                          N. James George
+ #  09/29/2023      Added parameter to ReturnFormattedStatisticsDataFrameFromSeries
+ #                                                          N. James George
  #
  #******************************************************************************************/
 
@@ -2073,6 +2078,9 @@ def ReturnSeriesWithUniqueIndicesLastValues \
  #  String
  #          captionStringParameter
  #                          The parameter is the text for the caption.
+ #  String
+ #          columnNameString
+ #                          The parameter is the name of the column holding data.
  #  Integer
  #          precisionIntegerParameter
  #                          This optional parameter is the decimal place 
@@ -2081,13 +2089,16 @@ def ReturnSeriesWithUniqueIndicesLastValues \
  #
  #  Date                Description                                 Programmer
  #  ---------------     ------------------------------------        ------------------
- #  9/06/2023           Initial Development                         N. James George
+ #  09/06/2023          Initial Development                         N. James George
+ #  09/29/2023          Added columnNameString parameter            N. James George
  #
  #******************************************************************************************/
 
 def ReturnFormattedStatisticsDataFrameFromSeries \
         (inputSeriesParameter,
          captionStringParameter \
+             = '',
+         columnNameString \
              = '',
          precisionIntegerParameter \
             = 4):
@@ -2132,24 +2143,24 @@ def ReturnFormattedStatisticsDataFrameFromSeries \
                 .DataFrame \
                     (valueList, 
                      columns \
-                         = ['Precipitation'], 
+                         = [columnNameString], 
                      index \
                          = indexList)
     
     
         formattersDictionary \
             = {'Mean': lambda x: f'{x:.4f}',
-                       'Median': lambda x: f'{x:.4f}',
-                       'Mode': lambda x: f'{x:.4f}',
-                       'Variance': lambda x: f'{x:.4f}',
-                       'Std Dev': lambda x: f'{x:.4f}',
-                       'SEM': lambda x: f'{x:.4f}',
-                       'Minimum': lambda x: f'{x:.2f}',
-                       '25%': lambda x: f'{x:.2f}',
-                       '50%': lambda x: f'{x:.2f}',
-                       '75%': lambda x: f'{x:.2f}',
-                       'Maximum': lambda x: f'{x:.2f}',
-                       'Count': lambda x: f'{x:.0f}' }
+               'Median': lambda x: f'{x:.4f}',
+               'Mode': lambda x: f'{x:.4f}',
+               'Variance': lambda x: f'{x:.4f}',
+               'Std Dev': lambda x: f'{x:.4f}',
+               'SEM': lambda x: f'{x:.4f}',
+               'Minimum': lambda x: f'{x:.2f}',
+               '25%': lambda x: f'{x:.2f}',
+               '50%': lambda x: f'{x:.2f}',
+               '75%': lambda x: f'{x:.2f}',
+               'Maximum': lambda x: f'{x:.2f}',
+               'Count': lambda x: f'{x:.0f}'}
 
         statisticsStylerObject \
             = ReturnFormattedRowsAsStylerObject \
@@ -2759,6 +2770,577 @@ def DisplayDataFrameDataTypes \
                 (f'The function, DisplayDataFrameDataTypes, '
                  + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
                  + f"cannot display the DataFrame's column data types.")
+        
+        return \
+            None
+
+
+# In[35]:
+
+
+#*******************************************************************************************
+ #
+ #  Function Name:  ReturnFormattedStatisticsDataFrameFromDataFrameList
+ #
+ #  Function Description:
+ #      This function receives a Series, calculates its statistical values, places them
+ #      in a DataFrame, and returns the formatted DataFrame to the caller.
+ #
+ #
+ #  Function Parameters:
+ #
+ #  Type    Name            Description
+ #  -----   -------------   ----------------------------------------------
+ #  DataFrame
+ #          inputDataFrameParameter
+ #                          The parameter is the input DataFrame.
+ #  String
+ #          keyStringParameter
+ #                          The parameter is the text for the caption.
+ #  String
+ #          captionStringParameter
+ #                          The parameter is the text for the caption.
+ #
+ #
+ #  Date                Description                                 Programmer
+ #  ---------------     ------------------------------------        ------------------
+ #  9/29/2023           Initial Development                         N. James George
+ #
+ #******************************************************************************************/
+
+def ReturnFormattedStatisticsDataFrameFromDataFrameList \
+        (inputDataFrameList,
+         keyStringList,
+         captionString \
+             = ''):
+    
+    try:
+
+        indexStringList \
+            = ['Mean', 
+               'Median', 
+               'Mode', 
+               'Variance', 
+               'Std Dev', 
+               'SEM', 
+               'Minimum', 
+               '25%', 
+               '50%', 
+               '75%', 
+               'Maximum', 
+               'Count']
+
+        for index, value in enumerate(keyStringList): 
+
+            inputSeries = inputDataFrameList[index][value]
+   
+            valueList \
+                = [inputSeries.mean(),
+                   inputSeries.median(),
+                   inputSeries.mode()[0],
+                   inputSeries.var(),
+                   inputSeries.std(),
+                   inputSeries.sem(),
+                   inputSeries.min(),
+                   inputSeries.describe().loc['25%'],
+                   inputSeries.describe().loc['50%'],
+                   inputSeries.describe().loc['75%'],
+                   inputSeries.max(),
+                   inputSeries.count()]
+    
+           
+            tempDataFrame \
+                = pd \
+                    .DataFrame \
+                        (valueList, 
+                         columns \
+                             = [value], 
+                         index \
+                             = indexStringList)
+
+            if index == 0:
+            
+                statisticsDataFrame \
+                    = tempDataFrame.copy()
+            
+            else:
+            
+                statisticsDataFrame \
+                    = pd \
+                        .concat \
+                            ([statisticsDataFrame, 
+                              tempDataFrame], 
+                             axis = 1)
+
+        formattersDictionary \
+            = {'Mean': lambda x: f'{x:.4f}',
+               'Median': lambda x: f'{x:.4f}',
+               'Mode': lambda x: f'{x:.4f}',
+               'Variance': lambda x: f'{x:.4f}',
+               'Std Dev': lambda x: f'{x:.4f}',
+               'SEM': lambda x: f'{x:.4f}',
+               'Minimum': lambda x: f'{x:.2f}',
+               '25%': lambda x: f'{x:.2f}',
+               '50%': lambda x: f'{x:.2f}',
+               '75%': lambda x: f'{x:.2f}',
+               'Maximum': lambda x: f'{x:.2f}',
+               'Count': lambda x: f'{x:.0f}'}
+
+        statisticsStylerObject \
+            = ReturnFormattedRowsAsStylerObject \
+                (statisticsDataFrame.style, 
+                 formattersDictionary)
+        
+        
+        return \
+            statisticsStylerObject \
+                .set_caption \
+                    (captionString) \
+                .set_table_styles \
+                    ([{'selector': 'caption', 
+                       'props': [('color', 'black'), 
+                                 ('font-size', '16px'),
+                                 ('font-style', 'bold'),
+                                 ('text-align', 'center')]}]) \
+                .set_properties \
+                    (**{'text-align': 'center',
+                        'border': '1.3px solid red',
+                        'color': 'blue'})
+    
+    except:
+        
+        log_subroutine \
+            .PrintAndLogWriteText \
+                (f'The function, ReturnFormattedStatisticsDataFrameFromDataFrameList, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
+                 + f'was unable to return a formatted statistics DataFrame.')
+        
+        return \
+            None
+
+
+# In[36]:
+
+
+#*******************************************************************************************
+ #
+ #  Function Name:  ReturnMinimumMaximumValuesXAxisHistogram
+ #
+ #  Function Description:
+ #      This function returns the minimum and maximum x-axis values 
+ #      from a list of DataFrames.
+ #
+ #
+ #  Function Parameters:
+ #
+ #  Type    Name            Description
+ #  -----   -------------   ----------------------------------------------
+ #  DataFrame List
+ #          inputDataFrameList
+ #                          The parameter is the input DataFrame List.
+ #  String List
+ #          columnNameStringList
+ #                          This parameter is a List of the columns for display.
+ #
+ #
+ #  Date                Description                                 Programmer
+ #  ---------------     ------------------------------------        ------------------
+ #  9/30/2023           Initial Development                         N. James George
+ #
+ #******************************************************************************************/
+
+def ReturnMinimumMaximumValuesXAxisHistogram \
+        (inputDataFrameList,
+         columnNameStringList):
+
+    try:
+        
+        minimumXValueFloat \
+            = inputDataFrameList[0] \
+                [columnNameStringList[0]] \
+                    .min()
+            
+        maximumXValueFloat \
+            = inputDataFrameList[0] \
+                [columnNameStringList[0]] \
+                    .max()
+            
+        for index in range(len(inputDataFrameList)):
+                
+            currentMinimumXValueFloat \
+                = inputDataFrameList[index] \
+                    [columnNameStringList[index]] \
+                        .min()
+                
+            currentMaximumXValueFloat \
+                = inputDataFrameList[index] \
+                    [columnNameStringList[index]] \
+                        .max()
+                
+            if currentMinimumXValueFloat <= minimumXValueFloat:
+                    
+                minimumXValueFloat = currentMinimumXValueFloat
+                    
+            if currentMaximumXValueFloat >= maximumXValueFloat:
+                    
+                maximumXValueFloat = currentMaximumXValueFloat 
+                
+        return \
+            [minimumXValueFloat,
+             maximumXValueFloat]
+    
+    except:
+        
+        log_subroutine \
+            .PrintAndLogWriteText \
+                (f'The function, ReturnMinimumMaximumValuesXAxisHistogram, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
+                 + f'was unable to return minimum and maximum x-axis values.')
+        
+        return \
+            None        
+
+
+# In[37]:
+
+
+#*******************************************************************************************
+ #
+ #  Function Name:  ReturnMinimumMaximumValuesYAxisHistogram
+ #
+ #  Function Description:
+ #      This function returns the minimum and maximum y-axis values 
+ #      from a list of DataFrames.
+ #
+ #
+ #  Function Parameters:
+ #
+ #  Type    Name            Description
+ #  -----   -------------   ----------------------------------------------
+ #  DataFrame List
+ #          inputDataFrameList
+ #                          The parameter is the input DataFrame List.
+ #  String List
+ #          columnNameStringList
+ #                          This parameter is a List of the columns for display.
+ #  Boolean
+ #          normalizeYAxisHighestValueCountBoolean
+ #                          This parameter indicates whether the highest value count alone 
+ #                          is the maximum y-axis value.
+ #  Integer
+ #          binsInteger
+ #                          This parameter is the number of bins in the histograms.
+ #
+ #
+ #  Date                Description                                 Programmer
+ #  ---------------     ------------------------------------        ------------------
+ #  9/30/2023           Initial Development                         N. James George
+ #
+ #******************************************************************************************/
+
+def ReturnMinimumMaximumValuesYAxisHistogram \
+        (inputDataFrameList,
+         columnNameStringList,
+         normalizeYAxisHighestValueCountBoolean,
+         binsInteger):
+    
+    try:
+        
+        minimumYValueFloat = 0.0
+            
+        maximumYValueFloat = 0.0
+            
+        if normalizeYAxisHighestValueCountBoolean == True:
+            
+            for index in range(len(inputDataFrameList)):
+                
+                currentMinimumYValueFloat \
+                    = inputDataFrameList[index] \
+                        [columnNameStringList[index]] \
+                            .min()
+                
+                currentMaximumYValueFloat \
+                    = inputDataFrameList[index] \
+                        [columnNameStringList[index]] \
+                            .max()
+                
+                if currentMinimumYValueFloat <= minimumYValueFloat:
+                    
+                    minimumYValueFloat = currentMinimumYValueFloat
+                    
+                if currentMaximumYValueFloat >= maximumYValueFloat:
+                    
+                    maximumYValueFloat = currentMaximumYValueFloat
+                        
+        else:
+            
+            for index in range(len(inputDataFrameList)):
+                    
+                upperIndexLimitFloat \
+                    = inputDataFrameList[index] \
+                        [columnNameStringList[index]].max() \
+                      / float(binsInteger)
+
+                sumOfFrequencyCountsInteger = 0
+                
+                for rowIndex, row \
+                    in enumerate \
+                        (inputDataFrameList[index] \
+                             [columnNameStringList[index]] \
+                                .value_counts().index):
+                    
+                    if row <= upperIndexLimitFloat:
+    
+                        sumOfFrequencyCountsInteger \
+                            += inputDataFrameList[index] \
+                                [columnNameStringList[index]] \
+                                    .value_counts()[row]
+
+
+                if sumOfFrequencyCountsInteger >= maximumYValueFloat:
+                    
+                    maximumYValueFloat = sumOfFrequencyCountsInteger
+        
+        
+        return \
+            [minimumYValueFloat, 
+             maximumYValueFloat]
+    
+    except:
+        
+        
+        log_subroutine \
+            .PrintAndLogWriteText \
+                (f'The function, ReturnMinimumMaximumValuesYAxisHistogram, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
+                 + f'was unable to return minimum and maximum y-axis values.')
+        
+        return \
+            None        
+
+
+# In[38]:
+
+
+#*******************************************************************************************
+ #
+ #  Function Name:  ConvertDateStringListToMonthDayStringSeries
+ #
+ #  Function Description:
+ #      This function converts a String with the format, yyyy-mm-dd, and returns
+ #      the String, mm-dd.
+ #
+ #
+ #  Function Parameters:
+ #
+ #  Type    Name            Description
+ #  -----   -------------   ----------------------------------------------
+ #  String
+ #          inputDateStringList
+ #                          This parameter is a input date String.
+ #  Integer
+ #          removeNumberOfFirstCharactersInteger
+ #                          This parameter indicates how many characters to remove
+ #                          from the beginning of the input String.
+ #
+ #
+ #  Date                Description                                 Programmer
+ #  ---------------     ------------------------------------        ------------------
+ #  9/30/2023           Initial Development                         N. James George
+ #
+ #******************************************************************************************/
+
+def ConvertDateStringListToMonthDayStringSeries \
+        (inputDateStringList,
+         removeNumberOfFirstCharactersInteger):
+    
+    try:
+        
+        tempSeries \
+            = pd.Series \
+                (inputDateStringList)
+    
+        monthDaySeries \
+            = tempSeries \
+                .apply \
+                    (lambda x: x[removeNumberOfFirstCharactersInteger:])
+
+        return \
+            monthDaySeries
+    
+    except:
+        
+        log_subroutine \
+            .PrintAndLogWriteText \
+                (f'The function, ConvertDateStringListToMonthDayStringSeries, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
+                 + f'was unable to convert a date to a month and day.')
+        
+        return \
+            None         
+
+
+# In[39]:
+
+
+#*******************************************************************************************
+ #
+ #  Function Name:  ReturnNormalizedMonthDayIndexSeries
+ #
+ #  Function Description:
+ #      This function returns a normalized index Series from a DataFrame List.
+ #
+ #
+ #  Function Parameters:
+ #
+ #  Type    Name            Description
+ #  -----   -------------   ----------------------------------------------
+ #  DataFrame List
+ #          inputDataFrameList
+ #                          This parameter is a input DataFrame List
+ #
+ #
+ #  Date                Description                                 Programmer
+ #  ---------------     ------------------------------------        ------------------
+ #  9/30/2023           Initial Development                         N. James George
+ #
+ #******************************************************************************************/
+
+def ReturnNormalizedMonthDayIndexSeries \
+        (inputDataFrameList):
+    
+    try:
+        
+        sortedDataFrameList \
+            = sorted(inputDataFrameList, key=len)
+
+        for index, dataFrameObject in enumerate(sortedDataFrameList):
+    
+            if 'newIndex' not in dataFrameObject.index.name:
+            
+                seriesObject \
+                    = ConvertDateStringListToMonthDayStringSeries \
+                        (dataFrameObject.index.tolist(), 5)
+    
+                dataFrameObject['newIndex'] \
+                    = seriesObject.values
+    
+                dataFrameObject \
+                    .set_index \
+                        ('newIndex',  
+                         drop = True, 
+                         append = False,
+                         inplace = True,
+                         verify_integrity = False)
+        
+    
+            if index > 1:
+
+                currentDataFrameIndexSeries \
+                    = dataFrameObject.index
+        
+        
+                lastDataFrameIndexLengthInteger \
+                    = len(tempIndexSeries)
+        
+                currentDataFrameIndexLengthInteger \
+                    = len(currentDataFrameIndexSeries)
+        
+        
+                tempIndexSeries \
+                    = currentDataFrameIndexSeries \
+                        [currentDataFrameIndexSeries.isin(tempIndexSeries)]
+        
+            else:
+
+                tempIndexSeries \
+                    = dataFrameObject.index    
+        
+        
+        return \
+            tempIndexSeries
+    
+    except:
+        
+        log_subroutine \
+            .PrintAndLogWriteText \
+                ('The function, ReturnNormalizedMonthDayIndexSeries, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
+                 + 'was unable to normalize the index series from ' 
+                 + 'a DataFrame List.')
+        
+        return \
+            None
+
+
+# In[40]:
+
+
+#*******************************************************************************************
+ #
+ #  Function Name:  ReturnNormalizedDataFrameFromIndex
+ #
+ #  Function Description:
+ #      This function returns a normalized DataFrame from a normalized index Series
+ #      and a DataFrame List.
+ #
+ #
+ #  Function Parameters:
+ #
+ #  Type    Name            Description
+ #  -----   -------------   ----------------------------------------------
+ #  DataFrame List
+ #          inputDataFrameList
+ #                          This parameter is a input DataFrame List
+ #  String
+ #          omitColumnNameString
+ #                          This parameter is the name of an omitted DataFrame column.
+ #
+ #
+ #  Date                Description                                 Programmer
+ #  ---------------     ------------------------------------        ------------------
+ #  9/30/2023           Initial Development                         N. James George
+ #
+ #******************************************************************************************/
+
+def ReturnNormalizedDataFrameFromIndex \
+        (inputDataFrameList,
+         omitColumnNameString):
+    
+    try:
+        normalizedIndexSeries \
+            = ReturnNormalizedMonthDayIndexSeries \
+                (inputDataFrameList)
+
+        normalizedDataFrameList \
+            = []
+
+        for index, dataFrameObject in enumerate(inputDataFrameList):
+
+            tempDataFrame \
+                = dataFrameObject \
+                    .apply \
+                        (lambda row: row[dataFrameObject.index.isin(normalizedIndexSeries)])
+    
+            if omitColumnNameString not in dataFrameObject.columns:
+        
+                normalizedDataFrameList \
+                    .append \
+                        (tempDataFrame)
+        
+        return \
+            pd.concat \
+                (normalizedDataFrameList, 
+                 axis = 1)
+    
+    except:
+        
+        log_subroutine \
+            .PrintAndLogWriteText \
+                ('The function, ReturnNormalizedDataFrameFromIndex, '
+                 + f'in source file, {CONSTANT_LOCAL_FILE_NAME}, '
+                 + 'was unable to return a normalized DataFrame from a ' 
+                 + 'normalized index.')
         
         return \
             None
