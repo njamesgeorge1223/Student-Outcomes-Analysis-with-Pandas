@@ -1,5 +1,5 @@
 
-Timepoint: 09/27/2023 19:44:15
+Timepoint: 11/07/2023 19:16:36
 Program execution begins...
 
 
@@ -1527,10 +1527,10 @@ Name: Total Students, dtype: float64
 
 
 School Size
-Small (<1000)          416972.500
-Medium (1000-2000)    1029597.200
+Small (<1000)            416972.5
+Medium (1000-2000)      1029597.2
 Large (2000-5000)     2333437.125
-Name: Total School Budget, dtype: float64
+Name: Total School Budget, dtype: object
 
 
 
@@ -1542,11 +1542,11 @@ Name: Per Student Budget, dtype: float64
 
 
 
-                    Total Students  Total School Budget  Per Student Budget
-School Size                                                                
-Small (<1000)              694.500           416972.500             595.000
-Medium (1000-2000)        1704.400          1029597.200             605.600
-Large (2000-5000)         3657.375          2333437.125             635.375
+                    Total Students Total School Budget  Per Student Budget
+School Size                                                               
+Small (<1000)              694.500            416972.5             595.000
+Medium (1000-2000)        1704.400           1029597.2             605.600
+Large (2000-5000)         3657.375         2333437.125             635.375
 
 
 
@@ -1562,7 +1562,7 @@ School Size
 Small (<1000)          416972.5
 Medium (1000-2000)    1049400.0
 Large (2000-5000)     2228999.0
-Name: Total School Budget, dtype: float64
+Name: Total School Budget, dtype: object
 
 
 
@@ -1574,19 +1574,19 @@ Name: Per Student Budget, dtype: float64
 
 
 
-                    Total Students  Total School Budget  Per Student Budget
-School Size                                                                
-Small (<1000)                694.5             416972.5               595.0
-Medium (1000-2000)          1761.0            1049400.0               600.0
-Large (2000-5000)           3474.0            2228999.0               641.5
+                    Total Students Total School Budget  Per Student Budget
+School Size                                                               
+Small (<1000)                694.5            416972.5               595.0
+Medium (1000-2000)          1761.0           1049400.0               600.0
+Large (2000-5000)           3474.0           2228999.0               641.5
 
 
 
                    Total Students         Total School Budget             \
                              Mean  Median                Mean     Median   
 School Size                                                                
-Small (<1000)             694.500   694.5          416972.500   416972.5   
-Medium (1000-2000)       1704.400  1761.0         1029597.200  1049400.0   
+Small (<1000)             694.500   694.5            416972.5   416972.5   
+Medium (1000-2000)       1704.400  1761.0           1029597.2  1049400.0   
 Large (2000-5000)        3657.375  3474.0         2333437.125  2228999.0   
 
                    Per Student Budget         
@@ -1737,9 +1737,9 @@ Name: Total Students, dtype: float64
 
 
 School Type
-Charter     9.126881e+05
-District    2.478275e+06
-Name: Total School Budget, dtype: float64
+Charter         912688.125
+District    2478274.714286
+Name: Total School Budget, dtype: object
 
 
 
@@ -1750,10 +1750,10 @@ Name: Per Student Budget, dtype: float64
 
 
 
-             Total Students  Total School Budget  Per Student Budget
-School Type                                                         
-Charter         1524.250000         9.126881e+05          599.500000
-District        3853.714286         2.478275e+06          643.571429
+             Total Students Total School Budget  Per Student Budget
+School Type                                                        
+Charter         1524.250000          912688.125          599.500000
+District        3853.714286      2478274.714286          643.571429
 
 
 
@@ -1767,7 +1767,7 @@ Name: Total Students, dtype: float64
 School Type
 Charter     1046265.0
 District    2547363.0
-Name: Total School Budget, dtype: float64
+Name: Total School Budget, dtype: object
 
 
 
@@ -1778,18 +1778,18 @@ Name: Per Student Budget, dtype: float64
 
 
 
-             Total Students  Total School Budget  Per Student Budget
-School Type                                                         
-Charter              1698.0            1046265.0               591.5
-District             3999.0            2547363.0               644.0
+             Total Students Total School Budget  Per Student Budget
+School Type                                                        
+Charter              1698.0           1046265.0               591.5
+District             3999.0           2547363.0               644.0
 
 
 
             Total Students         Total School Budget             \
                       Mean  Median                Mean     Median   
 School Type                                                         
-Charter        1524.250000  1698.0        9.126881e+05  1046265.0   
-District       3853.714286  3999.0        2.478275e+06  2547363.0   
+Charter        1524.250000  1698.0          912688.125  1046265.0   
+District       3853.714286  3999.0      2478274.714286  2547363.0   
 
             Per Student Budget         
                           Mean Median  
@@ -1912,7 +1912,7 @@ Charter      90.561554
 District     53.527508  
 
 
-Timepoint: 09/27/2023 19:45:09
+Timepoint: 11/07/2023 19:17:35
 Program execution begins...
 
 
@@ -3440,10 +3440,10 @@ Name: Total Students, dtype: float64
 
 
 School Size
-Small (<1000)          416972.500
-Medium (1000-2000)    1029597.200
+Small (<1000)            416972.5
+Medium (1000-2000)      1029597.2
 Large (2000-5000)     2333437.125
-Name: Total School Budget, dtype: float64
+Name: Total School Budget, dtype: object
 
 
 
@@ -3455,11 +3455,11 @@ Name: Per Student Budget, dtype: float64
 
 
 
-                    Total Students  Total School Budget  Per Student Budget
-School Size                                                                
-Small (<1000)              694.500           416972.500             595.000
-Medium (1000-2000)        1704.400          1029597.200             605.600
-Large (2000-5000)         3657.375          2333437.125             635.375
+                    Total Students Total School Budget  Per Student Budget
+School Size                                                               
+Small (<1000)              694.500            416972.5             595.000
+Medium (1000-2000)        1704.400           1029597.2             605.600
+Large (2000-5000)         3657.375         2333437.125             635.375
 
 
 
@@ -3475,7 +3475,7 @@ School Size
 Small (<1000)          416972.5
 Medium (1000-2000)    1049400.0
 Large (2000-5000)     2228999.0
-Name: Total School Budget, dtype: float64
+Name: Total School Budget, dtype: object
 
 
 
@@ -3487,19 +3487,19 @@ Name: Per Student Budget, dtype: float64
 
 
 
-                    Total Students  Total School Budget  Per Student Budget
-School Size                                                                
-Small (<1000)                694.5             416972.5               595.0
-Medium (1000-2000)          1761.0            1049400.0               600.0
-Large (2000-5000)           3474.0            2228999.0               641.5
+                    Total Students Total School Budget  Per Student Budget
+School Size                                                               
+Small (<1000)                694.5            416972.5               595.0
+Medium (1000-2000)          1761.0           1049400.0               600.0
+Large (2000-5000)           3474.0           2228999.0               641.5
 
 
 
                    Total Students         Total School Budget             \
                              Mean  Median                Mean     Median   
 School Size                                                                
-Small (<1000)             694.500   694.5          416972.500   416972.5   
-Medium (1000-2000)       1704.400  1761.0         1029597.200  1049400.0   
+Small (<1000)             694.500   694.5            416972.5   416972.5   
+Medium (1000-2000)       1704.400  1761.0           1029597.2  1049400.0   
 Large (2000-5000)        3657.375  3474.0         2333437.125  2228999.0   
 
                    Per Student Budget         
@@ -3650,9 +3650,9 @@ Name: Total Students, dtype: float64
 
 
 School Type
-Charter     9.126881e+05
-District    2.478275e+06
-Name: Total School Budget, dtype: float64
+Charter         912688.125
+District    2478274.714286
+Name: Total School Budget, dtype: object
 
 
 
@@ -3663,10 +3663,10 @@ Name: Per Student Budget, dtype: float64
 
 
 
-             Total Students  Total School Budget  Per Student Budget
-School Type                                                         
-Charter         1524.250000         9.126881e+05          599.500000
-District        3853.714286         2.478275e+06          643.571429
+             Total Students Total School Budget  Per Student Budget
+School Type                                                        
+Charter         1524.250000          912688.125          599.500000
+District        3853.714286      2478274.714286          643.571429
 
 
 
@@ -3680,7 +3680,7 @@ Name: Total Students, dtype: float64
 School Type
 Charter     1046265.0
 District    2547363.0
-Name: Total School Budget, dtype: float64
+Name: Total School Budget, dtype: object
 
 
 
@@ -3691,18 +3691,18 @@ Name: Per Student Budget, dtype: float64
 
 
 
-             Total Students  Total School Budget  Per Student Budget
-School Type                                                         
-Charter              1698.0            1046265.0               591.5
-District             3999.0            2547363.0               644.0
+             Total Students Total School Budget  Per Student Budget
+School Type                                                        
+Charter              1698.0           1046265.0               591.5
+District             3999.0           2547363.0               644.0
 
 
 
             Total Students         Total School Budget             \
                       Mean  Median                Mean     Median   
 School Type                                                         
-Charter        1524.250000  1698.0        9.126881e+05  1046265.0   
-District       3853.714286  3999.0        2.478275e+06  2547363.0   
+Charter        1524.250000  1698.0          912688.125  1046265.0   
+District       3853.714286  3999.0      2478274.714286  2547363.0   
 
             Per Student Budget         
                           Mean Median  
