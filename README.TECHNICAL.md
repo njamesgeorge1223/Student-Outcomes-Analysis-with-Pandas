@@ -149,6 +149,8 @@ Jupyter Notebook, Pandas, Python 3.11.4
   &emsp; |&rarr; [./Images/PyCitySchoolsTable116FinancialMetricsbySchoolTypeMeanMedian.png](./Images/PyCitySchoolsTable116FinancialMetricsbySchoolTypeMeanMedian.png)
   
   &emsp; |&rarr; [./Images/PyCitySchoolsTable124DisplayTestScoresPassingRatesMeanbySchoolType.png](./Images/PyCitySchoolsTable124DisplayTestScoresPassingRatesMeanbySchoolType.png)
+
+  &emsp; |&rarr; [./Images/PyCitySchoolsTable124DisplayTestScoresPassingRatesMeanbySchoolType.png](./Images/PyCitySchoolsTable124DisplayTestScoresPassingRatesMeanbySchoolType.png)
   
   &emsp; |&rarr; [./Images/PyCitySchoolsTable125DisplayTestScoresPassingRatesMedianbySchoolType.png](./Images/PyCitySchoolsTable125DisplayTestScoresPassingRatesMedianbySchoolType.png)
   
