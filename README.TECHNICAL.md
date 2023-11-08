@@ -172,9 +172,9 @@ Jupyter Notebook, Pandas, Python 3.11.4
 
 |&rarr; [./Logs/](./Logs/)
 
-  &emsp; |&rarr; [./Logs/20230927PyCitySchoolsDebug.txt](./Logs/20230927PyCitySchoolsDebug.txt)
+  &emsp; |&rarr; [./Logs/20231107PyCitySchoolsDebug.txt](./Logs/20231107PyCitySchoolsDebug.txt)
 
-  &emsp; |&rarr; [./Logs/20230927PyCitySchoolsLog.txt](./Logs/20230927PyCitySchoolsLog.txt)
+  &emsp; |&rarr; [./Logs/20231107PyCitySchoolsLog.txt](./Logs/20231107PyCitySchoolsLog.txt)
 
   &emsp; |&rarr; [./Logs/README.md](./Logs/README.md)
 
